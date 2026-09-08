@@ -1,132 +1,624 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#102b52" />
+
   <title>VOX Cinemas UAE - Mockup</title>
+
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <div class="top-strip">VOX Cinemas UAE • Prototype experience</div>
+
+  <div class="top-strip">
+    VOX Cinemas UAE • Prototype experience
+  </div>
+
+
   <header class="site-header">
-    <a class="brand" href="#" aria-label="VOX home"><span class="brand-mark">VOX</span><span>CINEMAS</span></a>
-    <nav class="nav-links" aria-label="Main navigation">
-      <a href="#movies">Movies</a><a href="#experiences">Experiences</a><a href="#offers">Offers</a><a href="#food">Food & Drinks</a>
+
+    <a
+      class="brand"
+      href="#"
+      aria-label="VOX home"
+    >
+      <span class="brand-mark">VOX</span>
+      <span>CINEMAS</span>
+    </a>
+
+
+    <nav
+      class="nav-links"
+      aria-label="Main navigation"
+    >
+      <a href="#movies">Movies</a>
+      <a href="#experiences">Experiences</a>
+      <a href="#offers">Offers</a>
+      <a href="#food">Food & Drinks</a>
     </nav>
+
+
     <div class="header-actions">
-      <button class="icon-btn" id="searchBtn" aria-label="Search">⌕</button>
-      <button class="text-btn">العربية</button>
-      <button class="primary small" id="loginBtn">Sign in</button>
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+
+      <button
+        class="icon-btn"
+        id="searchBtn"
+        aria-label="Search"
+      >
+        ⌕
+      </button>
+
+      <button class="text-btn">
+        العربية
+      </button>
+
+      <button
+        class="primary small"
+        id="loginBtn"
+      >
+        Sign in
+      </button>
+
+      <button
+        class="menu-btn"
+        id="menuBtn"
+        aria-label="Open menu"
+      >
+        ☰
+      </button>
+
     </div>
+
   </header>
 
+
   <main>
-    <section class="hero" aria-label="Featured movie">
+
+
+    <!-- HERO -->
+
+    <section
+      class="hero"
+      aria-label="Featured movie"
+    >
+
       <div class="hero-overlay"></div>
+
+
       <div class="hero-content">
-        <span class="eyebrow">NOW SHOWING</span>
-        <h1>Big-screen stories.<br/>Your way.</h1>
-        <p>Discover the latest releases, premium cinema experiences and showtimes across the UAE.</p>
-        <div class="hero-actions"><a class="primary" href="#booking">Book tickets</a><a class="secondary" href="#movies">View movies</a></div>
-      </div>
-      <div class="hero-art" aria-hidden="true">
-        <img src="assets/odyssey.png" alt="" />
-        <div class="glow"></div>
-      </div>
-    </section>
 
-    <section class="booking-panel" id="booking">
-      <div class="booking-title"><span>Quick booking</span><strong>Find your perfect showtime</strong></div>
-      <div class="booking-grid">
-   <label>
-  <span>Movie</span>
-  <select id="movieSelect">
-    <option value="">Any Movie</option>
-  </select>
-</label>
-
-<label>
-  <span>Cinema</span>
-  <select id="cinemaSelect">
-    <option value="">Select Cinema</option>
-  </select>
-</label>
-        <label><span>Date</span><select id="dateSelect"></select></label>
-        <button class="primary find-btn" id="findBtn">Find times & book</button>
-      </div>
-      <div id="bookingResult" class="booking-result" aria-live="polite"></div>
-    </section>
-
-   <section class="section" id="movies">
-
-  <div class="section-head">
-
-    <div>
-      <span class="eyebrow dark">WHAT'S ON</span>
-
-      <h2>Movies in cinemas now</h2>
-
-      <div class="live-row">
-        <span id="liveStatus" class="live-status">
-          Loading live catalogue…
+        <span class="eyebrow">
+          NOW SHOWING
         </span>
 
-        <span id="liveUpdated" class="live-updated"></span>
+        <h1>
+          Big-screen stories.<br />
+          Your way.
+        </h1>
+
+        <p>
+          Discover the latest releases,
+          premium cinema experiences and
+          showtimes across the UAE.
+        </p>
+
+
+        <div class="hero-actions">
+
+          <a
+            class="primary"
+            href="#booking"
+          >
+            Book tickets
+          </a>
+
+          <a
+            class="secondary"
+            href="#movies"
+          >
+            View movies
+          </a>
+
+        </div>
+
       </div>
+
+
+      <div
+        class="hero-art"
+        aria-hidden="true"
+      >
+
+        <img
+          src="assets/odyssey.png"
+          alt=""
+        />
+
+        <div class="glow"></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- QUICK BOOKING -->
+
+    <section
+      class="booking-panel"
+      id="booking"
+    >
+
+      <div class="booking-title">
+
+        <span>
+          Quick booking
+        </span>
+
+        <strong>
+          Find your perfect showtime
+        </strong>
+
+      </div>
+
+
+      <div class="booking-grid">
+
+
+        <label>
+
+          <span>
+            Movie
+          </span>
+
+          <select id="movieSelect">
+            <option value="">
+              Any Movie
+            </option>
+          </select>
+
+        </label>
+
+
+        <label>
+
+          <span>
+            Cinema
+          </span>
+
+          <select id="cinemaSelect">
+            <option value="">
+              Select Cinema
+            </option>
+          </select>
+
+        </label>
+
+
+        <label>
+
+          <span>
+            Date
+          </span>
+
+          <select id="dateSelect"></select>
+
+        </label>
+
+
+        <button
+          class="primary find-btn"
+          id="findBtn"
+        >
+          Find times & book
+        </button>
+
+
+      </div>
+
+
+      <div
+        id="bookingResult"
+        class="booking-result"
+        aria-live="polite"
+      ></div>
+
+    </section>
+
+
+
+    <!-- MOVIES -->
+
+    <section
+      class="section"
+      id="movies"
+    >
+
+      <div class="section-head">
+
+
+        <div>
+
+          <span class="eyebrow dark">
+            WHAT'S ON
+          </span>
+
+          <h2>
+            Movies in cinemas now
+          </h2>
+
+
+          <div class="live-row">
+
+            <span
+              id="liveStatus"
+              class="live-status"
+            >
+              Loading movie catalogue…
+            </span>
+
+            <span
+              id="liveUpdated"
+              class="live-updated"
+            ></span>
+
+          </div>
+
+        </div>
+
+
+        <div class="movie-filters"></div>
+
+
+      </div>
+
+
+      <div
+        class="movie-grid"
+        id="movieGrid"
+      ></div>
+
+
+      <button
+        class="secondary dark center"
+        id="viewAllBtn"
+      >
+        View all movies
+      </button>
+
+
+    </section>
+
+
+
+    <!-- EXPERIENCES -->
+
+    <section
+      class="experience-section"
+      id="experiences"
+    >
+
+      <div class="section-head light">
+
+        <div>
+
+          <span class="eyebrow">
+            THE VOX DIFFERENCE
+          </span>
+
+          <h2>
+            Choose your experience
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="experience-grid">
+
+
+        <article>
+
+          <div class="exp-icon">
+            ✦
+          </div>
+
+          <h3>
+            THEATRE
+          </h3>
+
+          <p>
+            Premium dining, reclining seats
+            and an elevated movie night.
+          </p>
+
+          <button>
+            Discover THEATRE →
+          </button>
+
+        </article>
+
+
+        <article>
+
+          <div class="exp-icon">
+            ◉
+          </div>
+
+          <h3>
+            IMAX
+          </h3>
+
+          <p>
+            Immersive scale, powerful sound
+            and spectacular picture quality.
+          </p>
+
+          <button>
+            Explore IMAX →
+          </button>
+
+        </article>
+
+
+        <article>
+
+          <div class="exp-icon">
+            ⚡
+          </div>
+
+          <h3>
+            4DX
+          </h3>
+
+          <p>
+            Motion seats and environmental
+            effects that put you inside the action.
+          </p>
+
+          <button>
+            Explore 4DX →
+          </button>
+
+        </article>
+
+
+        <article>
+
+          <div class="exp-icon">
+            ★
+          </div>
+
+          <h3>
+            KIDS
+          </h3>
+
+          <p>
+            A colourful cinema experience
+            designed for families and younger guests.
+          </p>
+
+          <button>
+            Explore KIDS →
+          </button>
+
+        </article>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- OFFERS -->
+
+    <section
+      class="section offers"
+      id="offers"
+    >
+
+      <div class="section-head">
+
+        <div>
+
+          <span class="eyebrow dark">
+            MORE AT VOX
+          </span>
+
+          <h2>
+            Offers & favourites
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="promo-grid">
+
+
+        <article class="promo purple">
+
+          <span>
+            SHARE
+          </span>
+
+          <h3>
+            Earn and spend SHARE points
+          </h3>
+
+          <p>
+            Make every movie night more rewarding.
+          </p>
+
+          <button>
+            Learn more
+          </button>
+
+        </article>
+
+
+        <article class="promo gold">
+
+          <span>
+            ONLINE EXCLUSIVE
+          </span>
+
+          <h3>
+            Pre-order your snacks
+          </h3>
+
+          <p>
+            Spend less time in the queue
+            and more time at the movies.
+          </p>
+
+          <button>
+            Order food
+          </button>
+
+        </article>
+
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-brand">
+
+      <strong>
+        VOX
+      </strong>
+
+      <span>
+        CINEMAS
+      </span>
+
     </div>
 
-    <div class="movie-filters"></div>
+
+    <p>
+      This is a non-production UI mock-up
+      created for prototyping purposes.
+    </p>
+
+
+    <div>
+
+      <a href="#movies">
+        Movies
+      </a>
+
+      <a href="#booking">
+        Book
+      </a>
+
+      <a href="#experiences">
+        Experiences
+      </a>
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- WEBSITE BOOKING MODAL -->
+
+  <div
+    class="modal"
+    id="modal"
+    hidden
+  >
+
+    <div class="modal-card">
+
+      <button
+        class="modal-close"
+        id="modalClose"
+      >
+        ×
+      </button>
+
+
+      <h3 id="modalTitle">
+        Book your movie
+      </h3>
+
+
+      <p id="modalCopy"></p>
+
+
+      <div
+        id="showtimes"
+        class="showtimes"
+      ></div>
+
+
+      <button
+        class="primary full"
+        id="continueBtn"
+      >
+        Continue
+      </button>
+
+    </div>
 
   </div>
 
-  <div class="movie-grid" id="movieGrid"></div>
 
-  <button
-    class="secondary dark center"
-    id="viewAllBtn">
-    View all movies
-  </button>
 
-</section>
+  <!-- VOX MOCK-UP APPLICATION -->
 
-    <section class="experience-section" id="experiences">
-      <div class="section-head light"><div><span class="eyebrow">THE VOX DIFFERENCE</span><h2>Choose your experience</h2></div></div>
-      <div class="experience-grid">
-        <article><div class="exp-icon">✦</div><h3>THEATRE</h3><p>Premium dining, reclining seats and an elevated movie night.</p><button>Discover THEATRE →</button></article>
-        <article><div class="exp-icon">◉</div><h3>IMAX</h3><p>Immersive scale, powerful sound and spectacular picture quality.</p><button>Explore IMAX →</button></article>
-        <article><div class="exp-icon">⚡</div><h3>4DX</h3><p>Motion seats and environmental effects that put you inside the action.</p><button>Explore 4DX →</button></article>
-        <article><div class="exp-icon">★</div><h3>KIDS</h3><p>A colourful cinema experience designed for families and younger guests.</p><button>Explore KIDS →</button></article>
-      </div>
-    </section>
-
-    <section class="section offers" id="offers">
-      <div class="section-head"><div><span class="eyebrow dark">MORE AT VOX</span><h2>Offers & favourites</h2></div></div>
-      <div class="promo-grid"><article class="promo purple"><span>SHARE</span><h3>Earn and spend SHARE points</h3><p>Make every movie night more rewarding.</p><button>Learn more</button></article><article class="promo gold"><span>ONLINE EXCLUSIVE</span><h3>Pre-order your snacks</h3><p>Spend less time in the queue and more time at the movies.</p><button>Order food</button></article></div>
-    </section>
-  </main>
-
-  <footer><div class="footer-brand"><strong>VOX</strong><span>CINEMAS</span></div><p>This is a non-production UI mock-up created for prototyping purposes.</p><div><a href="#movies">Movies</a><a href="#booking">Book</a><a href="#experiences">Experiences</a></div></footer>
-
-  <div class="modal" id="modal" hidden><div class="modal-card"><button class="modal-close" id="modalClose">×</button><h3 id="modalTitle">Book your movie</h3><p id="modalCopy"></p><div id="showtimes" class="showtimes"></div><button class="primary full" id="continueBtn">Continue</button></div></div>
   <script src="app.js"></script>
 
-<!-- VOXI Digital Concierge configuration -->
-<script>
-  window.VoxiConfig = {
-    apiBase: "https://concierge-api-production-3d90.up.railway.app/api",
-    lang: "en",
-    open: true
-  };
-</script>
 
-<!-- VOXI Digital Concierge widget -->
-<script
-  src="https://voxi-demo.up.railway.app/embed/voxi.js"
-  charset="utf-8"
-  defer>
-</script>
-  
+
+  <!--
+    VOXI DIGITAL CONCIERGE
+
+    Important:
+    Define VoxiConfig BEFORE loading
+    the Railway widget script.
+
+    This forces the widget to use
+    the Railway Concierge API rather
+    than attempting /api calls against
+    the Cloudflare-hosted VOX page.
+  -->
+
+  <script>
+    window.VoxiConfig = {
+      apiBase: "https://concierge-api-production-3d90.up.railway.app/api",
+      lang: "en",
+      open: true
+    };
+  </script>
+
+
+  <!-- VOXI CUSTOM WIDGET -->
+
+  <script
+    src="https://voxi-demo.up.railway.app/embed/voxi.js"
+    charset="utf-8"
+    defer
+  ></script>
+
+
 </body>
+
 </html>
