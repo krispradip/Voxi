@@ -112,3 +112,72 @@
   color: var(--muted);
   padding: 30px 0;
 }
+/* =======================================================
+   VOXI DEMO BASELINE B2
+   WEBSITE LOGIN
+======================================================= */
+
+.login-modal-card {
+  max-width: 460px;
+}
+
+.login-intro {
+  margin: 8px 0 20px;
+  color: #667085;
+  line-height: 1.5;
+}
+
+.login-form {
+  display: grid;
+  gap: 16px;
+}
+
+.login-field {
+  display: grid;
+  gap: 7px;
+}
+
+.login-field span {
+  font-size: 12px;
+  font-weight: 800;
+  color: #344054;
+}
+
+.login-field input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  padding: 13px 14px;
+  font: inherit;
+  color: #101828;
+  background: #ffffff;
+  outline: none;
+}
+
+.login-field input:focus {
+  border-color: #16bdd0;
+  box-shadow: 0 0 0 3px rgba(22, 189, 208, 0.12);
+}
+
+.login-error {
+  border-radius: 9px;
+  padding: 10px 12px;
+  background: #fff1f0;
+  color: #b42318;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.login-hint {
+  margin: 0;
+  text-align: center;
+  color: #98a2b3;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.account-signed-in {
+  white-space: nowrap;
+}
+
