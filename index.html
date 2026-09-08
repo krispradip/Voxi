@@ -40,19 +40,56 @@
     <section class="booking-panel" id="booking">
       <div class="booking-title"><span>Quick booking</span><strong>Find your perfect showtime</strong></div>
       <div class="booking-grid">
-        <label><span>Movie</span><select id="movieSelect"><option value="">Any Movie</option></select></label>
-        <label><span>Cinema</span><select id="cinemaSelect"><option value="">Select Cinema</option></select></label>
+   <label>
+  <span>Movie</span>
+  <select id="movieSelect">
+    <option value="">Any Movie</option>
+  </select>
+</label>
+
+<label>
+  <span>Cinema</span>
+  <select id="cinemaSelect">
+    <option value="">Select Cinema</option>
+  </select>
+</label>
         <label><span>Date</span><select id="dateSelect"></select></label>
         <button class="primary find-btn" id="findBtn">Find times & book</button>
       </div>
       <div id="bookingResult" class="booking-result" aria-live="polite"></div>
     </section>
 
-    <section class="section" id="movies">
-      <div class="section-head"><div><span class="eyebrow dark">WHAT'S ON</span><h2>Movies in cinemas now</h2><div class="live-row"><span id="liveStatus" class="live-status">Loading live catalogue…</span><span id="liveUpdated" class="live-updated"></span></div></div><div class="movie-filters"></div></div>
-      <div class="movie-grid" id="movieGrid"></div>
-      <button class="secondary dark center" id="viewAllBtn">View all movies</button>
-    </section>
+   <section class="section" id="movies">
+
+  <div class="section-head">
+
+    <div>
+      <span class="eyebrow dark">WHAT'S ON</span>
+
+      <h2>Movies in cinemas now</h2>
+
+      <div class="live-row">
+        <span id="liveStatus" class="live-status">
+          Loading live catalogue…
+        </span>
+
+        <span id="liveUpdated" class="live-updated"></span>
+      </div>
+    </div>
+
+    <div class="movie-filters"></div>
+
+  </div>
+
+  <div class="movie-grid" id="movieGrid"></div>
+
+  <button
+    class="secondary dark center"
+    id="viewAllBtn">
+    View all movies
+  </button>
+
+</section>
 
     <section class="experience-section" id="experiences">
       <div class="section-head light"><div><span class="eyebrow">THE VOX DIFFERENCE</span><h2>Choose your experience</h2></div></div>
