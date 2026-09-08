@@ -1,6 +1,39 @@
+/*
+  VOXI DEMO BASELINE B2
+  2026-09-08
+
+  Responsibilities:
+  - VOX mock-up catalogue
+  - demo booking interaction
+  - host website login
+  - automatic Voxi login bridge
+
+  IMPORTANT:
+  Voxi itself remains Noorul's Railway widget.
+  We do not copy or modify the widget.
+*/
+
+
+/* -------------------------------------------------------
+   GLOBAL STATE
+------------------------------------------------------- */
+
 let movies = [];
 let cinemas = [];
 let selectedTime = "";
+let hostCustomer = null;
+
+
+/* -------------------------------------------------------
+   VOXI API
+
+   The value comes from index.html.
+   There must NOT be /api at the end.
+------------------------------------------------------- */
+
+const VOXI_API_BASE =
+  window.VoxiConfig?.apiBase ||
+  "https://concierge-api-production-3d90.up.railway.app";
 
 
 /* -------------------------------------------------------
@@ -66,17 +99,23 @@ const liveStatus =
 const liveUpdated =
   document.getElementById("liveUpdated");
 
+const loginButton =
+  document.getElementById("loginBtn");
+
 
 /* -------------------------------------------------------
    DATE SELECTOR
 ------------------------------------------------------- */
 
 const formatDate = date =>
-  date.toLocaleDateString("en-AE", {
-    weekday: "short",
-    day: "numeric",
-    month: "short"
-  });
+  date.toLocaleDateString(
+    "en-AE",
+    {
+      weekday: "short",
+      day: "numeric",
+      month: "short"
+    }
+  );
 
 
 if (dateSelect) {
@@ -112,7 +151,7 @@ if (dateSelect) {
 
 
 /* -------------------------------------------------------
-   SAFE TEXT
+   SAFE HTML
 ------------------------------------------------------- */
 
 function escapeHtml(value = "") {
@@ -136,7 +175,7 @@ function escapeAttr(value = "") {
 
 
 /* -------------------------------------------------------
-   POPULATE MOVIE / CINEMA SELECTORS
+   MOVIE / CINEMA SELECTORS
 ------------------------------------------------------- */
 
 function populateSelectors() {
@@ -323,7 +362,6 @@ function createMovieCard(movie) {
 
     </div>
 
-
     <div class="movie-body">
 
       <h3>
@@ -336,7 +374,6 @@ function createMovieCard(movie) {
           "Language TBC"
         )}
       </div>
-
 
       <div class="card-actions">
 
@@ -352,7 +389,6 @@ function createMovieCard(movie) {
           View Movie
         </a>
 
-
         <button
           class="book-card"
           type="button"
@@ -366,18 +402,11 @@ function createMovieCard(movie) {
   `;
 
 
-  /*
-     If an external poster is broken,
-     remove the card completely.
-
-     This keeps the demo page clean instead
-     of showing broken-image placeholders.
-  */
-
   const poster =
     card.querySelector(
       ".movie-poster"
     );
+
 
   poster.addEventListener(
     "error",
@@ -390,20 +419,17 @@ function createMovieCard(movie) {
   );
 
 
-  const bookButton =
-    card.querySelector(
-      ".book-card"
+  card
+    .querySelector(".book-card")
+    .addEventListener(
+      "click",
+      () => {
+
+        openBooking(
+          movie.title
+        );
+      }
     );
-
-  bookButton.addEventListener(
-    "click",
-    () => {
-
-      openBooking(
-        movie.title
-      );
-    }
-  );
 
 
   return card;
@@ -423,14 +449,6 @@ function renderMovies(
 
   movieGrid.innerHTML = "";
 
-
-  /*
-     Only show movies that actually have
-     a poster value.
-
-     If the URL itself turns out to be broken,
-     createMovieCard() removes the card.
-  */
 
   const list =
     movies.filter(movie => {
@@ -476,7 +494,7 @@ function renderMovies(
 
 
 /* -------------------------------------------------------
-   DISPLAY COUNT
+   MOVIE COUNT
 ------------------------------------------------------- */
 
 function updateDisplayedMovieCount() {
@@ -498,7 +516,7 @@ function updateDisplayedMovieCount() {
 
 
 /* -------------------------------------------------------
-   LOAD MOVIES AND CINEMAS
+   LOAD MOVIES / CINEMAS
 ------------------------------------------------------- */
 
 async function loadCatalogue() {
@@ -595,11 +613,6 @@ async function loadCatalogue() {
     }
 
 
-    /*
-       We are no longer pretending that
-       this is a continuously refreshed feed.
-    */
-
     if (liveUpdated) {
 
       liveUpdated.textContent =
@@ -658,7 +671,7 @@ async function loadCatalogue() {
    BOOKING MODAL
 ------------------------------------------------------- */
 
-const modal =
+const bookingModal =
   document.getElementById(
     "modal"
   );
@@ -682,7 +695,7 @@ const showtimes =
 function openBooking(title) {
 
   if (
-    !modal ||
+    !bookingModal ||
     !showtimes
   ) {
 
@@ -720,16 +733,13 @@ function openBooking(title) {
   showtimes.innerHTML = "";
 
 
-  const demoTimes = [
+  [
     "11:15 AM",
     "1:45 PM",
     "4:30 PM",
     "7:15 PM",
     "10:00 PM"
-  ];
-
-
-  demoTimes.forEach(time => {
+  ].forEach(time => {
 
     const button =
       document.createElement(
@@ -777,66 +787,47 @@ function openBooking(title) {
   });
 
 
-  modal.hidden =
+  bookingModal.hidden =
     false;
 }
 
 
-/* -------------------------------------------------------
-   MODAL CLOSE
-------------------------------------------------------- */
-
-const modalClose =
-  document.getElementById(
+document
+  .getElementById(
     "modalClose"
-  );
-
-
-if (modalClose) {
-
-  modalClose.addEventListener(
+  )
+  ?.addEventListener(
     "click",
     () => {
 
-      if (modal) {
-        modal.hidden = true;
-      }
+      bookingModal.hidden =
+        true;
     }
   );
-}
 
 
-if (modal) {
-
-  modal.addEventListener(
+bookingModal
+  ?.addEventListener(
     "click",
     event => {
 
       if (
-        event.target === modal
+        event.target ===
+        bookingModal
       ) {
 
-        modal.hidden =
+        bookingModal.hidden =
           true;
       }
     }
   );
-}
 
 
-/* -------------------------------------------------------
-   CONTINUE BUTTON
-------------------------------------------------------- */
-
-const continueButton =
-  document.getElementById(
+document
+  .getElementById(
     "continueBtn"
-  );
-
-
-if (continueButton) {
-
-  continueButton.addEventListener(
+  )
+  ?.addEventListener(
     "click",
     () => {
 
@@ -852,33 +843,21 @@ if (continueButton) {
 
       showMessage(
         `${selectedTime} selected. ` +
-        `For the final demo, the conversational bot will handle the complete booking journey.`
+        `For the demo, Voxi can complete the full booking journey.`
       );
 
 
-      if (modal) {
-
-        modal.hidden =
-          true;
-      }
+      bookingModal.hidden =
+        true;
     }
   );
-}
 
 
-/* -------------------------------------------------------
-   QUICK BOOKING
-------------------------------------------------------- */
-
-const findButton =
-  document.getElementById(
+document
+  .getElementById(
     "findBtn"
-  );
-
-
-if (findButton) {
-
-  findButton.addEventListener(
+  )
+  ?.addEventListener(
     "click",
     () => {
 
@@ -888,43 +867,18 @@ if (findButton) {
         "a movie";
 
 
-      const bookingResult =
-        document.getElementById(
-          "bookingResult"
-        );
-
-
-      if (bookingResult) {
-
-        bookingResult.textContent =
-          `Searching ${
-            cinemaSelect?.value ||
-            "all cinemas"
-          } for ${selectedMovie}...`;
-      }
-
-
       openBooking(
         selectedMovie
       );
     }
   );
-}
 
 
-/* -------------------------------------------------------
-   VIEW ALL
-------------------------------------------------------- */
-
-const viewAllButton =
-  document.getElementById(
+document
+  .getElementById(
     "viewAllBtn"
-  );
-
-
-if (viewAllButton) {
-
-  viewAllButton.addEventListener(
+  )
+  ?.addEventListener(
     "click",
     () => {
 
@@ -960,7 +914,745 @@ if (viewAllButton) {
         });
     }
   );
+
+
+/* -------------------------------------------------------
+   SITE LOGIN MODAL
+------------------------------------------------------- */
+
+const loginModal =
+  document.getElementById(
+    "loginModal"
+  );
+
+const loginClose =
+  document.getElementById(
+    "loginClose"
+  );
+
+const siteLoginForm =
+  document.getElementById(
+    "siteLoginForm"
+  );
+
+const siteLoginIdentifier =
+  document.getElementById(
+    "siteLoginIdentifier"
+  );
+
+const siteLoginPin =
+  document.getElementById(
+    "siteLoginPin"
+  );
+
+const siteLoginError =
+  document.getElementById(
+    "siteLoginError"
+  );
+
+const siteLoginSubmit =
+  document.getElementById(
+    "siteLoginSubmit"
+  );
+
+
+function openSiteLogin() {
+
+  if (!loginModal) return;
+
+
+  siteLoginError.hidden =
+    true;
+
+  siteLoginError.textContent =
+    "";
+
+
+  siteLoginForm.reset();
+
+
+  loginModal.hidden =
+    false;
+
+
+  setTimeout(
+    () =>
+      siteLoginIdentifier
+        ?.focus(),
+    50
+  );
 }
+
+
+function closeSiteLogin() {
+
+  if (loginModal) {
+
+    loginModal.hidden =
+      true;
+  }
+}
+
+
+loginClose
+  ?.addEventListener(
+    "click",
+    closeSiteLogin
+  );
+
+
+loginModal
+  ?.addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target ===
+        loginModal
+      ) {
+
+        closeSiteLogin();
+      }
+    }
+  );
+
+
+/* -------------------------------------------------------
+   VERIFY CUSTOMER AGAINST EXISTING VOXI DEMO API
+
+   This does NOT replace Voxi login.
+
+   It only validates the same demo credentials
+   and gives the host page the customer name.
+------------------------------------------------------- */
+
+async function verifyDemoCustomer(
+  identifier,
+  pin
+) {
+
+  const sessionResponse =
+    await fetch(
+      `${VOXI_API_BASE}/widget/session`,
+      {
+        method: "POST",
+        headers: {
+          "content-type":
+            "application/json"
+        },
+        body: JSON.stringify({
+          language: "en",
+          modality: "text",
+          channel: "web"
+        })
+      }
+    );
+
+
+  if (!sessionResponse.ok) {
+
+    throw new Error(
+      "Could not start the customer session."
+    );
+  }
+
+
+  const session =
+    await sessionResponse.json();
+
+
+  const loginResponse =
+    await fetch(
+      `${VOXI_API_BASE}/widget/login`,
+      {
+        method: "POST",
+        headers: {
+          "content-type":
+            "application/json",
+
+          authorization:
+            `Bearer ${session.token}`
+        },
+
+        body: JSON.stringify({
+          identifier,
+          pin
+        })
+      }
+    );
+
+
+  const result =
+    await loginResponse.json();
+
+
+  if (
+    !loginResponse.ok ||
+    !result.ok ||
+    !result.customer
+  ) {
+
+    throw new Error(
+      result.error ||
+      "Could not sign in."
+    );
+  }
+
+
+  /*
+    Best-effort cleanup of the temporary
+    validation session.
+
+    The real authenticated session will
+    belong to the Voxi widget.
+  */
+
+  fetch(
+    `${VOXI_API_BASE}/widget/logout`,
+    {
+      method: "POST",
+
+      headers: {
+        "content-type":
+          "application/json",
+
+        authorization:
+          `Bearer ${
+            result.token ||
+            session.token
+          }`
+      },
+
+      body: "{}"
+    }
+  ).catch(
+    () => undefined
+  );
+
+
+  return result.customer;
+}
+
+
+/* -------------------------------------------------------
+   WAIT HELPER
+------------------------------------------------------- */
+
+function waitFor(
+  getter,
+  timeout = 10000,
+  interval = 100
+) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const started =
+        Date.now();
+
+
+      const check = () => {
+
+        let result = null;
+
+        try {
+
+          result =
+            getter();
+
+        }
+
+        catch {
+          result = null;
+        }
+
+
+        if (result) {
+
+          resolve(result);
+
+          return;
+        }
+
+
+        if (
+          Date.now() -
+          started >=
+          timeout
+        ) {
+
+          reject(
+            new Error(
+              "Timed out waiting for Voxi."
+            )
+          );
+
+          return;
+        }
+
+
+        setTimeout(
+          check,
+          interval
+        );
+      };
+
+
+      check();
+    }
+  );
+}
+
+
+/* -------------------------------------------------------
+   AUTO-LOGIN EXISTING VOXI WIDGET
+
+   Noorul's widget uses an OPEN Shadow DOM.
+
+   We open its existing login sheet,
+   fill the same credentials and submit.
+
+   No changes to Noorul's code are required.
+------------------------------------------------------- */
+
+async function syncVoxiLogin(
+  identifier,
+  pin
+) {
+
+  await waitFor(
+    () =>
+      window.Voxi &&
+      document
+        .getElementById(
+          "voxi-widget-host"
+        )
+        ?.shadowRoot
+  );
+
+
+  window.Voxi.login();
+
+
+  const shadow =
+    document
+      .getElementById(
+        "voxi-widget-host"
+      )
+      .shadowRoot;
+
+
+  const form =
+    await waitFor(
+      () =>
+        shadow.querySelector(
+          "form.authsheet"
+        )
+    );
+
+
+  const identifierInput =
+    form.querySelector(
+      'input[name="identifier"]'
+    );
+
+  const pinInput =
+    form.querySelector(
+      'input[name="pin"]'
+    );
+
+
+  if (
+    !identifierInput ||
+    !pinInput
+  ) {
+
+    throw new Error(
+      "Voxi login fields were not found."
+    );
+  }
+
+
+  identifierInput.value =
+    identifier;
+
+  identifierInput.dispatchEvent(
+    new Event(
+      "input",
+      {
+        bubbles: true
+      }
+    )
+  );
+
+
+  pinInput.value =
+    pin;
+
+  pinInput.dispatchEvent(
+    new Event(
+      "input",
+      {
+        bubbles: true
+      }
+    )
+  );
+
+
+  /*
+    Submit Noorul's existing login form.
+
+    This is what actually authenticates
+    the Voxi conversation.
+  */
+
+  if (
+    typeof form.requestSubmit ===
+    "function"
+  ) {
+
+    form.requestSubmit();
+
+  }
+
+  else {
+
+    form.dispatchEvent(
+      new Event(
+        "submit",
+        {
+          bubbles: true,
+          cancelable: true
+        }
+      )
+    );
+  }
+
+
+  /*
+    Successful login changes the widget
+    header from "Log in" to
+    "<first name> · Log out".
+  */
+
+  await waitFor(
+    () => {
+
+      const authButton =
+        shadow.querySelector(
+          ".iconbtn.auth"
+        );
+
+
+      const text =
+        authButton
+          ?.textContent
+          ?.trim() ||
+        "";
+
+
+      return /log out|خروج/i.test(
+        text
+      );
+    },
+    12000
+  );
+
+
+  return true;
+}
+
+
+/* -------------------------------------------------------
+   WEBSITE + VOXI SIGN IN
+------------------------------------------------------- */
+
+siteLoginForm
+  ?.addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+
+      const identifier =
+        siteLoginIdentifier
+          .value
+          .trim();
+
+      const pin =
+        siteLoginPin
+          .value
+          .trim();
+
+
+      if (
+        !identifier ||
+        !pin
+      ) {
+
+        return;
+      }
+
+
+      siteLoginError.hidden =
+        true;
+
+      siteLoginSubmit.disabled =
+        true;
+
+      siteLoginSubmit.textContent =
+        "Signing in…";
+
+
+      try {
+
+        /*
+          Step 1:
+          validate customer and obtain
+          display information for website.
+        */
+
+        const customer =
+          await verifyDemoCustomer(
+            identifier,
+            pin
+          );
+
+
+        /*
+          Step 2:
+          sign the SAME customer into
+          Noorul's actual Voxi widget.
+        */
+
+        await syncVoxiLogin(
+          identifier,
+          pin
+        );
+
+
+        /*
+          Only mark the website logged in
+          after BOTH have succeeded.
+        */
+
+        hostCustomer =
+          customer;
+
+
+        loginButton.textContent =
+          `Hi, ${customer.firstName}`;
+
+        loginButton.classList.add(
+          "account-signed-in"
+        );
+
+        loginButton.title =
+          "Signed in to VOX and Voxi";
+
+
+        closeSiteLogin();
+
+
+        showMessage(
+          `Welcome ${customer.firstName}. ` +
+          `Voxi now recognises your customer profile.`
+        );
+
+
+        /*
+          Credentials are deliberately
+          NOT stored anywhere.
+        */
+
+        siteLoginPin.value =
+          "";
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "VOX/Voxi login failed:",
+          error
+        );
+
+
+        siteLoginError.textContent =
+          error.message ||
+          "Could not sign in.";
+
+        siteLoginError.hidden =
+          false;
+      }
+
+      finally {
+
+        siteLoginSubmit.disabled =
+          false;
+
+        siteLoginSubmit.textContent =
+          "Sign in";
+      }
+    }
+  );
+
+
+/* -------------------------------------------------------
+   WEBSITE + VOXI LOGOUT
+------------------------------------------------------- */
+
+async function signOutEverywhere() {
+
+  try {
+
+    if (window.Voxi) {
+
+      window.Voxi.logout();
+    }
+
+  }
+
+  catch (error) {
+
+    console.warn(
+      "Voxi logout warning:",
+      error
+    );
+  }
+
+
+  hostCustomer =
+    null;
+
+
+  loginButton.textContent =
+    "Sign in";
+
+  loginButton.classList.remove(
+    "account-signed-in"
+  );
+
+  loginButton.title =
+    "";
+
+
+  showMessage(
+    "You are now browsing as a guest."
+  );
+}
+
+
+/* -------------------------------------------------------
+   HEADER LOGIN BUTTON
+------------------------------------------------------- */
+
+loginButton
+  ?.addEventListener(
+    "click",
+    async () => {
+
+      if (!hostCustomer) {
+
+        openSiteLogin();
+
+        return;
+      }
+
+
+      const confirmed =
+        window.confirm(
+          `Sign out ${hostCustomer.firstName}?`
+        );
+
+
+      if (confirmed) {
+
+        await signOutEverywhere();
+      }
+    }
+  );
+
+
+/* -------------------------------------------------------
+   SEARCH
+------------------------------------------------------- */
+
+document
+  .getElementById(
+    "searchBtn"
+  )
+  ?.addEventListener(
+    "click",
+    () => {
+
+      const query =
+        window.prompt(
+          "Search movies"
+        );
+
+
+      if (!query) return;
+
+
+      const match =
+        movies.find(movie =>
+          movie.title
+            .toLowerCase()
+            .includes(
+              query
+                .toLowerCase()
+            )
+        );
+
+
+      if (match) {
+
+        if (movieSelect) {
+
+          movieSelect.value =
+            match.title;
+        }
+
+
+        document
+          .getElementById(
+            "movies"
+          )
+          ?.scrollIntoView({
+            behavior: "smooth"
+          });
+
+      }
+
+      else {
+
+        showMessage(
+          "No matching movie found."
+        );
+      }
+    }
+  );
+
+
+/* -------------------------------------------------------
+   MOBILE MENU DEMO
+------------------------------------------------------- */
+
+document
+  .getElementById(
+    "menuBtn"
+  )
+  ?.addEventListener(
+    "click",
+    () => {
+
+      window.alert(
+        "Movies • Experiences • Offers • Food & Drinks"
+      );
+    }
+  );
 
 
 /* -------------------------------------------------------
@@ -980,16 +1672,6 @@ function showMessage(message) {
     bookingResult.textContent =
       message;
   }
-
-
-  document
-    .getElementById(
-      "booking"
-    )
-    ?.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
 }
 
 
