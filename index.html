@@ -3,27 +3,32 @@
 
 <head>
   <meta charset="utf-8" />
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1"
   />
 
-<meta
-  name="color-scheme"
-  content="light dark"
-/>
+  <!--
+    Allow native browser controls to follow
+    Light / Dark / System appearance.
+  -->
+  <meta
+    name="color-scheme"
+    content="light dark"
+  />
 
-<meta
-  name="theme-color"
-  media="(prefers-color-scheme: light)"
-  content="#00a9ce"
-/>
+  <meta
+    name="theme-color"
+    media="(prefers-color-scheme: light)"
+    content="#00a9ce"
+  />
 
-<meta
-  name="theme-color"
-  media="(prefers-color-scheme: dark)"
-  content="#171b20"
-/>
+  <meta
+    name="theme-color"
+    media="(prefers-color-scheme: dark)"
+    content="#171b20"
+  />
 
   <title>VOX Cinemas UAE</title>
 
@@ -85,7 +90,6 @@
       </a>
 
 
-
       <!-- MAIN NAVIGATION -->
 
       <nav
@@ -116,11 +120,9 @@
       </nav>
 
 
-
       <!-- HEADER ACTIONS -->
 
       <div class="header-actions">
-
 
         <button
           class="header-icon"
@@ -157,7 +159,6 @@
         >
           ☰
         </button>
-
 
       </div>
 
@@ -196,7 +197,6 @@
       </div>
 
 
-
       <div class="booking-control">
 
         <label for="movieSelect">
@@ -214,6 +214,17 @@
       </div>
 
 
+      <!--
+        Kept for compatibility with B2 app.js.
+        Hidden in the replica UI if not required.
+      -->
+
+      <select
+        id="dateSelect"
+        hidden
+        aria-hidden="true"
+      ></select>
+
 
       <button
         class="vox-book-btn"
@@ -222,7 +233,6 @@
       >
         FIND TIMES AND BOOK
       </button>
-
 
     </div>
 
@@ -241,11 +251,10 @@
 
 
     <!-- =====================================================
-         HERO / PROMOTIONAL CAROUSEL
+         HERO
     ====================================================== -->
 
     <section class="hero">
-
 
       <div class="hero-backdrop"></div>
 
@@ -325,7 +334,7 @@
 
 
 
-        <!-- HERO POSTER -->
+        <!-- HERO ART -->
 
         <div
           class="hero-visual"
@@ -362,7 +371,6 @@
       id="movies"
     >
 
-
       <div class="section-shell">
 
 
@@ -375,9 +383,10 @@
               What's On
             </h2>
 
+
             <!--
-              Kept for B2/B3 app.js compatibility.
-              Hidden visually by CSS.
+              Required by existing app.js.
+              Hidden visually in B3 CSS.
             -->
 
             <div class="live-row">
@@ -388,6 +397,7 @@
               >
                 Loading movie catalogue…
               </span>
+
 
               <span
                 id="liveUpdated"
@@ -423,13 +433,13 @@
 
 
 
-        <!-- App.js creates filters here -->
+        <!-- app.js dynamically creates language filters -->
 
         <div class="movie-filters"></div>
 
 
 
-        <!-- App.js creates movie cards here -->
+        <!-- app.js dynamically creates movie cards -->
 
         <div
           class="movie-grid"
@@ -462,7 +472,6 @@
       id="experiences"
     >
 
-
       <div class="section-shell">
 
 
@@ -486,9 +495,12 @@
 
           <!-- IMAX -->
 
-          <article class="experience-card experience-imax">
+          <article
+            class="experience-card experience-imax"
+          >
 
             <div class="experience-overlay"></div>
+
 
             <div class="experience-content">
 
@@ -517,9 +529,12 @@
 
           <!-- THEATRE -->
 
-          <article class="experience-card experience-theatre">
+          <article
+            class="experience-card experience-theatre"
+          >
 
             <div class="experience-overlay"></div>
+
 
             <div class="experience-content">
 
@@ -548,9 +563,12 @@
 
           <!-- 4DX -->
 
-          <article class="experience-card experience-4dx">
+          <article
+            class="experience-card experience-4dx"
+          >
 
             <div class="experience-overlay"></div>
+
 
             <div class="experience-content">
 
@@ -579,9 +597,12 @@
 
           <!-- KIDS -->
 
-          <article class="experience-card experience-kids">
+          <article
+            class="experience-card experience-kids"
+          >
 
             <div class="experience-overlay"></div>
+
 
             <div class="experience-content">
 
@@ -624,7 +645,6 @@
       id="food"
     >
 
-
       <div class="food-inner">
 
 
@@ -657,21 +677,28 @@
 
         <div class="food-art">
 
+
           <div class="popcorn-bucket">
 
+
             <div class="popcorn">
+
               <span></span>
               <span></span>
               <span></span>
               <span></span>
               <span></span>
+
             </div>
+
 
             <strong>
               VOX
             </strong>
 
+
           </div>
+
 
         </div>
 
@@ -690,7 +717,6 @@
       class="offers-section"
       id="offers"
     >
-
 
       <div class="section-shell">
 
@@ -776,7 +802,6 @@
       id="cinemas"
     >
 
-
       <div class="section-shell">
 
 
@@ -786,9 +811,11 @@
             FIND US
           </span>
 
+
           <h2>
             Find your nearest VOX Cinema
           </h2>
+
 
           <p>
             VOX Cinemas locations across
@@ -802,6 +829,7 @@
           >
             FIND A CINEMA
           </a>
+
 
         </div>
 
@@ -845,6 +873,7 @@
           Great movies.
           Great experiences.
         </p>
+
 
       </div>
 
@@ -941,8 +970,8 @@
 
 
   <!-- =====================================================
-       MOCK WEBSITE BOOKING MODAL
-       Required by existing app.js
+       WEBSITE BOOKING MODAL
+       REQUIRED BY B2 APP.JS
   ====================================================== -->
 
   <div
@@ -950,7 +979,6 @@
     id="modal"
     hidden
   >
-
 
     <div class="modal-card">
 
@@ -994,7 +1022,8 @@
 
 
   <!-- =====================================================
-       B2/B3 SITE LOGIN MODAL
+       WEBSITE LOGIN MODAL
+       B2 AUTO-LOGIN BRIDGE
   ====================================================== -->
 
   <div
@@ -1002,7 +1031,6 @@
     id="loginModal"
     hidden
   >
-
 
     <div class="modal-card login-modal-card">
 
@@ -1051,6 +1079,7 @@
             Email, mobile number or SHARE member ID
           </span>
 
+
           <input
             id="siteLoginIdentifier"
             name="identifier"
@@ -1069,6 +1098,7 @@
           <span>
             PIN
           </span>
+
 
           <input
             id="siteLoginPin"
@@ -1110,6 +1140,7 @@
 
       </form>
 
+
     </div>
 
   </div>
@@ -1119,8 +1150,8 @@
   <!-- =====================================================
        VOXI CONFIGURATION
 
-       B2/B3 LOCKED SETTING:
-       DO NOT ADD /api TO apiBase
+       LOCKED:
+       DO NOT ADD /api
   ====================================================== -->
 
   <script>
@@ -1143,8 +1174,7 @@
 
 
   <!-- =====================================================
-       EXISTING B2 APP.JS
-       DO NOT CHANGE FOR B3
+       EXISTING B2 APPLICATION LOGIC
   ====================================================== -->
 
   <script src="app.js"></script>
@@ -1152,8 +1182,7 @@
 
 
   <!-- =====================================================
-       NOORUL'S REMOTE VOXI WIDGET
-       DO NOT MODIFY
+       NOORUL'S VOXI WIDGET
   ====================================================== -->
 
   <script
@@ -1161,85 +1190,668 @@
     charset="utf-8"
     defer
   ></script>
-<!-- B3.1 - Rename Voxi launcher -->
-<script>
-  (function customiseVoxiLauncher() {
 
-    const launcherLabel = "Ask us";
-    let observer = null;
 
-    function applyLabel(shadowRoot) {
 
-      const launcher =
-        shadowRoot.querySelector(".launcher");
+  <!-- =====================================================
+       B3.3 VOXI HOST CUSTOMISATION
 
-      const label =
-        shadowRoot.querySelector(".launcher .lbl");
+       - Ask Voxi -> Ask us
+       - Widget follows browser/system Dark Mode
+       - Does not modify bot logic
+       - Does not modify Railway
+  ====================================================== -->
 
-      if (label && label.textContent !== launcherLabel) {
-        label.textContent = launcherLabel;
-      }
+  <script>
 
-      if (
-        launcher &&
-        launcher.getAttribute("aria-label") !== launcherLabel
-      ) {
-        launcher.setAttribute(
-          "aria-label",
-          launcherLabel
-        );
-      }
-    }
+    (function customiseVoxi() {
 
-    function attach() {
 
-      const host =
-        document.getElementById("voxi-widget-host");
+      const launcherLabel =
+        "Ask us";
 
-      const shadowRoot =
-        host?.shadowRoot;
 
-      if (!shadowRoot) {
-        return false;
-      }
+      /*
+        CSS is injected into Noorul's
+        OPEN Shadow DOM.
 
-      applyLabel(shadowRoot);
+        The media query means the widget
+        automatically follows the same
+        browser / operating-system appearance
+        as the VOX website.
+      */
 
-      observer =
-        new MutationObserver(() => {
-          applyLabel(shadowRoot);
-        });
+      const darkThemeCss = `
 
-      observer.observe(
-        shadowRoot,
-        {
-          childList: true,
-          subtree: true
-        }
-      );
+        @media (prefers-color-scheme: dark) {
 
-      return true;
-    }
 
-    if (!attach()) {
+          :host {
 
-      const timer =
-        setInterval(() => {
+            color-scheme: dark;
 
-          if (attach()) {
-            clearInterval(timer);
+            --bg: #111418;
+            --bg-2: #181c21;
+
+            --panel: #171b20;
+            --panel-2: #1d2227;
+
+            --ink: #f4f6f8;
+            --ink-2: #d8dde1;
+
+            --muted: #9ba4ad;
+
+            --line: #343a40;
+            --line-2: #454c53;
+
+            --vox-blue-soft: #12333c;
+            --vox-blue-tint: #1a4a55;
+
+            --body-glow: #0d2730;
+
+            --shadow:
+              0 20px 60px
+              rgba(0, 0, 0, 0.48);
+
           }
 
-        }, 100);
 
-      setTimeout(
-        () => clearInterval(timer),
-        10000
-      );
-    }
+          /* MAIN WIDGET */
 
-  })();
-</script>
+          .widget {
+
+            background:
+              var(--panel);
+
+            color:
+              var(--ink);
+
+          }
+
+
+          .widget-body {
+
+            background:
+
+              radial-gradient(
+                900px 300px
+                at 50% -80px,
+                var(--body-glow) 0%,
+                var(--panel-2) 70%
+              );
+
+          }
+
+
+          /* MESSAGES */
+
+          .msg.agent,
+          .msg.human {
+
+            background:
+              #252a30;
+
+            color:
+              #f4f6f8;
+
+            border-color:
+              var(--line);
+
+          }
+
+
+          .sysnote {
+
+            background:
+              rgba(
+                37,
+                42,
+                48,
+                0.92
+              );
+
+            color:
+              #aeb6bd;
+
+            border-color:
+              var(--line);
+
+          }
+
+
+          /* START AREA */
+
+          .start h3 {
+            color: #f5f6f7;
+          }
+
+
+          .start p {
+            color: var(--muted);
+          }
+
+
+          /* CHIPS */
+
+          .chip,
+          .daytabs button,
+          .time {
+
+            background:
+              #252a30;
+
+            color:
+              #e4e8eb;
+
+            border-color:
+              var(--line-2);
+
+          }
+
+
+          .chip:hover,
+          .time:hover:not(:disabled) {
+
+            border-color:
+              var(--vox-blue);
+
+          }
+
+
+          /* CONTENT CARDS */
+
+          .cards,
+          .movie,
+          .sheet,
+          .ticket,
+          .fnbcard,
+          .bankoffers .bank,
+          .newcard {
+
+            background:
+              #1d2227;
+
+            color:
+              #f2f4f5;
+
+            border-color:
+              var(--line);
+
+          }
+
+
+          .movie .t b,
+          .fnbcard .b > b,
+          .fnbcard .price,
+          .ticket .t-film,
+          .ticket .t-collect,
+          .reviewpay h5,
+          .reviewpay .due b {
+
+            color:
+              #f3f5f6;
+
+          }
+
+
+          /* SHOWTIMES */
+
+          .showgroup .sg-cinema {
+
+            color:
+              #e5e9ec;
+
+          }
+
+
+          .time {
+
+            background:
+              #252a30;
+
+          }
+
+
+          /* SEATS */
+
+          .seat {
+
+            background:
+              #252a30;
+
+            border-color:
+              #505860;
+
+          }
+
+
+          .seat.premium {
+
+            background:
+              #40391f;
+
+            border-color:
+              #b99b36;
+
+          }
+
+
+          .seat.sold {
+
+            background:
+              #454b50;
+
+            border-color:
+              #454b50;
+
+          }
+
+
+          .seat.held {
+
+            background:
+              #583936;
+
+            border-color:
+              #583936;
+
+          }
+
+
+          /* PAYMENT */
+
+          .method {
+
+            background:
+              #252a30;
+
+            color:
+              #f1f3f5;
+
+            border-color:
+              var(--line);
+
+          }
+
+
+          .sheet input,
+          .row3 input {
+
+            background:
+              #252a30;
+
+            color:
+              #ffffff;
+
+            border-color:
+              var(--line-2);
+
+          }
+
+
+          .reviewpay .steps span {
+
+            background:
+              #252a30;
+
+            color:
+              #aab2b9;
+
+          }
+
+
+          /* LOCATION */
+
+          .locbar,
+          .locsheet {
+
+            background:
+              #171b20;
+
+            color:
+              #f1f3f5;
+
+            border-color:
+              var(--line);
+
+          }
+
+
+          .locsheet .chips button {
+
+            background:
+              #252a30;
+
+            color:
+              #e1e5e8;
+
+            border-color:
+              var(--line);
+
+          }
+
+
+          /* LOGIN */
+
+          .authsheet {
+
+            background:
+              #17252b;
+
+            border-color:
+              var(--line);
+
+          }
+
+
+          .authsheet b {
+
+            color:
+              #f5f6f7;
+
+          }
+
+
+          .authsheet input {
+
+            background:
+              #252a30;
+
+            color:
+              #ffffff;
+
+            border-color:
+              var(--line-2);
+
+          }
+
+
+          /* VOICE */
+
+          .voicestage {
+
+            background:
+              linear-gradient(
+                180deg,
+                #20262c,
+                #181c21
+              );
+
+            border-color:
+              var(--line);
+
+          }
+
+
+          /* COMPOSER */
+
+          .widget-foot,
+          .powered {
+
+            background:
+              #171b20;
+
+            border-color:
+              var(--line);
+
+          }
+
+
+          .composer {
+
+            background:
+              #252a30;
+
+            border-color:
+              var(--line-2);
+
+          }
+
+
+          .composer:focus-within {
+
+            background:
+              #252a30;
+
+          }
+
+
+          .composer input {
+
+            color:
+              #ffffff;
+
+          }
+
+
+          .composer input::placeholder {
+
+            color:
+              #87919a;
+
+          }
+
+
+          .iconbtn.mic {
+
+            background:
+              #252a30;
+
+            color:
+              #e7eaec;
+
+            border-color:
+              var(--line-2);
+
+          }
+
+
+          /* LOGIN / SHARE NUDGES */
+
+          .shareblock,
+          .loginnudge {
+
+            background:
+              #17252b;
+
+            border-color:
+              #27515b;
+
+          }
+
+
+          .shareblock .b,
+          .loginnudge span {
+
+            color:
+              #d7dcdf;
+
+          }
+
+
+        }
+
+      `;
+
+
+
+      function applyCustomisation() {
+
+
+        const host =
+          document.getElementById(
+            "voxi-widget-host"
+          );
+
+
+        const shadow =
+          host?.shadowRoot;
+
+
+        if (!shadow) {
+
+          return false;
+
+        }
+
+
+
+        /* -----------------------------------------------
+           INSTALL DARK-MODE CSS ONCE
+        ------------------------------------------------ */
+
+
+        if (
+          !shadow.getElementById(
+            "voxi-system-theme"
+          )
+        ) {
+
+
+          const style =
+            document.createElement(
+              "style"
+            );
+
+
+          style.id =
+            "voxi-system-theme";
+
+
+          style.textContent =
+            darkThemeCss;
+
+
+          shadow.appendChild(
+            style
+          );
+
+        }
+
+
+
+        /* -----------------------------------------------
+           RENAME LAUNCHER
+        ------------------------------------------------ */
+
+
+        function updateLauncher() {
+
+
+          const launcher =
+            shadow.querySelector(
+              ".launcher"
+            );
+
+
+          const label =
+            shadow.querySelector(
+              ".launcher .lbl"
+            );
+
+
+          if (
+            label &&
+            label.textContent !==
+              launcherLabel
+          ) {
+
+            label.textContent =
+              launcherLabel;
+
+          }
+
+
+          if (launcher) {
+
+            launcher.setAttribute(
+              "aria-label",
+              launcherLabel
+            );
+
+          }
+
+        }
+
+
+        updateLauncher();
+
+
+
+        /*
+          React may rebuild the launcher
+          when opening / closing the widget.
+
+          Keep "Ask us" synchronised.
+        */
+
+        const observer =
+          new MutationObserver(
+            updateLauncher
+          );
+
+
+        observer.observe(
+          shadow,
+          {
+            childList: true,
+            subtree: true
+          }
+        );
+
+
+        return true;
+
+      }
+
+
+
+      /*
+        Noorul's widget loads asynchronously.
+
+        Poll only until the Shadow DOM exists.
+      */
+
+      if (!applyCustomisation()) {
+
+
+        const timer =
+          setInterval(
+            () => {
+
+
+              if (
+                applyCustomisation()
+              ) {
+
+                clearInterval(
+                  timer
+                );
+
+              }
+
+
+            },
+            100
+          );
+
+
+        setTimeout(
+          () => {
+
+            clearInterval(
+              timer
+            );
+
+          }, 10000);
+
+      }
+
+
+    })();
+
+  </script>
+
 
 </body>
 
