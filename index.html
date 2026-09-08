@@ -1149,7 +1149,85 @@
     charset="utf-8"
     defer
   ></script>
+<!-- B3.1 - Rename Voxi launcher -->
+<script>
+  (function customiseVoxiLauncher() {
 
+    const launcherLabel = "Ask us";
+    let observer = null;
+
+    function applyLabel(shadowRoot) {
+
+      const launcher =
+        shadowRoot.querySelector(".launcher");
+
+      const label =
+        shadowRoot.querySelector(".launcher .lbl");
+
+      if (label && label.textContent !== launcherLabel) {
+        label.textContent = launcherLabel;
+      }
+
+      if (
+        launcher &&
+        launcher.getAttribute("aria-label") !== launcherLabel
+      ) {
+        launcher.setAttribute(
+          "aria-label",
+          launcherLabel
+        );
+      }
+    }
+
+    function attach() {
+
+      const host =
+        document.getElementById("voxi-widget-host");
+
+      const shadowRoot =
+        host?.shadowRoot;
+
+      if (!shadowRoot) {
+        return false;
+      }
+
+      applyLabel(shadowRoot);
+
+      observer =
+        new MutationObserver(() => {
+          applyLabel(shadowRoot);
+        });
+
+      observer.observe(
+        shadowRoot,
+        {
+          childList: true,
+          subtree: true
+        }
+      );
+
+      return true;
+    }
+
+    if (!attach()) {
+
+      const timer =
+        setInterval(() => {
+
+          if (attach()) {
+            clearInterval(timer);
+          }
+
+        }, 100);
+
+      setTimeout(
+        () => clearInterval(timer),
+        10000
+      );
+    }
+
+  })();
+</script>
 
 </body>
 
