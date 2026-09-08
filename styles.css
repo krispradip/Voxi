@@ -3106,3 +3106,382 @@ img {
   }
 
 }
+/* ==========================================================
+   VOXI-DEMO-B3.2
+   SYSTEM / BROWSER DARK MODE
+
+   Automatically follows:
+   prefers-color-scheme: dark
+========================================================== */
+
+@media (prefers-color-scheme: dark) {
+
+  :root {
+    --page: #111418;
+    --page-soft: #181c21;
+
+    --text: #f1f3f5;
+    --muted: #9ba4ad;
+
+    --line: #343a40;
+
+    --charcoal: #20252a;
+    --charcoal-dark: #171b20;
+
+    --navy: #071321;
+    --navy-mid: #0d233d;
+  }
+
+
+  /* -------------------------------------------------------
+     GLOBAL
+  ------------------------------------------------------- */
+
+  body {
+    background: #111418;
+    color: #f1f3f5;
+  }
+
+
+  /* -------------------------------------------------------
+     HEADER
+  ------------------------------------------------------- */
+
+  .site-header {
+    background: #181c21;
+
+    border-bottom-color: #30353b;
+  }
+
+  .brand-lockup strong,
+  .brand-lockup small {
+    color: #ffffff;
+  }
+
+  .nav-links a {
+    color: #e5e8eb;
+  }
+
+  .nav-links a:hover {
+    color: var(--vox-blue);
+  }
+
+  .header-icon,
+  .language-btn,
+  .menu-btn {
+    color: #e5e8eb;
+  }
+
+  .search-shape {
+    border-color: #e5e8eb;
+  }
+
+  .search-shape::after {
+    background: #e5e8eb;
+  }
+
+
+  /* -------------------------------------------------------
+     BOOKING BAR
+  ------------------------------------------------------- */
+
+  .booking-bar {
+    background: #252a2f;
+  }
+
+  .booking-control select {
+    background: #343a40;
+    color: #f4f5f6;
+
+    border: 1px solid #464d54;
+
+    color-scheme: dark;
+  }
+
+  .booking-control select option {
+    background: #343a40;
+    color: #ffffff;
+  }
+
+
+  /* -------------------------------------------------------
+     WHAT'S ON
+  ------------------------------------------------------- */
+
+  .movies-section {
+    background: #111418;
+  }
+
+  .movies-heading {
+    border-bottom-color: #343a40;
+  }
+
+  .movies-heading h2,
+  .experience-heading h2,
+  .standard-heading h2,
+  .find-us-copy h2 {
+    color: #f5f6f7;
+  }
+
+  .movie-tab {
+    color: #9099a2;
+  }
+
+  .movie-tab.active {
+    color: var(--vox-blue);
+  }
+
+
+  /* -------------------------------------------------------
+     FILTER CHIPS
+  ------------------------------------------------------- */
+
+  .chip {
+    background: #1d2227;
+
+    border-color: #3b4249;
+
+    color: #bcc3c9;
+  }
+
+  .chip:hover {
+    border-color: var(--vox-blue);
+    color: var(--vox-blue);
+  }
+
+  .chip.active {
+    background: var(--vox-blue);
+
+    border-color: var(--vox-blue);
+
+    color: #ffffff;
+  }
+
+
+  /* -------------------------------------------------------
+     MOVIE CARDS
+  ------------------------------------------------------- */
+
+  .movie-card {
+    background: #111418;
+  }
+
+  .poster-wrap {
+    background: #252a30;
+  }
+
+  .movie-body h3 {
+    color: #f3f5f6;
+  }
+
+  .meta {
+    color: #8f989f;
+  }
+
+  .details-card {
+    background: #1d2227;
+
+    border-color: #424950;
+
+    color: #e1e5e8;
+  }
+
+  .details-card:hover {
+    border-color: var(--vox-blue);
+
+    color: var(--vox-blue);
+  }
+
+  .view-all-btn {
+    background: #171b20;
+
+    border-color: #6c747c;
+
+    color: #e7eaec;
+  }
+
+  .view-all-btn:hover {
+    background: #e7eaec;
+
+    color: #171b20;
+  }
+
+  .empty-state {
+    color: #9ba4ad;
+  }
+
+
+  /* -------------------------------------------------------
+     EXPERIENCE SECTION
+  ------------------------------------------------------- */
+
+  .experience-section {
+    background: #181c21;
+  }
+
+  .experience-heading p {
+    color: #9aa3ab;
+  }
+
+
+  /* -------------------------------------------------------
+     FOOD SECTION
+
+     Already dark, only minor adjustment.
+  ------------------------------------------------------- */
+
+  .food-section {
+    background: #15191e;
+  }
+
+
+  /* -------------------------------------------------------
+     OFFERS
+  ------------------------------------------------------- */
+
+  .offers-section {
+    background: #111418;
+  }
+
+
+  /* -------------------------------------------------------
+     FIND US
+  ------------------------------------------------------- */
+
+  .find-us-section {
+    background: #181c21;
+
+    border-top-color: #30363c;
+  }
+
+  .find-us-copy p {
+    color: #a0a8af;
+  }
+
+
+  /* -------------------------------------------------------
+     FOOTER
+  ------------------------------------------------------- */
+
+  .site-footer {
+    background: #0c0f12;
+  }
+
+
+  /* -------------------------------------------------------
+     MODALS
+  ------------------------------------------------------- */
+
+  .modal {
+    background:
+      rgba(
+        0,
+        0,
+        0,
+        0.78
+      );
+  }
+
+  .modal-card {
+    background: #1c2025;
+
+    color: #f4f5f6;
+
+    border: 1px solid #343a40;
+  }
+
+  .modal-card h3 {
+    color: #ffffff;
+  }
+
+  .modal-card p {
+    color: #a9b0b6;
+  }
+
+  .modal-close {
+    color: #bbc1c6;
+  }
+
+
+  /* -------------------------------------------------------
+     SHOWTIMES
+  ------------------------------------------------------- */
+
+  .showtime {
+    background: #252a30;
+
+    border-color: #42494f;
+
+    color: #eef0f2;
+  }
+
+  .showtime:hover,
+  .showtime.selected {
+    background: var(--vox-blue);
+
+    border-color: var(--vox-blue);
+
+    color: #ffffff;
+  }
+
+
+  /* -------------------------------------------------------
+     LOGIN
+  ------------------------------------------------------- */
+
+  .login-logo {
+    color: #ffffff;
+  }
+
+  .login-field span {
+    color: #d3d7da;
+  }
+
+  .login-field input {
+    background: #252a30;
+
+    border-color: #434a50;
+
+    color: #ffffff;
+
+    color-scheme: dark;
+  }
+
+  .login-field input::placeholder {
+    color: #7f8991;
+  }
+
+  .login-field input:focus {
+    border-color: var(--vox-blue);
+
+    box-shadow:
+      0 0 0 2px
+      rgba(
+        0,
+        169,
+        206,
+        0.14
+      );
+  }
+
+  .login-error {
+    background: #3b2022;
+
+    color: #ffaaa3;
+  }
+
+  .login-hint {
+    color: #7f8991 !important;
+  }
+
+
+  /* -------------------------------------------------------
+     BROWSER FORM CONTROLS
+  ------------------------------------------------------- */
+
+  input,
+  select {
+    color-scheme: dark;
+  }
+
+}
