@@ -1,0 +1,43 @@
+name: Refresh VOX live catalogue
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "17 */3 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Refresh VOX catalogue
+        run: python scripts/update_vox.py
+
+      - name: Commit updated catalogue
+        run: |
+          if git diff --quiet -- data/movies.json; then
+            echo "No catalogue changes"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/movies.json
+          git commit -m "Refresh VOX live catalogue"
+          git push
