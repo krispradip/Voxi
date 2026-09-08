@@ -112,10 +112,18 @@
   <div class="modal" id="modal" hidden><div class="modal-card"><button class="modal-close" id="modalClose">×</button><h3 id="modalTitle">Book your movie</h3><p id="modalCopy"></p><div id="showtimes" class="showtimes"></div><button class="primary full" id="continueBtn">Continue</button></div></div>
   <script src="app.js"></script>
 
+<!-- VOXI Digital Concierge configuration -->
+<script>
+  window.VoxiConfig = {
+    apiBase: "https://concierge-api-production-3d90.up.railway.app/api",
+    lang: "en",
+    open: true
+  };
+</script>
+
+<!-- VOXI Digital Concierge widget -->
 <script
   src="https://voxi-demo.up.railway.app/embed/voxi.js"
-  data-api="https://concierge-api-production-3d90.up.railway.app/api"
-  data-open="true"
   charset="utf-8"
   defer>
 </script>
