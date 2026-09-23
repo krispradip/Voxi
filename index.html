@@ -2,48 +2,48 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
 
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1"
-  />
+  >
 
-  <!--
-    Allow native browser controls to follow
-    Light / Dark / System appearance.
-  -->
   <meta
     name="color-scheme"
     content="light dark"
-  />
+  >
 
   <meta
     name="theme-color"
     media="(prefers-color-scheme: light)"
     content="#00a9ce"
-  />
+  >
 
   <meta
     name="theme-color"
     media="(prefers-color-scheme: dark)"
-    content="#171b20"
-  />
+    content="#111418"
+  >
+
+  <meta
+    name="description"
+    content="VOX Cinemas UAE"
+  >
 
   <title>VOX Cinemas UAE</title>
 
   <link
     rel="stylesheet"
     href="styles.css"
-  />
+  >
 </head>
 
 
 <body>
 
-
   <!-- =====================================================
-       TOP BRAND LINE
+       TOP ACCENT
   ====================================================== -->
 
   <div class="brand-line"></div>
@@ -57,21 +57,21 @@
 
     <div class="header-inner">
 
-
-      <!-- VOX LOGO -->
+      <!-- LOGO -->
 
       <a
         class="brand"
-        href="#"
+        href="/"
         aria-label="VOX Cinemas home"
       >
 
-        <span class="vox-symbol">
-
+        <span
+          class="vox-symbol"
+          aria-hidden="true"
+        >
           <span class="vox-arch arch-one"></span>
           <span class="vox-arch arch-two"></span>
           <span class="vox-arch arch-three"></span>
-
         </span>
 
 
@@ -90,7 +90,7 @@
       </a>
 
 
-      <!-- MAIN NAVIGATION -->
+      <!-- PRIMARY NAVIGATION -->
 
       <nav
         class="nav-links"
@@ -101,20 +101,20 @@
           MOVIES
         </a>
 
-        <a href="#food">
-          FOOD &amp; DRINKS
+        <a href="#cinemas">
+          CINEMAS
         </a>
 
         <a href="#experiences">
-          WAYS TO WATCH
+          EXPERIENCES
         </a>
 
         <a href="#offers">
           OFFERS
         </a>
 
-        <a href="#cinemas">
-          FIND US
+        <a href="#food">
+          FOOD &amp; DRINKS
         </a>
 
       </nav>
@@ -128,7 +128,7 @@
           class="header-icon"
           id="searchBtn"
           type="button"
-          aria-label="Search"
+          aria-label="Search movies"
         >
           <span class="search-shape"></span>
         </button>
@@ -137,6 +137,7 @@
         <button
           class="language-btn"
           type="button"
+          aria-label="Switch language"
         >
           العربية
         </button>
@@ -147,7 +148,7 @@
           id="loginBtn"
           type="button"
         >
-          Sign in
+          SIGN IN
         </button>
 
 
@@ -155,9 +156,11 @@
           class="menu-btn"
           id="menuBtn"
           type="button"
-          aria-label="Menu"
+          aria-label="Open menu"
         >
-          ☰
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
 
       </div>
@@ -167,9 +170,41 @@
   </header>
 
 
+  <!-- =====================================================
+       MOBILE NAVIGATION
+  ====================================================== -->
+
+  <div
+    class="mobile-nav"
+    id="mobileNav"
+    hidden
+  >
+
+    <a href="#movies">
+      MOVIES
+    </a>
+
+    <a href="#cinemas">
+      CINEMAS
+    </a>
+
+    <a href="#experiences">
+      EXPERIENCES
+    </a>
+
+    <a href="#offers">
+      OFFERS
+    </a>
+
+    <a href="#food">
+      FOOD &amp; DRINKS
+    </a>
+
+  </div>
+
 
   <!-- =====================================================
-       QUICK BOOKING BAR
+       QUICK BOOKING
   ====================================================== -->
 
   <section
@@ -178,7 +213,6 @@
   >
 
     <div class="booking-inner">
-
 
       <div class="booking-control">
 
@@ -215,8 +249,8 @@
 
 
       <!--
-        Kept for compatibility with B2 app.js.
-        Hidden in the replica UI if not required.
+        Required by existing application logic.
+        We keep it hidden on the main booking bar.
       -->
 
       <select
@@ -246,7 +280,6 @@
   </section>
 
 
-
   <main>
 
 
@@ -262,50 +295,57 @@
       <div class="hero-inner">
 
 
-        <!-- HERO COPY -->
-
         <div class="hero-copy">
 
-          <div class="hero-kicker">
-            IN CINEMAS NOW
-          </div>
+          <span class="hero-kicker">
+            NOW SHOWING
+          </span>
 
 
           <h1>
             THE
-            <span>ODYSSEY</span>
+            <span>
+              ODYSSEY
+            </span>
           </h1>
 
 
           <div class="hero-meta">
 
-            <span>15+</span>
+            <span>
+              15+
+            </span>
 
             <span class="meta-divider"></span>
 
-            <span>EPIC ADVENTURE</span>
+            <span>
+              ENGLISH
+            </span>
 
             <span class="meta-divider"></span>
 
-            <span>IMAX</span>
+            <span>
+              IMAX
+            </span>
 
           </div>
 
 
           <p>
-            Experience Christopher Nolan's
-            epic adventure on the big screen.
+            Experience an epic cinematic adventure
+            on the big screen at VOX Cinemas.
           </p>
 
 
           <div class="hero-buttons">
 
-            <a
+            <button
               class="hero-book"
-              href="#booking"
+              id="heroBookBtn"
+              type="button"
             >
               BOOK NOW
-            </a>
+            </button>
 
 
             <a
@@ -322,19 +362,14 @@
             class="carousel-dots"
             aria-hidden="true"
           >
-
             <span class="active"></span>
             <span></span>
             <span></span>
             <span></span>
-
           </div>
 
         </div>
 
-
-
-        <!-- HERO ART -->
 
         <div
           class="hero-visual"
@@ -343,23 +378,19 @@
 
           <div class="hero-poster-glow"></div>
 
-
           <img
             class="hero-poster"
             src="assets/odyssey.png"
             alt=""
-          />
-
+          >
 
           <div class="hero-shadow"></div>
 
         </div>
 
-
       </div>
 
     </section>
-
 
 
     <!-- =====================================================
@@ -379,15 +410,14 @@
 
           <div class="title-area">
 
+            <span class="section-kicker">
+              MOVIES
+            </span>
+
             <h2>
               What's On
             </h2>
 
-
-            <!--
-              Required by existing app.js.
-              Hidden visually in B3 CSS.
-            -->
 
             <div class="live-row">
 
@@ -395,9 +425,8 @@
                 id="liveStatus"
                 class="live-status"
               >
-                Loading movie catalogue…
+                Loading movie catalogue...
               </span>
-
 
               <span
                 id="liveUpdated"
@@ -409,12 +438,16 @@
           </div>
 
 
-
-          <div class="movie-tabs">
+          <div
+            class="movie-tabs"
+            role="tablist"
+            aria-label="Movie category"
+          >
 
             <button
               type="button"
               class="movie-tab active"
+              data-movie-tab="now"
             >
               NOW SHOWING
             </button>
@@ -422,24 +455,22 @@
             <button
               type="button"
               class="movie-tab"
+              data-movie-tab="soon"
             >
               COMING SOON
             </button>
 
           </div>
 
-
         </div>
 
 
-
-        <!-- app.js dynamically creates language filters -->
+        <!-- Created dynamically by app.js -->
 
         <div class="movie-filters"></div>
 
 
-
-        <!-- app.js dynamically creates movie cards -->
+        <!-- Movie cards created dynamically by app.js -->
 
         <div
           class="movie-grid"
@@ -447,24 +478,21 @@
         ></div>
 
 
-
         <button
           class="view-all-btn"
           id="viewAllBtn"
           type="button"
         >
-          VIEW ALL
+          VIEW ALL MOVIES
         </button>
-
 
       </div>
 
     </section>
 
 
-
     <!-- =====================================================
-         VOX EXPERIENCES
+         EXPERIENCES
     ====================================================== -->
 
     <section
@@ -477,23 +505,24 @@
 
         <div class="experience-heading">
 
+          <span class="section-kicker">
+            EXPERIENCES
+          </span>
+
           <h2>
             Try a VOX experience
           </h2>
 
           <p>
-            Make your next movie more than
-            just a trip to the cinema.
+            Choose the cinema experience that makes
+            your next movie even more memorable.
           </p>
 
         </div>
 
 
-
         <div class="experience-grid">
 
-
-          <!-- IMAX -->
 
           <article
             class="experience-card experience-imax"
@@ -501,11 +530,10 @@
 
             <div class="experience-overlay"></div>
 
-
             <div class="experience-content">
 
               <span class="experience-small">
-                SEE MORE
+                BIGGER. BOLDER.
               </span>
 
               <h3>
@@ -513,21 +541,18 @@
               </h3>
 
               <p>
-                Bigger screens. Bigger sound.
-                Bigger movies.
+                Larger screens, immersive sound
+                and spectacular cinematic scale.
               </p>
 
-              <button type="button">
+              <a href="#booking">
                 DISCOVER IMAX
-              </button>
+              </a>
 
             </div>
 
           </article>
 
-
-
-          <!-- THEATRE -->
 
           <article
             class="experience-card experience-theatre"
@@ -535,11 +560,10 @@
 
             <div class="experience-overlay"></div>
 
-
             <div class="experience-content">
 
               <span class="experience-small">
-                DINE IN STYLE
+                PREMIUM CINEMA
               </span>
 
               <h3>
@@ -547,28 +571,24 @@
               </h3>
 
               <p>
-                Reclining seats, premium service
-                and cinema dining.
+                Premium seating, cinema dining
+                and elevated service.
               </p>
 
-              <button type="button">
+              <a href="#booking">
                 DISCOVER THEATRE
-              </button>
+              </a>
 
             </div>
 
           </article>
 
 
-
-          <!-- 4DX -->
-
           <article
             class="experience-card experience-4dx"
           >
 
             <div class="experience-overlay"></div>
-
 
             <div class="experience-content">
 
@@ -582,20 +602,17 @@
 
               <p>
                 Motion and environmental effects
-                put you inside the action.
+                bring the action to life.
               </p>
 
-              <button type="button">
+              <a href="#booking">
                 DISCOVER 4DX
-              </button>
+              </a>
 
             </div>
 
           </article>
 
-
-
-          <!-- KIDS -->
 
           <article
             class="experience-card experience-kids"
@@ -603,11 +620,10 @@
 
             <div class="experience-overlay"></div>
 
-
             <div class="experience-content">
 
               <span class="experience-small">
-                MADE FOR FAMILIES
+                FAMILY FUN
               </span>
 
               <h3>
@@ -615,25 +631,23 @@
               </h3>
 
               <p>
-                A colourful cinema experience
-                for younger movie fans.
+                A colourful and entertaining cinema
+                experience for younger movie fans.
               </p>
 
-              <button type="button">
+              <a href="#booking">
                 DISCOVER KIDS
-              </button>
+              </a>
 
             </div>
 
           </article>
-
 
         </div>
 
       </div>
 
     </section>
-
 
 
     <!-- =====================================================
@@ -654,59 +668,51 @@
             FOOD &amp; DRINKS
           </span>
 
-
           <h2>
-            Movie night tastes
-            better at VOX
+            Movie night tastes better at VOX
           </h2>
 
-
           <p>
-            Pre-order your cinema favourites
-            and have them ready when you arrive.
+            Discover cinema favourites, snacks
+            and drinks for your next visit.
           </p>
 
-
-          <button type="button">
-            ORDER FOOD ONLINE
-          </button>
+          <a
+            class="food-button"
+            href="#booking"
+          >
+            EXPLORE FOOD &amp; DRINKS
+          </a>
 
         </div>
 
 
-
-        <div class="food-art">
-
+        <div
+          class="food-art"
+          aria-hidden="true"
+        >
 
           <div class="popcorn-bucket">
 
-
             <div class="popcorn">
-
               <span></span>
               <span></span>
               <span></span>
               <span></span>
               <span></span>
-
             </div>
-
 
             <strong>
               VOX
             </strong>
 
-
           </div>
 
-
         </div>
-
 
       </div>
 
     </section>
-
 
 
     <!-- =====================================================
@@ -723,74 +729,76 @@
 
         <div class="standard-heading">
 
-          <h2>
-            Offers &amp; promotions
-          </h2>
+          <div>
 
-          <a href="#">
+            <span class="section-kicker">
+              OFFERS
+            </span>
+
+            <h2>
+              Offers &amp; promotions
+            </h2>
+
+          </div>
+
+          <a href="#booking">
             VIEW ALL OFFERS
           </a>
 
         </div>
 
 
-
         <div class="offers-grid">
+
+
+          <article class="offer-card bank-offer-card">
+
+            <span class="offer-tag">
+              BANK OFFERS
+            </span>
+
+            <h3>
+              More ways to enjoy the movies
+            </h3>
+
+            <p>
+              Discover available card promotions
+              and cinema offers.
+            </p>
+
+            <a href="#booking">
+              EXPLORE OFFERS
+            </a>
+
+          </article>
 
 
           <article class="offer-card share-card">
 
-            <div class="offer-tag">
+            <span class="offer-tag">
               SHARE
-            </div>
+            </span>
 
             <h3>
-              Make every movie
-              more rewarding
+              Make every movie more rewarding
             </h3>
 
             <p>
-              Earn and spend SHARE points
-              when you enjoy VOX Cinemas.
+              Earn and spend SHARE points when
+              enjoying VOX Cinemas.
             </p>
 
-            <button type="button">
+            <a href="#booking">
               LEARN MORE
-            </button>
+            </a>
 
           </article>
-
-
-
-          <article class="offer-card food-offer">
-
-            <div class="offer-tag">
-              FOOD &amp; DRINKS
-            </div>
-
-            <h3>
-              Pre-order your snacks
-            </h3>
-
-            <p>
-              Skip the queue and have your
-              favourites waiting for you.
-            </p>
-
-            <button type="button">
-              ORDER ONLINE
-            </button>
-
-          </article>
-
 
         </div>
-
 
       </div>
 
     </section>
-
 
 
     <!-- =====================================================
@@ -804,43 +812,52 @@
 
       <div class="section-shell">
 
-
-        <div class="find-us-copy">
-
-          <span class="section-eyebrow">
-            FIND US
-          </span>
+        <div class="find-us-layout">
 
 
-          <h2>
-            Find your nearest VOX Cinema
-          </h2>
+          <div class="find-us-copy">
+
+            <span class="section-eyebrow">
+              FIND US
+            </span>
+
+            <h2>
+              Find your nearest VOX Cinema
+            </h2>
+
+            <p>
+              Explore VOX Cinemas locations across
+              Dubai, Abu Dhabi and the UAE.
+            </p>
+
+            <a
+              class="find-us-button"
+              href="#booking"
+            >
+              FIND A CINEMA
+            </a>
+
+          </div>
 
 
-          <p>
-            VOX Cinemas locations across
-            Dubai, Abu Dhabi and the UAE.
-          </p>
-
-
-          <a
-            class="find-us-button"
-            href="#booking"
+          <div
+            class="cinema-visual"
+            aria-hidden="true"
           >
-            FIND A CINEMA
-          </a>
 
+            <div class="cinema-visual-circle circle-one"></div>
+            <div class="cinema-visual-circle circle-two"></div>
+            <div class="cinema-pin"></div>
+
+          </div>
 
         </div>
-
 
       </div>
 
     </section>
 
-
   </main>
-
 
 
   <!-- =====================================================
@@ -849,12 +866,10 @@
 
   <footer class="site-footer">
 
-
     <div class="footer-inner">
 
 
       <div class="footer-brand">
-
 
         <div class="footer-logo">
 
@@ -868,15 +883,11 @@
 
         </div>
 
-
         <p>
-          Great movies.
-          Great experiences.
+          Great moments on the big screen.
         </p>
 
-
       </div>
-
 
 
       <div class="footer-column">
@@ -900,11 +911,10 @@
       </div>
 
 
-
       <div class="footer-column">
 
         <strong>
-          EXPERIENCE
+          EXPERIENCES
         </strong>
 
         <a href="#experiences">
@@ -926,7 +936,6 @@
       </div>
 
 
-
       <div class="footer-column">
 
         <strong>
@@ -934,7 +943,7 @@
         </strong>
 
         <a href="#cinemas">
-          Find Us
+          Cinemas
         </a>
 
         <a href="#offers">
@@ -947,9 +956,7 @@
 
       </div>
 
-
     </div>
-
 
 
     <div class="footer-bottom">
@@ -958,20 +965,18 @@
         © VOX Cinemas
       </span>
 
-      <span class="prototype-note">
-        Non-production prototype for demonstration purposes
+      <span>
+        UAE
       </span>
 
     </div>
 
-
   </footer>
 
 
-
   <!-- =====================================================
-       WEBSITE BOOKING MODAL
-       REQUIRED BY B2 APP.JS
+       BOOKING MODAL
+       IDs retained for existing app.js compatibility
   ====================================================== -->
 
   <div
@@ -980,22 +985,25 @@
     hidden
   >
 
-    <div class="modal-card">
-
+    <div class="modal-card booking-modal-card">
 
       <button
         class="modal-close"
         id="modalClose"
         type="button"
+        aria-label="Close"
       >
         ×
       </button>
 
 
+      <span class="modal-eyebrow">
+        SELECT A SESSION
+      </span>
+
       <h3 id="modalTitle">
         Book your movie
       </h3>
-
 
       <p id="modalCopy"></p>
 
@@ -1014,16 +1022,13 @@
         CONTINUE
       </button>
 
-
     </div>
 
   </div>
 
 
-
   <!-- =====================================================
-       WEBSITE LOGIN MODAL
-       B2 AUTO-LOGIN BRIDGE
+       SIGN-IN MODAL
   ====================================================== -->
 
   <div
@@ -1033,7 +1038,6 @@
   >
 
     <div class="modal-card login-modal-card">
-
 
       <button
         class="modal-close"
@@ -1062,8 +1066,8 @@
 
 
       <p class="login-intro">
-        Sign in once and Voxi will recognise
-        you automatically during this visit.
+        Sign in to continue with your customer profile
+        during this visit.
       </p>
 
 
@@ -1079,7 +1083,6 @@
             Email, mobile number or SHARE member ID
           </span>
 
-
           <input
             id="siteLoginIdentifier"
             name="identifier"
@@ -1087,10 +1090,9 @@
             autocomplete="username"
             placeholder="Email, mobile or member ID"
             required
-          />
+          >
 
         </label>
-
 
 
         <label class="login-field">
@@ -1098,7 +1100,6 @@
           <span>
             PIN
           </span>
-
 
           <input
             id="siteLoginPin"
@@ -1108,10 +1109,9 @@
             autocomplete="current-password"
             placeholder="PIN"
             required
-          />
+          >
 
         </label>
-
 
 
         <div
@@ -1122,7 +1122,6 @@
         ></div>
 
 
-
         <button
           class="modal-primary"
           id="siteLoginSubmit"
@@ -1131,27 +1130,40 @@
           SIGN IN
         </button>
 
-
-        <p class="login-hint">
-          Prototype only. Uses the same demo
-          customer credentials configured for Voxi.
-        </p>
-
-
       </form>
-
 
     </div>
 
   </div>
 
 
+  <!-- =====================================================
+       PAGE CONTEXT
+       The assistant can use this later to understand
+       what the customer is currently viewing.
+  ====================================================== -->
+
+  <script>
+
+    window.VOX_PAGE_CONTEXT = {
+      page: "home",
+      movie: null,
+      cinema: null,
+      date: null,
+      session: null,
+      experience: null
+    };
+
+  </script>
+
 
   <!-- =====================================================
-       VOXI CONFIGURATION
+       EXISTING CHAT BACKEND CONFIGURATION
 
-       LOCKED:
-       DO NOT ADD /api
+       IMPORTANT:
+       The existing external embed currently expects this
+       legacy global name. Do not rename it until the
+       Railway embed itself is changed.
   ====================================================== -->
 
   <script>
@@ -1172,17 +1184,18 @@
   </script>
 
 
-
   <!-- =====================================================
-       EXISTING B2 APPLICATION LOGIC
+       WEBSITE APPLICATION
   ====================================================== -->
 
   <script src="app.js"></script>
 
 
-
   <!-- =====================================================
-       NOORUL'S VOXI WIDGET
+       EXISTING EXTERNAL CHAT EMBED
+
+       Keep this exact URL for now.
+       The customer-facing website contains no old branding.
   ====================================================== -->
 
   <script
@@ -1192,491 +1205,22 @@
   ></script>
 
 
-
   <!-- =====================================================
-       B3.3 VOXI HOST CUSTOMISATION
+       CHAT WIDGET HOST CUSTOMISATION
 
-       - Ask Voxi -> Ask us
-       - Widget follows browser/system Dark Mode
-       - Does not modify bot logic
-       - Does not modify Railway
+       Only customer-facing launcher wording is changed.
+       No bot logic or Railway functionality is modified.
   ====================================================== -->
 
   <script>
 
-    (function customiseVoxi() {
-
+    (function customiseChatWidget() {
 
       const launcherLabel =
         "Ask us";
 
 
-      /*
-        CSS is injected into Noorul's
-        OPEN Shadow DOM.
-
-        The media query means the widget
-        automatically follows the same
-        browser / operating-system appearance
-        as the VOX website.
-      */
-
-      const darkThemeCss = `
-
-        @media (prefers-color-scheme: dark) {
-
-
-          :host {
-
-            color-scheme: dark;
-
-            --bg: #111418;
-            --bg-2: #181c21;
-
-            --panel: #171b20;
-            --panel-2: #1d2227;
-
-            --ink: #f4f6f8;
-            --ink-2: #d8dde1;
-
-            --muted: #9ba4ad;
-
-            --line: #343a40;
-            --line-2: #454c53;
-
-            --vox-blue-soft: #12333c;
-            --vox-blue-tint: #1a4a55;
-
-            --body-glow: #0d2730;
-
-            --shadow:
-              0 20px 60px
-              rgba(0, 0, 0, 0.48);
-
-          }
-
-
-          /* MAIN WIDGET */
-
-          .widget {
-
-            background:
-              var(--panel);
-
-            color:
-              var(--ink);
-
-          }
-
-
-          .widget-body {
-
-            background:
-
-              radial-gradient(
-                900px 300px
-                at 50% -80px,
-                var(--body-glow) 0%,
-                var(--panel-2) 70%
-              );
-
-          }
-
-
-          /* MESSAGES */
-
-          .msg.agent,
-          .msg.human {
-
-            background:
-              #252a30;
-
-            color:
-              #f4f6f8;
-
-            border-color:
-              var(--line);
-
-          }
-
-
-          .sysnote {
-
-            background:
-              rgba(
-                37,
-                42,
-                48,
-                0.92
-              );
-
-            color:
-              #aeb6bd;
-
-            border-color:
-              var(--line);
-
-          }
-
-
-          /* START AREA */
-
-          .start h3 {
-            color: #f5f6f7;
-          }
-
-
-          .start p {
-            color: var(--muted);
-          }
-
-
-          /* CHIPS */
-
-          .chip,
-          .daytabs button,
-          .time {
-
-            background:
-              #252a30;
-
-            color:
-              #e4e8eb;
-
-            border-color:
-              var(--line-2);
-
-          }
-
-
-          .chip:hover,
-          .time:hover:not(:disabled) {
-
-            border-color:
-              var(--vox-blue);
-
-          }
-
-
-          /* CONTENT CARDS */
-
-          .cards,
-          .movie,
-          .sheet,
-          .ticket,
-          .fnbcard,
-          .bankoffers .bank,
-          .newcard {
-
-            background:
-              #1d2227;
-
-            color:
-              #f2f4f5;
-
-            border-color:
-              var(--line);
-
-          }
-
-
-          .movie .t b,
-          .fnbcard .b > b,
-          .fnbcard .price,
-          .ticket .t-film,
-          .ticket .t-collect,
-          .reviewpay h5,
-          .reviewpay .due b {
-
-            color:
-              #f3f5f6;
-
-          }
-
-
-          /* SHOWTIMES */
-
-          .showgroup .sg-cinema {
-
-            color:
-              #e5e9ec;
-
-          }
-
-
-          .time {
-
-            background:
-              #252a30;
-
-          }
-
-
-          /* SEATS */
-
-          .seat {
-
-            background:
-              #252a30;
-
-            border-color:
-              #505860;
-
-          }
-
-
-          .seat.premium {
-
-            background:
-              #40391f;
-
-            border-color:
-              #b99b36;
-
-          }
-
-
-          .seat.sold {
-
-            background:
-              #454b50;
-
-            border-color:
-              #454b50;
-
-          }
-
-
-          .seat.held {
-
-            background:
-              #583936;
-
-            border-color:
-              #583936;
-
-          }
-
-
-          /* PAYMENT */
-
-          .method {
-
-            background:
-              #252a30;
-
-            color:
-              #f1f3f5;
-
-            border-color:
-              var(--line);
-
-          }
-
-
-          .sheet input,
-          .row3 input {
-
-            background:
-              #252a30;
-
-            color:
-              #ffffff;
-
-            border-color:
-              var(--line-2);
-
-          }
-
-
-          .reviewpay .steps span {
-
-            background:
-              #252a30;
-
-            color:
-              #aab2b9;
-
-          }
-
-
-          /* LOCATION */
-
-          .locbar,
-          .locsheet {
-
-            background:
-              #171b20;
-
-            color:
-              #f1f3f5;
-
-            border-color:
-              var(--line);
-
-          }
-
-
-          .locsheet .chips button {
-
-            background:
-              #252a30;
-
-            color:
-              #e1e5e8;
-
-            border-color:
-              var(--line);
-
-          }
-
-
-          /* LOGIN */
-
-          .authsheet {
-
-            background:
-              #17252b;
-
-            border-color:
-              var(--line);
-
-          }
-
-
-          .authsheet b {
-
-            color:
-              #f5f6f7;
-
-          }
-
-
-          .authsheet input {
-
-            background:
-              #252a30;
-
-            color:
-              #ffffff;
-
-            border-color:
-              var(--line-2);
-
-          }
-
-
-          /* VOICE */
-
-          .voicestage {
-
-            background:
-              linear-gradient(
-                180deg,
-                #20262c,
-                #181c21
-              );
-
-            border-color:
-              var(--line);
-
-          }
-
-
-          /* COMPOSER */
-
-          .widget-foot,
-          .powered {
-
-            background:
-              #171b20;
-
-            border-color:
-              var(--line);
-
-          }
-
-
-          .composer {
-
-            background:
-              #252a30;
-
-            border-color:
-              var(--line-2);
-
-          }
-
-
-          .composer:focus-within {
-
-            background:
-              #252a30;
-
-          }
-
-
-          .composer input {
-
-            color:
-              #ffffff;
-
-          }
-
-
-          .composer input::placeholder {
-
-            color:
-              #87919a;
-
-          }
-
-
-          .iconbtn.mic {
-
-            background:
-              #252a30;
-
-            color:
-              #e7eaec;
-
-            border-color:
-              var(--line-2);
-
-          }
-
-
-          /* LOGIN / SHARE NUDGES */
-
-          .shareblock,
-          .loginnudge {
-
-            background:
-              #17252b;
-
-            border-color:
-              #27515b;
-
-          }
-
-
-          .shareblock .b,
-          .loginnudge span {
-
-            color:
-              #d7dcdf;
-
-          }
-
-
-        }
-
-      `;
-
-
-
       function applyCustomisation() {
-
 
         const host =
           document.getElementById(
@@ -1695,48 +1239,7 @@
         }
 
 
-
-        /* -----------------------------------------------
-           INSTALL DARK-MODE CSS ONCE
-        ------------------------------------------------ */
-
-
-        if (
-          !shadow.getElementById(
-            "voxi-system-theme"
-          )
-        ) {
-
-
-          const style =
-            document.createElement(
-              "style"
-            );
-
-
-          style.id =
-            "voxi-system-theme";
-
-
-          style.textContent =
-            darkThemeCss;
-
-
-          shadow.appendChild(
-            style
-          );
-
-        }
-
-
-
-        /* -----------------------------------------------
-           RENAME LAUNCHER
-        ------------------------------------------------ */
-
-
         function updateLauncher() {
-
 
           const launcher =
             shadow.querySelector(
@@ -1777,27 +1280,29 @@
         updateLauncher();
 
 
+        if (
+          !shadow.__launcherObserverInstalled
+        ) {
 
-        /*
-          React may rebuild the launcher
-          when opening / closing the widget.
+          const observer =
+            new MutationObserver(
+              updateLauncher
+            );
 
-          Keep "Ask us" synchronised.
-        */
 
-        const observer =
-          new MutationObserver(
-            updateLauncher
+          observer.observe(
+            shadow,
+            {
+              childList: true,
+              subtree: true
+            }
           );
 
 
-        observer.observe(
-          shadow,
-          {
-            childList: true,
-            subtree: true
-          }
-        );
+          shadow.__launcherObserverInstalled =
+            true;
+
+        }
 
 
         return true;
@@ -1805,20 +1310,11 @@
       }
 
 
-
-      /*
-        Noorul's widget loads asynchronously.
-
-        Poll only until the Shadow DOM exists.
-      */
-
       if (!applyCustomisation()) {
-
 
         const timer =
           setInterval(
             () => {
-
 
               if (
                 applyCustomisation()
@@ -1829,7 +1325,6 @@
                 );
 
               }
-
 
             },
             100
@@ -1843,10 +1338,11 @@
               timer
             );
 
-          }, 10000);
+          },
+          10000
+        );
 
       }
-
 
     })();
 
