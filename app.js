@@ -1,11 +1,10 @@
 /* ==========================================================
-   VOX CINEMAS UAE - DEMO REPLICA
-   app.js
+   VOX CINEMAS UAE - FINAL APP.JS
    ========================================================== */
 
 
 /* ==========================================================
-   GLOBAL STATE
+   STATE
    ========================================================== */
 
 let movies = [];
@@ -20,16 +19,15 @@ let showAllMovies = false;
 
 
 /* ==========================================================
-   EXISTING CHAT API
-
-   The external embed still depends on the legacy global
-   configuration name in index.html.
-
-   Do not add /api to the backend URL.
+   EXISTING EMBED INTEGRATION
    ========================================================== */
 
+const EMBED_CONFIG_KEY = "VoxiConfig";
+const EMBED_GLOBAL_KEY = "Voxi";
+const EMBED_HOST_ID = "voxi-widget-host";
+
 const CHAT_API_BASE =
-  window.VoxiConfig?.apiBase ||
+  window[EMBED_CONFIG_KEY]?.apiBase ||
   "https://concierge-api-production-3d90.up.railway.app";
 
 
@@ -43,24 +41,21 @@ const fallbackMovies = [
     language: "Malayalam",
     rating: "PG15",
     poster: "assets/im-game.png",
-    url:
-      "https://uae.voxcinemas.com/movies/whatson"
+    url: "https://uae.voxcinemas.com/movies/whatson"
   },
   {
     title: "The Odyssey",
     language: "English",
     rating: "15+",
     poster: "assets/odyssey.png",
-    url:
-      "https://uae.voxcinemas.com/movies/whatson"
+    url: "https://uae.voxcinemas.com/movies/whatson"
   },
   {
     title: "Spider-Man: Brand New Day",
     language: "English",
     rating: "PG13",
     poster: "assets/spiderman.png",
-    url:
-      "https://uae.voxcinemas.com/movies/whatson"
+    url: "https://uae.voxcinemas.com/movies/whatson"
   }
 ];
 
@@ -75,85 +70,56 @@ const fallbackCinemas = [
 
 
 /* ==========================================================
-   DOM ELEMENTS
+   ELEMENTS
    ========================================================== */
 
 const movieGrid =
-  document.getElementById(
-    "movieGrid"
-  );
+  document.getElementById("movieGrid");
 
 const movieSelect =
-  document.getElementById(
-    "movieSelect"
-  );
+  document.getElementById("movieSelect");
 
 const cinemaSelect =
-  document.getElementById(
-    "cinemaSelect"
-  );
+  document.getElementById("cinemaSelect");
 
 const dateSelect =
-  document.getElementById(
-    "dateSelect"
-  );
+  document.getElementById("dateSelect");
 
 const filterWrap =
-  document.querySelector(
-    ".movie-filters"
-  );
+  document.querySelector(".movie-filters");
 
 const liveStatus =
-  document.getElementById(
-    "liveStatus"
-  );
+  document.getElementById("liveStatus");
 
 const liveUpdated =
-  document.getElementById(
-    "liveUpdated"
-  );
+  document.getElementById("liveUpdated");
 
 const loginButton =
-  document.getElementById(
-    "loginBtn"
-  );
+  document.getElementById("loginBtn");
 
 const viewAllButton =
-  document.getElementById(
-    "viewAllBtn"
-  );
+  document.getElementById("viewAllBtn");
 
 const mobileMenu =
-  document.getElementById(
-    "mobileNav"
-  );
+  document.getElementById("mobileNav");
 
 
 /* ==========================================================
    PAGE CONTEXT
-
-   This creates a single page-state object that can later
-   be passed into the conversational assistant.
-
-   No customer credentials are stored here.
    ========================================================== */
 
-function updatePageContext(
-  patch = {}
-) {
+function updatePageContext(patch = {}) {
 
   window.VOX_PAGE_CONTEXT = {
     ...(window.VOX_PAGE_CONTEXT || {}),
     ...patch
   };
 
-
   window.dispatchEvent(
     new CustomEvent(
       "vox:contextchange",
       {
-        detail:
-          window.VOX_PAGE_CONTEXT
+        detail: window.VOX_PAGE_CONTEXT
       }
     )
   );
@@ -167,12 +133,10 @@ updatePageContext({
 
 
 /* ==========================================================
-   SAFE HTML HELPERS
+   SAFE HTML
    ========================================================== */
 
-function escapeHtml(
-  value = ""
-) {
+function escapeHtml(value = "") {
 
   return String(value).replace(
     /[&<>'"]/g,
@@ -187,23 +151,17 @@ function escapeHtml(
 }
 
 
-function escapeAttr(
-  value = ""
-) {
+function escapeAttr(value = "") {
 
-  return escapeHtml(
-    value
-  );
+  return escapeHtml(value);
 }
 
 
 /* ==========================================================
-   DATE HELPERS
+   DATES
    ========================================================== */
 
-function formatDate(
-  date
-) {
+function formatDate(date) {
 
   return date.toLocaleDateString(
     "en-AE",
@@ -222,41 +180,25 @@ function initialiseDates() {
     return;
   }
 
+  dateSelect.innerHTML = "";
 
-  dateSelect.innerHTML =
-    "";
+  for (let index = 0; index < 7; index++) {
 
-
-  for (
-    let index = 0;
-    index < 7;
-    index++
-  ) {
-
-    const date =
-      new Date();
-
+    const date = new Date();
 
     date.setDate(
-      date.getDate() +
-      index
+      date.getDate() + index
     );
-
 
     const value =
       date
         .toISOString()
-        .slice(
-          0,
-          10
-        );
-
+        .slice(0, 10);
 
     const label =
       index === 0
         ? `Today • ${formatDate(date)}`
         : formatDate(date);
-
 
     dateSelect.add(
       new Option(
@@ -264,15 +206,11 @@ function initialiseDates() {
         value
       )
     );
-
   }
 
-
   updatePageContext({
-    date:
-      dateSelect.value
+    date: dateSelect.value
   });
-
 }
 
 
@@ -290,26 +228,20 @@ function populateSelectors() {
     movieSelect.innerHTML =
       '<option value="">Any Movie</option>';
 
+    movies.forEach(movie => {
 
-    movies.forEach(
-      movie => {
+      const label =
+        movie.language
+          ? `${movie.title} (${movie.language})`
+          : movie.title;
 
-        const label =
-          movie.language
-            ? `${movie.title} (${movie.language})`
-            : movie.title;
-
-
-        movieSelect.add(
-          new Option(
-            label,
-            movie.title
-          )
-        );
-
-      }
-    );
-
+      movieSelect.add(
+        new Option(
+          label,
+          movie.title
+        )
+      );
+    });
   }
 
 
@@ -318,27 +250,21 @@ function populateSelectors() {
     cinemaSelect.innerHTML =
       '<option value="">Select Your Cinema(s)</option>';
 
+    cinemas.forEach(cinema => {
 
-    cinemas.forEach(
-      cinema => {
-
-        cinemaSelect.add(
-          new Option(
-            cinema,
-            cinema
-          )
-        );
-
-      }
-    );
-
+      cinemaSelect.add(
+        new Option(
+          cinema,
+          cinema
+        )
+      );
+    });
   }
-
 }
 
 
 /* ==========================================================
-   PAGE CONTEXT FROM SELECTORS
+   SELECTOR CONTEXT
    ========================================================== */
 
 movieSelect
@@ -348,13 +274,11 @@ movieSelect
 
       updatePageContext({
         movie:
-          movieSelect.value ||
-          null,
+          movieSelect.value || null,
 
         session:
           null
       });
-
     }
   );
 
@@ -366,13 +290,11 @@ cinemaSelect
 
       updatePageContext({
         cinema:
-          cinemaSelect.value ||
-          null,
+          cinemaSelect.value || null,
 
         session:
           null
       });
-
     }
   );
 
@@ -384,13 +306,11 @@ dateSelect
 
       updatePageContext({
         date:
-          dateSelect.value ||
-          null,
+          dateSelect.value || null,
 
         session:
           null
       });
-
     }
   );
 
@@ -405,14 +325,10 @@ function buildFilters() {
     return;
   }
 
-
   const languages = [
     ...new Set(
       movies
-        .map(
-          movie =>
-            movie.language
-        )
+        .map(movie => movie.language)
         .filter(Boolean)
     )
   ].sort();
@@ -431,83 +347,49 @@ function buildFilters() {
 
     ...preferredLanguages.filter(
       language =>
-        languages.includes(
-          language
-        )
+        languages.includes(language)
     ),
 
     ...languages.filter(
       language =>
-        !preferredLanguages.includes(
-          language
-        )
+        !preferredLanguages.includes(language)
     )
 
   ];
 
 
-  filterWrap.innerHTML =
-    "";
+  filterWrap.innerHTML = "";
 
 
   const allButton =
-    document.createElement(
-      "button"
-    );
+    document.createElement("button");
 
+  allButton.type = "button";
+  allButton.className = "chip active";
+  allButton.dataset.filter = "all";
+  allButton.textContent = "All";
 
-  allButton.type =
-    "button";
-
-  allButton.className =
-    "chip active";
-
-  allButton.dataset.filter =
-    "all";
-
-  allButton.textContent =
-    "All";
-
-
-  filterWrap.appendChild(
-    allButton
-  );
+  filterWrap.appendChild(allButton);
 
 
   orderedLanguages.forEach(
     language => {
 
       const button =
-        document.createElement(
-          "button"
-        );
+        document.createElement("button");
 
+      button.type = "button";
+      button.className = "chip";
+      button.dataset.filter = language;
+      button.textContent = language;
 
-      button.type =
-        "button";
-
-      button.className =
-        "chip";
-
-      button.dataset.filter =
-        language;
-
-      button.textContent =
-        language;
-
-
-      filterWrap.appendChild(
-        button
-      );
-
+      filterWrap.appendChild(button);
     }
   );
 
 
   filterWrap
-    .querySelectorAll(
-      ".chip"
-    )
+    .querySelectorAll(".chip")
     .forEach(
       button => {
 
@@ -516,39 +398,424 @@ function buildFilters() {
           () => {
 
             filterWrap
-              .querySelectorAll(
-                ".chip"
-              )
+              .querySelectorAll(".chip")
               .forEach(
                 item =>
-                  item.classList.remove(
-                    "active"
-                  )
+                  item.classList.remove("active")
               );
 
-
-            button.classList.add(
-              "active"
-            );
-
+            button.classList.add("active");
 
             activeLanguage =
               button.dataset.filter ||
               "all";
 
-
-            showAllMovies =
-              false;
-
+            showAllMovies = false;
 
             renderMovies();
-
           }
         );
+      }
+    );
+}
 
+
+/* ==========================================================
+   MOVIE PAGE OVERRIDES
+   ========================================================== */
+
+const MOVIE_PAGE_OVERRIDES = {
+
+  "Bethlehem Kudumba Unit|Malayalam":
+    "https://uae.voxcinemas.com/movies/bethlehem-kudumba-unit-malayalam",
+
+  "Bethlehem Kudumba Unit|Tamil":
+    "https://uae.voxcinemas.com/movies/bethlehem-kudumba-unit-tamil",
+
+  "Fall 2: Deadpoint|English":
+    "https://uae.voxcinemas.com/movies/fall-2-deadpoint",
+
+  "Mirzapur|Hindi":
+    "https://uae.voxcinemas.com/movies/mirzapur-hindi",
+
+  "It Ends|English":
+    "https://uae.voxcinemas.com/movies/it-ends",
+
+  "Insidious: Out Of The Further|English":
+    "https://uae.voxcinemas.com/movies/insidious-out-of-the-further",
+
+  "Coyote VS Acme|English":
+    "https://uae.voxcinemas.com/movies/coyote-vs-acme",
+
+  "Mutiny|English":
+    "https://uae.voxcinemas.com/ar/movies/mutiny"
+};
+
+
+/* ==========================================================
+   POSTER CACHE
+   ========================================================== */
+
+const POSTER_CACHE_KEY =
+  "vox-poster-cache-v3";
+
+
+let posterCache = {};
+
+
+try {
+
+  posterCache =
+    JSON.parse(
+      localStorage.getItem(
+        POSTER_CACHE_KEY
+      ) || "{}"
+    );
+
+}
+
+catch {
+
+  posterCache = {};
+
+}
+
+
+function savePosterCache() {
+
+  try {
+
+    localStorage.setItem(
+      POSTER_CACHE_KEY,
+      JSON.stringify(posterCache)
+    );
+
+  }
+
+  catch {
+
+    /* Ignore browser storage restrictions. */
+
+  }
+}
+
+
+/* ==========================================================
+   MOVIE URL HELPERS
+   ========================================================== */
+
+function getMovieKey(movie) {
+
+  return `${
+    movie.title || ""
+  }|${
+    movie.language || ""
+  }`;
+}
+
+
+function movieSlug(title = "") {
+
+  return title
+    .normalize("NFKD")
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    )
+    .toLowerCase()
+    .replace(
+      /&/g,
+      " and "
+    )
+    .replace(
+      /['’]/g,
+      ""
+    )
+    .replace(
+      /[^a-z0-9]+/g,
+      "-"
+    )
+    .replace(
+      /^-+|-+$/g,
+      ""
+    );
+}
+
+
+function isSpecificMovieUrl(url) {
+
+  if (
+    typeof url !== "string"
+  ) {
+    return false;
+  }
+
+  return (
+    url.includes(
+      "uae.voxcinemas.com/"
+    ) &&
+    url.includes(
+      "/movies/"
+    ) &&
+    !url.endsWith(
+      "/movies/whatson"
+    )
+  );
+}
+
+
+function getMoviePageCandidates(movie) {
+
+  const key =
+    getMovieKey(movie);
+
+
+  const candidates = [];
+
+
+  if (
+    MOVIE_PAGE_OVERRIDES[key]
+  ) {
+
+    candidates.push(
+      MOVIE_PAGE_OVERRIDES[key]
+    );
+  }
+
+
+  if (
+    isSpecificMovieUrl(
+      movie.url
+    )
+  ) {
+
+    candidates.push(
+      movie.url
+    );
+  }
+
+
+  const slug =
+    movieSlug(
+      movie.title
+    );
+
+
+  if (slug) {
+
+    const language =
+      String(
+        movie.language || ""
+      )
+        .trim()
+        .toLowerCase();
+
+
+    if (
+      language &&
+      language !== "english"
+    ) {
+
+      candidates.push(
+        `https://uae.voxcinemas.com/movies/${slug}-${language}`
+      );
+    }
+
+
+    candidates.push(
+      `https://uae.voxcinemas.com/movies/${slug}`
+    );
+  }
+
+
+  return [
+    ...new Set(candidates)
+  ];
+}
+
+
+/* ==========================================================
+   LIVE POSTER LOOKUP
+   ========================================================== */
+
+async function fetchPosterFromMoviePage(
+  pageUrl
+) {
+
+  const metadataUrl =
+    new URL(
+      "https://api.microlink.io/"
+    );
+
+
+  metadataUrl.searchParams.set(
+    "url",
+    pageUrl
+  );
+
+
+  metadataUrl.searchParams.set(
+    "meta",
+    "true"
+  );
+
+
+  const response =
+    await fetch(
+      metadataUrl.toString(),
+      {
+        cache: "force-cache"
       }
     );
 
+
+  if (!response.ok) {
+
+    return null;
+  }
+
+
+  const payload =
+    await response.json();
+
+
+  const imageUrl =
+    payload
+      ?.data
+      ?.image
+      ?.url;
+
+
+  if (
+    typeof imageUrl !== "string" ||
+    !imageUrl.startsWith("https://")
+  ) {
+
+    return null;
+  }
+
+
+  if (
+    !imageUrl.includes(
+      "assets.voxcinemas.com"
+    )
+  ) {
+
+    return null;
+  }
+
+
+  return imageUrl;
+}
+
+
+/* ==========================================================
+   RESOLVE MOVIE MEDIA
+   ========================================================== */
+
+async function resolveMovieMedia(movie) {
+
+  const key =
+    getMovieKey(movie);
+
+
+  const pageCandidates =
+    getMoviePageCandidates(movie);
+
+
+  const preferredPage =
+    pageCandidates[0] ||
+    movie.url ||
+    "https://uae.voxcinemas.com/movies/whatson";
+
+
+  /*
+    Local poster already supplied.
+  */
+
+  if (
+    typeof movie.poster === "string" &&
+    movie.poster.trim()
+  ) {
+
+    return {
+      posterUrl:
+        movie.poster.trim(),
+
+      pageUrl:
+        preferredPage
+    };
+  }
+
+
+  /*
+    Previously resolved poster.
+  */
+
+  if (
+    posterCache[key]?.posterUrl
+  ) {
+
+    return posterCache[key];
+  }
+
+
+  /*
+    Resolve poster from live movie page.
+  */
+
+  for (
+    const pageUrl
+    of pageCandidates
+  ) {
+
+    try {
+
+      const posterUrl =
+        await fetchPosterFromMoviePage(
+          pageUrl
+        );
+
+
+      if (!posterUrl) {
+
+        continue;
+      }
+
+
+      const result = {
+        posterUrl,
+        pageUrl
+      };
+
+
+      posterCache[key] =
+        result;
+
+
+      savePosterCache();
+
+
+      return result;
+
+    }
+
+    catch (error) {
+
+      console.debug(
+        "Poster lookup failed:",
+        movie.title,
+        pageUrl
+      );
+
+    }
+  }
+
+
+  return {
+    posterUrl: null,
+    pageUrl: preferredPage
+  };
 }
 
 
@@ -579,12 +846,100 @@ function createPosterPlaceholder(
 
 
 /* ==========================================================
+   MOUNT POSTER
+   ========================================================== */
+
+function mountMoviePoster(
+  posterWrap,
+  movie,
+  posterUrl
+) {
+
+  if (
+    !posterWrap ||
+    !posterUrl
+  ) {
+
+    return;
+  }
+
+
+  const existingImage =
+    posterWrap.querySelector(
+      ".movie-poster"
+    );
+
+
+  existingImage?.remove();
+
+
+  const image =
+    document.createElement(
+      "img"
+    );
+
+
+  image.className =
+    "movie-poster";
+
+
+  image.src =
+    posterUrl;
+
+
+  image.alt =
+    `${movie.title} poster`;
+
+
+  image.loading =
+    "lazy";
+
+
+  image.decoding =
+    "async";
+
+
+  image.addEventListener(
+    "load",
+    () => {
+
+      posterWrap
+        .querySelector(
+          ".poster-placeholder"
+        )
+        ?.remove();
+
+    },
+    {
+      once: true
+    }
+  );
+
+
+  image.addEventListener(
+    "error",
+    () => {
+
+      image.remove();
+
+    },
+    {
+      once: true
+    }
+  );
+
+
+  posterWrap.prepend(
+    image
+  );
+}
+
+
+/* ==========================================================
    MOVIE CARD
    ========================================================== */
 
-function createMovieCard(
-  movie
-) {
+function createMovieCard(movie) {
 
   const card =
     document.createElement(
@@ -616,16 +971,25 @@ function createMovieCard(
     );
 
 
-  const safeUrl =
-    escapeAttr(
-      movie.url ||
-      "https://uae.voxcinemas.com/movies/whatson"
+  const pages =
+    getMoviePageCandidates(
+      movie
     );
+
+
+  const initialMovieUrl =
+    pages[0] ||
+    movie.url ||
+    "https://uae.voxcinemas.com/movies/whatson";
 
 
   card.innerHTML = `
 
     <div class="poster-wrap">
+
+      <div class="poster-placeholder">
+        ${safeTitle}
+      </div>
 
       <span class="rating">
         ${safeRating}
@@ -650,7 +1014,7 @@ function createMovieCard(
 
         <a
           class="details-card"
-          href="${safeUrl}"
+          href="${escapeAttr(initialMovieUrl)}"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -677,66 +1041,50 @@ function createMovieCard(
     );
 
 
-  if (
-    typeof movie.poster ===
-      "string" &&
-    movie.poster.trim()
-  ) {
-
-    const image =
-      document.createElement(
-        "img"
-      );
+  const detailsLink =
+    card.querySelector(
+      ".details-card"
+    );
 
 
-    image.className =
-      "movie-poster";
+  resolveMovieMedia(movie)
+    .then(
+      result => {
 
-    image.src =
-      movie.poster;
+        if (
+          result?.posterUrl
+        ) {
 
-    image.alt =
-      `${movie.title} poster`;
-
-    image.loading =
-      "lazy";
-
-
-    image.addEventListener(
-      "error",
-      () => {
-
-        image.remove();
+          mountMoviePoster(
+            posterWrap,
+            movie,
+            result.posterUrl
+          );
+        }
 
 
-        posterWrap.prepend(
-          createPosterPlaceholder(
-            movie.title
-          )
+        if (
+          detailsLink &&
+          result?.pageUrl
+        ) {
+
+          detailsLink.href =
+            result.pageUrl;
+        }
+
+      }
+    )
+    .catch(
+      error => {
+
+        console.debug(
+          "Movie media lookup failed:",
+          movie.title,
+          error
         );
 
-      },
-      {
-        once: true
       }
     );
-
-
-    posterWrap.prepend(
-      image
-    );
-
-  }
-
-  else {
-
-    posterWrap.prepend(
-      createPosterPlaceholder(
-        movie.title
-      )
-    );
-
-  }
 
 
   card
@@ -751,7 +1099,6 @@ function createMovieCard(
 
           movieSelect.value =
             movie.title;
-
         }
 
 
@@ -772,15 +1119,11 @@ function createMovieCard(
         openBooking(
           movie.title
         );
-
       }
     );
 
 
-  card
-    .querySelector(
-      ".details-card"
-    )
+  detailsLink
     ?.addEventListener(
       "click",
       () => {
@@ -807,44 +1150,29 @@ function createMovieCard(
 
 
 /* ==========================================================
-   MOVIE LIST
+   FILTERED MOVIES
    ========================================================== */
 
 function getFilteredMovies() {
 
   /*
-    The current JSON comes from the VOX
-    /movies/whatson catalogue.
-
-    It does not contain a reliable field distinguishing
-    "Now Showing" from "Coming Soon".
-
-    Therefore we do not fabricate a Coming Soon list.
+    Current local JSON contains the What's On catalogue.
+    It does not provide a reliable Coming Soon flag.
   */
 
   if (
-    activeMovieTab ===
-    "soon"
+    activeMovieTab === "soon"
   ) {
 
     return [];
-
   }
 
 
   return movies.filter(
-    movie => {
-
-      return (
-        activeLanguage ===
-          "all" ||
-        movie.language ===
-          activeLanguage
-      );
-
-    }
+    movie =>
+      activeLanguage === "all" ||
+      movie.language === activeLanguage
   );
-
 }
 
 
@@ -859,8 +1187,7 @@ function renderMovies() {
   }
 
 
-  movieGrid.innerHTML =
-    "";
+  movieGrid.innerHTML = "";
 
 
   const filtered =
@@ -875,7 +1202,7 @@ function renderMovies() {
 
         ${
           activeMovieTab === "soon"
-            ? "Coming Soon movies are not included in the current local catalogue."
+            ? "Coming Soon movies are not included in the current catalogue."
             : "No movies are available for this selection."
         }
 
@@ -887,14 +1214,10 @@ function renderMovies() {
 
       viewAllButton.hidden =
         true;
-
     }
 
 
-    updateDisplayedMovieCount(
-      0
-    );
-
+    updateDisplayedMovieCount(0);
 
     return;
   }
@@ -903,19 +1226,14 @@ function renderMovies() {
   const visibleMovies =
     showAllMovies
       ? filtered
-      : filtered.slice(
-          0,
-          10
-        );
+      : filtered.slice(0, 10);
 
 
   visibleMovies.forEach(
     movie => {
 
       movieGrid.appendChild(
-        createMovieCard(
-          movie
-        )
+        createMovieCard(movie)
       );
 
     }
@@ -925,22 +1243,19 @@ function renderMovies() {
   if (viewAllButton) {
 
     viewAllButton.hidden =
-      filtered.length <=
-      10;
+      filtered.length <= 10;
 
 
     viewAllButton.textContent =
       showAllMovies
         ? "SHOW LESS"
         : "VIEW ALL MOVIES";
-
   }
 
 
   updateDisplayedMovieCount(
     visibleMovies.length
   );
-
 }
 
 
@@ -959,7 +1274,6 @@ function updateDisplayedMovieCount(
 
   liveStatus.textContent =
     `Movie catalogue • ${visibleCount} movies`;
-
 }
 
 
@@ -968,9 +1282,7 @@ function updateDisplayedMovieCount(
    ========================================================== */
 
 document
-  .querySelectorAll(
-    ".movie-tab"
-  )
+  .querySelectorAll(".movie-tab")
   .forEach(
     button => {
 
@@ -1005,10 +1317,8 @@ document
 
 
           renderMovies();
-
         }
       );
-
     }
   );
 
@@ -1032,19 +1342,12 @@ viewAllButton
       if (!showAllMovies) {
 
         document
-          .getElementById(
-            "movies"
-          )
+          .getElementById("movies")
           ?.scrollIntoView({
-            behavior:
-              "smooth",
-
-            block:
-              "start"
+            behavior: "smooth",
+            block: "start"
           });
-
       }
-
     }
   );
 
@@ -1059,7 +1362,6 @@ async function loadCatalogue() {
 
     liveStatus.textContent =
       "Loading movie catalogue...";
-
   }
 
 
@@ -1074,16 +1376,14 @@ async function loadCatalogue() {
         fetch(
           "data/movies.json",
           {
-            cache:
-              "no-store"
+            cache: "no-store"
           }
         ),
 
         fetch(
           "data/cinemas.json",
           {
-            cache:
-              "no-store"
+            cache: "no-store"
           }
         )
 
@@ -1098,7 +1398,6 @@ async function loadCatalogue() {
       throw new Error(
         "Catalogue files unavailable"
       );
-
     }
 
 
@@ -1131,7 +1430,6 @@ async function loadCatalogue() {
       throw new Error(
         "Movie catalogue is empty"
       );
-
     }
 
 
@@ -1139,7 +1437,6 @@ async function loadCatalogue() {
 
       cinemas =
         fallbackCinemas;
-
     }
 
 
@@ -1149,7 +1446,6 @@ async function loadCatalogue() {
         movieData.updated_at
           ? `Updated ${movieData.updated_at}`
           : "";
-
     }
 
   }
@@ -1174,7 +1470,6 @@ async function loadCatalogue() {
 
       liveStatus.textContent =
         "Demo movie catalogue";
-
     }
 
 
@@ -1182,9 +1477,7 @@ async function loadCatalogue() {
 
       liveUpdated.textContent =
         "";
-
     }
-
   }
 
 
@@ -1193,48 +1486,31 @@ async function loadCatalogue() {
   buildFilters();
 
   renderMovies();
-
 }
 
 
 /* ==========================================================
-   BOOKING MODAL ELEMENTS
+   BOOKING MODAL
    ========================================================== */
 
 const bookingModal =
-  document.getElementById(
-    "modal"
-  );
-
+  document.getElementById("modal");
 
 const modalTitle =
-  document.getElementById(
-    "modalTitle"
-  );
-
+  document.getElementById("modalTitle");
 
 const modalCopy =
-  document.getElementById(
-    "modalCopy"
-  );
-
+  document.getElementById("modalCopy");
 
 const showtimes =
-  document.getElementById(
-    "showtimes"
-  );
+  document.getElementById("showtimes");
 
-
-/* ==========================================================
-   MODAL UTILITIES
-   ========================================================== */
 
 function lockPage() {
 
   document.body.classList.add(
     "modal-open"
   );
-
 }
 
 
@@ -1251,19 +1527,11 @@ function unlockPageIfClear() {
     document.body.classList.remove(
       "modal-open"
     );
-
   }
-
 }
 
 
-/* ==========================================================
-   BOOKING MODAL
-   ========================================================== */
-
-function openBooking(
-  title
-) {
+function openBooking(title) {
 
   if (
     !bookingModal ||
@@ -1275,12 +1543,10 @@ function openBooking(
     );
 
     return;
-
   }
 
 
-  selectedTime =
-    "";
+  selectedTime = "";
 
 
   const cinema =
@@ -1294,19 +1560,11 @@ function openBooking(
 
 
   updatePageContext({
-    movie:
-      title ||
-      null,
-
+    movie: title || null,
     cinema:
-      cinemaSelect?.value ||
-      null,
-
-    date:
-      selectedDate,
-
-    session:
-      null
+      cinemaSelect?.value || null,
+    date: selectedDate,
+    session: null
   });
 
 
@@ -1315,7 +1573,6 @@ function openBooking(
     modalTitle.textContent =
       title ||
       "Choose a showtime";
-
   }
 
 
@@ -1325,20 +1582,11 @@ function openBooking(
       cinemaSelect?.value
         ? `Select a showtime at ${cinema}.`
         : "Select a showtime. You can choose your cinema during the conversation.";
-
   }
 
 
-  showtimes.innerHTML =
-    "";
+  showtimes.innerHTML = "";
 
-
-  /*
-    These are demo presentation times.
-
-    They can later be replaced directly by
-    Vista session availability.
-  */
 
   const demoTimes = [
     "11:15 AM",
@@ -1361,10 +1609,8 @@ function openBooking(
       button.className =
         "showtime";
 
-
       button.type =
         "button";
-
 
       button.textContent =
         time;
@@ -1396,13 +1642,10 @@ function openBooking(
 
 
           updatePageContext({
-            session:
-              {
-                displayTime:
-                  time
-              }
+            session: {
+              displayTime: time
+            }
           });
-
         }
       );
 
@@ -1410,7 +1653,6 @@ function openBooking(
       showtimes.appendChild(
         button
       );
-
     }
   );
 
@@ -1420,13 +1662,8 @@ function openBooking(
 
 
   lockPage();
-
 }
 
-
-/* ==========================================================
-   CLOSE BOOKING MODAL
-   ========================================================== */
 
 function closeBookingModal() {
 
@@ -1440,14 +1677,11 @@ function closeBookingModal() {
 
 
   unlockPageIfClear();
-
 }
 
 
 document
-  .getElementById(
-    "modalClose"
-  )
+  .getElementById("modalClose")
   ?.addEventListener(
     "click",
     closeBookingModal
@@ -1460,26 +1694,17 @@ bookingModal
     event => {
 
       if (
-        event.target ===
-        bookingModal
+        event.target === bookingModal
       ) {
 
         closeBookingModal();
-
       }
-
     }
   );
 
 
-/* ==========================================================
-   CONTINUE FROM BOOKING MODAL
-   ========================================================== */
-
 document
-  .getElementById(
-    "continueBtn"
-  )
+  .getElementById("continueBtn")
   ?.addEventListener(
     "click",
     () => {
@@ -1491,7 +1716,6 @@ document
         );
 
         return;
-
       }
 
 
@@ -1501,19 +1725,12 @@ document
 
 
       closeBookingModal();
-
     }
   );
 
 
-/* ==========================================================
-   FIND TIMES
-   ========================================================== */
-
 document
-  .getElementById(
-    "findBtn"
-  )
+  .getElementById("findBtn")
   ?.addEventListener(
     "click",
     () => {
@@ -1542,19 +1759,12 @@ document
       openBooking(
         selectedMovie
       );
-
     }
   );
 
 
-/* ==========================================================
-   HERO BOOK BUTTON
-   ========================================================== */
-
 document
-  .getElementById(
-    "heroBookBtn"
-  )
+  .getElementById("heroBookBtn")
   ?.addEventListener(
     "click",
     () => {
@@ -1578,28 +1788,24 @@ document
 
           movieSelect.value =
             heroMovie;
-
         }
-
       }
 
 
       updatePageContext({
-        movie:
-          heroMovie
+        movie: heroMovie
       });
 
 
       openBooking(
         heroMovie
       );
-
     }
   );
 
 
 /* ==========================================================
-   SITE LOGIN ELEMENTS
+   LOGIN
    ========================================================== */
 
 const loginModal =
@@ -1607,46 +1813,36 @@ const loginModal =
     "loginModal"
   );
 
-
 const loginClose =
   document.getElementById(
     "loginClose"
   );
-
 
 const siteLoginForm =
   document.getElementById(
     "siteLoginForm"
   );
 
-
 const siteLoginIdentifier =
   document.getElementById(
     "siteLoginIdentifier"
   );
-
 
 const siteLoginPin =
   document.getElementById(
     "siteLoginPin"
   );
 
-
 const siteLoginError =
   document.getElementById(
     "siteLoginError"
   );
-
 
 const siteLoginSubmit =
   document.getElementById(
     "siteLoginSubmit"
   );
 
-
-/* ==========================================================
-   OPEN / CLOSE LOGIN
-   ========================================================== */
 
 function openSiteLogin() {
 
@@ -1657,18 +1853,12 @@ function openSiteLogin() {
 
   if (siteLoginError) {
 
-    siteLoginError.hidden =
-      true;
-
-
-    siteLoginError.textContent =
-      "";
-
+    siteLoginError.hidden = true;
+    siteLoginError.textContent = "";
   }
 
 
-  siteLoginForm
-    ?.reset();
+  siteLoginForm?.reset();
 
 
   loginModal.hidden =
@@ -1684,7 +1874,6 @@ function openSiteLogin() {
         ?.focus(),
     50
   );
-
 }
 
 
@@ -1700,7 +1889,6 @@ function closeSiteLogin() {
 
 
   unlockPageIfClear();
-
 }
 
 
@@ -1717,23 +1905,17 @@ loginModal
     event => {
 
       if (
-        event.target ===
-        loginModal
+        event.target === loginModal
       ) {
 
         closeSiteLogin();
-
       }
-
     }
   );
 
 
 /* ==========================================================
-   CUSTOMER VALIDATION
-
-   Uses the existing backend session/login interfaces.
-   Credentials are not stored by this page.
+   VERIFY CUSTOMER
    ========================================================== */
 
 async function verifyDemoCustomer(
@@ -1745,8 +1927,7 @@ async function verifyDemoCustomer(
     await fetch(
       `${CHAT_API_BASE}/widget/session`,
       {
-        method:
-          "POST",
+        method: "POST",
 
         headers: {
           "content-type":
@@ -1755,14 +1936,9 @@ async function verifyDemoCustomer(
 
         body:
           JSON.stringify({
-            language:
-              "en",
-
-            modality:
-              "text",
-
-            channel:
-              "web"
+            language: "en",
+            modality: "text",
+            channel: "web"
           })
       }
     );
@@ -1773,7 +1949,6 @@ async function verifyDemoCustomer(
     throw new Error(
       "Could not start the customer session."
     );
-
   }
 
 
@@ -1785,8 +1960,7 @@ async function verifyDemoCustomer(
     await fetch(
       `${CHAT_API_BASE}/widget/login`,
       {
-        method:
-          "POST",
+        method: "POST",
 
         headers: {
 
@@ -1820,7 +1994,6 @@ async function verifyDemoCustomer(
   catch {
 
     result = {};
-
   }
 
 
@@ -1834,23 +2007,13 @@ async function verifyDemoCustomer(
       result.error ||
       "Could not sign in."
     );
-
   }
 
-
-  /*
-    Best-effort cleanup of the temporary page
-    validation session.
-
-    The conversational widget owns its own
-    authenticated session separately.
-  */
 
   fetch(
     `${CHAT_API_BASE}/widget/logout`,
     {
-      method:
-        "POST",
+      method: "POST",
 
       headers: {
 
@@ -1865,18 +2028,15 @@ async function verifyDemoCustomer(
 
       },
 
-      body:
-        "{}"
+      body: "{}"
     }
   )
     .catch(
-      () =>
-        undefined
+      () => undefined
     );
 
 
   return result.customer;
-
 }
 
 
@@ -1891,86 +2051,69 @@ function waitFor(
 ) {
 
   return new Promise(
-    (
-      resolve,
-      reject
-    ) => {
+    (resolve, reject) => {
 
       const started =
         Date.now();
 
 
-      const check =
-        () => {
+      const check = () => {
 
-          let result =
-            null;
+        let result = null;
 
 
-          try {
+        try {
 
-            result =
-              getter();
+          result =
+            getter();
 
-          }
+        }
 
-          catch {
+        catch {
 
-            result =
-              null;
-
-          }
+          result = null;
+        }
 
 
-          if (result) {
+        if (result) {
 
-            resolve(
-              result
-            );
+          resolve(result);
 
-            return;
-
-          }
+          return;
+        }
 
 
-          if (
-            Date.now() -
-            started >=
-            timeout
-          ) {
+        if (
+          Date.now() -
+          started >=
+          timeout
+        ) {
 
-            reject(
-              new Error(
-                "Timed out waiting for the chat widget."
-              )
-            );
-
-            return;
-
-          }
-
-
-          setTimeout(
-            check,
-            interval
+          reject(
+            new Error(
+              "Timed out waiting for the chat widget."
+            )
           );
 
-        };
+          return;
+        }
+
+
+        setTimeout(
+          check,
+          interval
+        );
+      };
 
 
       check();
-
     }
   );
-
 }
 
 
 /* ==========================================================
-   INPUT VALUE HELPER
-
-   Helps with React-controlled form inputs inside the
-   existing external widget.
+   CONTROLLED INPUT VALUE
    ========================================================== */
 
 function setInputValue(
@@ -1979,9 +2122,7 @@ function setInputValue(
 ) {
 
   const prototype =
-    Object.getPrototypeOf(
-      input
-    );
+    Object.getPrototypeOf(input);
 
 
   const descriptor =
@@ -2008,7 +2149,6 @@ function setInputValue(
 
     input.value =
       value;
-
   }
 
 
@@ -2016,8 +2156,7 @@ function setInputValue(
     new Event(
       "input",
       {
-        bubbles:
-          true
+        bubbles: true
       }
     )
   );
@@ -2027,21 +2166,15 @@ function setInputValue(
     new Event(
       "change",
       {
-        bubbles:
-          true
+        bubbles: true
       }
     )
   );
-
 }
 
 
 /* ==========================================================
-   SYNC LOGIN TO EXISTING CHAT WIDGET
-
-   The following technical object and DOM identifiers belong
-   to the currently deployed external embed and therefore
-   must remain unchanged for compatibility.
+   SYNC LOGIN TO EXTERNAL CHAT
    ========================================================== */
 
 async function syncChatLogin(
@@ -2051,22 +2184,24 @@ async function syncChatLogin(
 
   await waitFor(
     () =>
-      window.Voxi &&
+      window[EMBED_GLOBAL_KEY] &&
       document
         .getElementById(
-          "voxi-widget-host"
+          EMBED_HOST_ID
         )
         ?.shadowRoot
   );
 
 
-  window.Voxi.login();
+  window[
+    EMBED_GLOBAL_KEY
+  ].login();
 
 
   const shadow =
     document
       .getElementById(
-        "voxi-widget-host"
+        EMBED_HOST_ID
       )
       .shadowRoot;
 
@@ -2100,7 +2235,6 @@ async function syncChatLogin(
     throw new Error(
       "Chat login fields were not found."
     );
-
   }
 
 
@@ -2118,7 +2252,7 @@ async function syncChatLogin(
 
   if (
     typeof form.requestSubmit ===
-    "function"
+      "function"
   ) {
 
     form.requestSubmit();
@@ -2131,22 +2265,13 @@ async function syncChatLogin(
       new Event(
         "submit",
         {
-          bubbles:
-            true,
-
-          cancelable:
-            true
+          bubbles: true,
+          cancelable: true
         }
       )
     );
-
   }
 
-
-  /*
-    Successful authentication changes the widget's
-    authentication control from login to logout.
-  */
 
   await waitFor(
     () => {
@@ -2174,12 +2299,11 @@ async function syncChatLogin(
 
 
   return true;
-
 }
 
 
 /* ==========================================================
-   WEBSITE + CHAT SIGN-IN
+   SIGN IN
    ========================================================== */
 
 siteLoginForm
@@ -2210,19 +2334,13 @@ siteLoginForm
       ) {
 
         return;
-
       }
 
 
       if (siteLoginError) {
 
-        siteLoginError.hidden =
-          true;
-
-
-        siteLoginError.textContent =
-          "";
-
+        siteLoginError.hidden = true;
+        siteLoginError.textContent = "";
       }
 
 
@@ -2231,19 +2349,12 @@ siteLoginForm
         siteLoginSubmit.disabled =
           true;
 
-
         siteLoginSubmit.textContent =
           "SIGNING IN...";
-
       }
 
 
       try {
-
-        /*
-          Step 1:
-          Validate the customer for the host website.
-        */
 
         const customer =
           await verifyDemoCustomer(
@@ -2251,12 +2362,6 @@ siteLoginForm
             pin
           );
 
-
-        /*
-          Step 2:
-          Authenticate the same customer in the
-          existing conversational widget.
-        */
 
         await syncChatLogin(
           identifier,
@@ -2283,13 +2388,11 @@ siteLoginForm
 
           loginButton.title =
             "Signed in";
-
         }
 
 
         updatePageContext({
-          authenticated:
-            true
+          authenticated: true
         });
 
 
@@ -2303,15 +2406,9 @@ siteLoginForm
         );
 
 
-        /*
-          Never retain the PIN.
-        */
-
         if (siteLoginPin) {
 
-          siteLoginPin.value =
-            "";
-
+          siteLoginPin.value = "";
         }
 
       }
@@ -2333,7 +2430,6 @@ siteLoginForm
 
           siteLoginError.hidden =
             false;
-
         }
 
       }
@@ -2345,14 +2441,10 @@ siteLoginForm
           siteLoginSubmit.disabled =
             false;
 
-
           siteLoginSubmit.textContent =
             "SIGN IN";
-
         }
-
       }
-
     }
   );
 
@@ -2365,10 +2457,15 @@ async function signOutEverywhere() {
 
   try {
 
-    if (window.Voxi) {
+    if (
+      window[
+        EMBED_GLOBAL_KEY
+      ]
+    ) {
 
-      window.Voxi.logout();
-
+      window[
+        EMBED_GLOBAL_KEY
+      ].logout();
     }
 
   }
@@ -2379,12 +2476,10 @@ async function signOutEverywhere() {
       "Chat logout warning:",
       error
     );
-
   }
 
 
-  hostCustomer =
-    null;
+  hostCustomer = null;
 
 
   if (loginButton) {
@@ -2392,28 +2487,22 @@ async function signOutEverywhere() {
     loginButton.textContent =
       "SIGN IN";
 
-
     loginButton.classList.remove(
       "account-signed-in"
     );
 
-
-    loginButton.title =
-      "";
-
+    loginButton.title = "";
   }
 
 
   updatePageContext({
-    authenticated:
-      false
+    authenticated: false
   });
 
 
   showMessage(
     "You are now browsing as a guest."
   );
-
 }
 
 
@@ -2431,7 +2520,6 @@ loginButton
         openSiteLogin();
 
         return;
-
       }
 
 
@@ -2449,9 +2537,7 @@ loginButton
       if (confirmed) {
 
         await signOutEverywhere();
-
       }
-
     }
   );
 
@@ -2461,9 +2547,7 @@ loginButton
    ========================================================== */
 
 document
-  .getElementById(
-    "searchBtn"
-  )
+  .getElementById("searchBtn")
   ?.addEventListener(
     "click",
     () => {
@@ -2503,20 +2587,12 @@ document
         );
 
         return;
-
       }
 
 
-      activeMovieTab =
-        "now";
-
-
-      activeLanguage =
-        "all";
-
-
-      showAllMovies =
-        true;
+      activeMovieTab = "now";
+      activeLanguage = "all";
+      showAllMovies = true;
 
 
       document
@@ -2531,7 +2607,6 @@ document
               button.dataset.movieTab ===
                 "now"
             );
-
           }
         );
 
@@ -2548,7 +2623,6 @@ document
               button.dataset.filter ===
                 "all"
             );
-
           }
         );
 
@@ -2560,7 +2634,6 @@ document
 
         movieSelect.value =
           match.title;
-
       }
 
 
@@ -2579,17 +2652,11 @@ document
 
 
       document
-        .getElementById(
-          "movies"
-        )
+        .getElementById("movies")
         ?.scrollIntoView({
-          behavior:
-            "smooth",
-
-          block:
-            "start"
+          behavior: "smooth",
+          block: "start"
         });
-
     }
   );
 
@@ -2599,9 +2666,7 @@ document
    ========================================================== */
 
 document
-  .getElementById(
-    "menuBtn"
-  )
+  .getElementById("menuBtn")
   ?.addEventListener(
     "click",
     () => {
@@ -2613,15 +2678,12 @@ document
 
       mobileMenu.hidden =
         !mobileMenu.hidden;
-
     }
   );
 
 
 mobileMenu
-  ?.querySelectorAll(
-    "a"
-  )
+  ?.querySelectorAll("a")
   .forEach(
     link => {
 
@@ -2629,18 +2691,15 @@ mobileMenu
         "click",
         () => {
 
-          mobileMenu.hidden =
-            true;
-
+          mobileMenu.hidden = true;
         }
       );
-
     }
   );
 
 
 /* ==========================================================
-   KEYBOARD
+   ESCAPE KEY
    ========================================================== */
 
 document.addEventListener(
@@ -2648,12 +2707,10 @@ document.addEventListener(
   event => {
 
     if (
-      event.key !==
-      "Escape"
+      event.key !== "Escape"
     ) {
 
       return;
-
     }
 
 
@@ -2663,7 +2720,6 @@ document.addEventListener(
     ) {
 
       closeBookingModal();
-
     }
 
 
@@ -2673,7 +2729,6 @@ document.addEventListener(
     ) {
 
       closeSiteLogin();
-
     }
 
 
@@ -2682,22 +2737,17 @@ document.addEventListener(
       !mobileMenu.hidden
     ) {
 
-      mobileMenu.hidden =
-        true;
-
+      mobileMenu.hidden = true;
     }
-
   }
 );
 
 
 /* ==========================================================
-   SIMPLE PAGE MESSAGE
+   PAGE MESSAGE
    ========================================================== */
 
-function showMessage(
-  message
-) {
+function showMessage(message) {
 
   const bookingResult =
     document.getElementById(
@@ -2728,15 +2778,11 @@ function showMessage(
           message
         ) {
 
-          bookingResult.textContent =
-            "";
-
+          bookingResult.textContent = "";
         }
-
       },
       7000
     );
-
 }
 
 
