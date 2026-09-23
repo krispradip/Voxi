@@ -1,44 +1,41 @@
-/*
-  VOXI DEMO BASELINE B2
-  2026-09-08
-
-  Responsibilities:
-  - VOX mock-up catalogue
-  - demo booking interaction
-  - host website login
-  - automatic Voxi login bridge
-
-  IMPORTANT:
-  Voxi itself remains Noorul's Railway widget.
-  We do not copy or modify the widget.
-*/
+/* ==========================================================
+   VOX CINEMAS UAE - DEMO REPLICA
+   app.js
+   ========================================================== */
 
 
-/* -------------------------------------------------------
+/* ==========================================================
    GLOBAL STATE
-------------------------------------------------------- */
+   ========================================================== */
 
 let movies = [];
 let cinemas = [];
+
 let selectedTime = "";
 let hostCustomer = null;
 
+let activeLanguage = "all";
+let activeMovieTab = "now";
+let showAllMovies = false;
 
-/* -------------------------------------------------------
-   VOXI API
 
-   The value comes from index.html.
-   There must NOT be /api at the end.
-------------------------------------------------------- */
+/* ==========================================================
+   EXISTING CHAT API
 
-const VOXI_API_BASE =
+   The external embed still depends on the legacy global
+   configuration name in index.html.
+
+   Do not add /api to the backend URL.
+   ========================================================== */
+
+const CHAT_API_BASE =
   window.VoxiConfig?.apiBase ||
   "https://concierge-api-production-3d90.up.railway.app";
 
 
-/* -------------------------------------------------------
+/* ==========================================================
    FALLBACK DATA
-------------------------------------------------------- */
+   ========================================================== */
 
 const fallbackMovies = [
   {
@@ -46,21 +43,24 @@ const fallbackMovies = [
     language: "Malayalam",
     rating: "PG15",
     poster: "assets/im-game.png",
-    url: "https://uae.voxcinemas.com/movies/whatson"
+    url:
+      "https://uae.voxcinemas.com/movies/whatson"
   },
   {
     title: "The Odyssey",
     language: "English",
     rating: "15+",
     poster: "assets/odyssey.png",
-    url: "https://uae.voxcinemas.com/movies/whatson"
+    url:
+      "https://uae.voxcinemas.com/movies/whatson"
   },
   {
     title: "Spider-Man: Brand New Day",
     language: "English",
     rating: "PG13",
     poster: "assets/spiderman.png",
-    url: "https://uae.voxcinemas.com/movies/whatson"
+    url:
+      "https://uae.voxcinemas.com/movies/whatson"
   }
 ];
 
@@ -74,87 +74,105 @@ const fallbackCinemas = [
 ];
 
 
-/* -------------------------------------------------------
-   ELEMENTS
-------------------------------------------------------- */
+/* ==========================================================
+   DOM ELEMENTS
+   ========================================================== */
 
 const movieGrid =
-  document.getElementById("movieGrid");
+  document.getElementById(
+    "movieGrid"
+  );
 
 const movieSelect =
-  document.getElementById("movieSelect");
+  document.getElementById(
+    "movieSelect"
+  );
 
 const cinemaSelect =
-  document.getElementById("cinemaSelect");
+  document.getElementById(
+    "cinemaSelect"
+  );
 
 const dateSelect =
-  document.getElementById("dateSelect");
+  document.getElementById(
+    "dateSelect"
+  );
 
 const filterWrap =
-  document.querySelector(".movie-filters");
+  document.querySelector(
+    ".movie-filters"
+  );
 
 const liveStatus =
-  document.getElementById("liveStatus");
+  document.getElementById(
+    "liveStatus"
+  );
 
 const liveUpdated =
-  document.getElementById("liveUpdated");
+  document.getElementById(
+    "liveUpdated"
+  );
 
 const loginButton =
-  document.getElementById("loginBtn");
+  document.getElementById(
+    "loginBtn"
+  );
 
+const viewAllButton =
+  document.getElementById(
+    "viewAllBtn"
+  );
 
-/* -------------------------------------------------------
-   DATE SELECTOR
-------------------------------------------------------- */
-
-const formatDate = date =>
-  date.toLocaleDateString(
-    "en-AE",
-    {
-      weekday: "short",
-      day: "numeric",
-      month: "short"
-    }
+const mobileMenu =
+  document.getElementById(
+    "mobileNav"
   );
 
 
-if (dateSelect) {
+/* ==========================================================
+   PAGE CONTEXT
 
-  dateSelect.innerHTML = "";
+   This creates a single page-state object that can later
+   be passed into the conversational assistant.
 
-  for (let i = 0; i < 7; i++) {
+   No customer credentials are stored here.
+   ========================================================== */
 
-    const date = new Date();
+function updatePageContext(
+  patch = {}
+) {
 
-    date.setDate(
-      date.getDate() + i
-    );
+  window.VOX_PAGE_CONTEXT = {
+    ...(window.VOX_PAGE_CONTEXT || {}),
+    ...patch
+  };
 
-    const label =
-      i === 0
-        ? `Today • ${formatDate(date)}`
-        : formatDate(date);
 
-    const value =
-      date
-        .toISOString()
-        .slice(0, 10);
-
-    dateSelect.add(
-      new Option(
-        label,
-        value
-      )
-    );
-  }
+  window.dispatchEvent(
+    new CustomEvent(
+      "vox:contextchange",
+      {
+        detail:
+          window.VOX_PAGE_CONTEXT
+      }
+    )
+  );
 }
 
 
-/* -------------------------------------------------------
-   SAFE HTML
-------------------------------------------------------- */
+updatePageContext({
+  page: "home",
+  authenticated: false
+});
 
-function escapeHtml(value = "") {
+
+/* ==========================================================
+   SAFE HTML HELPERS
+   ========================================================== */
+
+function escapeHtml(
+  value = ""
+) {
 
   return String(value).replace(
     /[&<>'"]/g,
@@ -169,14 +187,101 @@ function escapeHtml(value = "") {
 }
 
 
-function escapeAttr(value = "") {
-  return escapeHtml(value);
+function escapeAttr(
+  value = ""
+) {
+
+  return escapeHtml(
+    value
+  );
 }
 
 
-/* -------------------------------------------------------
-   MOVIE / CINEMA SELECTORS
-------------------------------------------------------- */
+/* ==========================================================
+   DATE HELPERS
+   ========================================================== */
+
+function formatDate(
+  date
+) {
+
+  return date.toLocaleDateString(
+    "en-AE",
+    {
+      weekday: "short",
+      day: "numeric",
+      month: "short"
+    }
+  );
+}
+
+
+function initialiseDates() {
+
+  if (!dateSelect) {
+    return;
+  }
+
+
+  dateSelect.innerHTML =
+    "";
+
+
+  for (
+    let index = 0;
+    index < 7;
+    index++
+  ) {
+
+    const date =
+      new Date();
+
+
+    date.setDate(
+      date.getDate() +
+      index
+    );
+
+
+    const value =
+      date
+        .toISOString()
+        .slice(
+          0,
+          10
+        );
+
+
+    const label =
+      index === 0
+        ? `Today • ${formatDate(date)}`
+        : formatDate(date);
+
+
+    dateSelect.add(
+      new Option(
+        label,
+        value
+      )
+    );
+
+  }
+
+
+  updatePageContext({
+    date:
+      dateSelect.value
+  });
+
+}
+
+
+initialiseDates();
+
+
+/* ==========================================================
+   SELECTORS
+   ========================================================== */
 
 function populateSelectors() {
 
@@ -185,54 +290,129 @@ function populateSelectors() {
     movieSelect.innerHTML =
       '<option value="">Any Movie</option>';
 
-    movies.forEach(movie => {
 
-      const label =
-        movie.language
-          ? `${movie.title} (${movie.language})`
-          : movie.title;
+    movies.forEach(
+      movie => {
 
-      movieSelect.add(
-        new Option(
-          label,
-          movie.title
-        )
-      );
-    });
+        const label =
+          movie.language
+            ? `${movie.title} (${movie.language})`
+            : movie.title;
+
+
+        movieSelect.add(
+          new Option(
+            label,
+            movie.title
+          )
+        );
+
+      }
+    );
+
   }
 
 
   if (cinemaSelect) {
 
     cinemaSelect.innerHTML =
-      '<option value="">Select Cinema</option>';
+      '<option value="">Select Your Cinema(s)</option>';
 
-    cinemas.forEach(cinema => {
 
-      cinemaSelect.add(
-        new Option(
-          cinema,
-          cinema
-        )
-      );
-    });
+    cinemas.forEach(
+      cinema => {
+
+        cinemaSelect.add(
+          new Option(
+            cinema,
+            cinema
+          )
+        );
+
+      }
+    );
+
   }
+
 }
 
 
-/* -------------------------------------------------------
+/* ==========================================================
+   PAGE CONTEXT FROM SELECTORS
+   ========================================================== */
+
+movieSelect
+  ?.addEventListener(
+    "change",
+    () => {
+
+      updatePageContext({
+        movie:
+          movieSelect.value ||
+          null,
+
+        session:
+          null
+      });
+
+    }
+  );
+
+
+cinemaSelect
+  ?.addEventListener(
+    "change",
+    () => {
+
+      updatePageContext({
+        cinema:
+          cinemaSelect.value ||
+          null,
+
+        session:
+          null
+      });
+
+    }
+  );
+
+
+dateSelect
+  ?.addEventListener(
+    "change",
+    () => {
+
+      updatePageContext({
+        date:
+          dateSelect.value ||
+          null,
+
+        session:
+          null
+      });
+
+    }
+  );
+
+
+/* ==========================================================
    LANGUAGE FILTERS
-------------------------------------------------------- */
+   ========================================================== */
 
 function buildFilters() {
 
-  if (!filterWrap) return;
+  if (!filterWrap) {
+    return;
+  }
 
 
   const languages = [
     ...new Set(
       movies
-        .map(movie => movie.language)
+        .map(
+          movie =>
+            movie.language
+        )
         .filter(Boolean)
     )
   ].sort();
@@ -251,21 +431,33 @@ function buildFilters() {
 
     ...preferredLanguages.filter(
       language =>
-        languages.includes(language)
+        languages.includes(
+          language
+        )
     ),
 
     ...languages.filter(
       language =>
-        !preferredLanguages.includes(language)
+        !preferredLanguages.includes(
+          language
+        )
     )
+
   ];
 
 
-  filterWrap.innerHTML = "";
+  filterWrap.innerHTML =
+    "";
 
 
   const allButton =
-    document.createElement("button");
+    document.createElement(
+      "button"
+    );
+
+
+  allButton.type =
+    "button";
 
   allButton.className =
     "chip active";
@@ -276,6 +468,7 @@ function buildFilters() {
   allButton.textContent =
     "All";
 
+
   filterWrap.appendChild(
     allButton
   );
@@ -285,7 +478,13 @@ function buildFilters() {
     language => {
 
       const button =
-        document.createElement("button");
+        document.createElement(
+          "button"
+        );
+
+
+      button.type =
+        "button";
 
       button.className =
         "chip";
@@ -296,98 +495,168 @@ function buildFilters() {
       button.textContent =
         language;
 
+
       filterWrap.appendChild(
         button
       );
+
     }
   );
 
 
   filterWrap
-    .querySelectorAll(".chip")
-    .forEach(button => {
+    .querySelectorAll(
+      ".chip"
+    )
+    .forEach(
+      button => {
 
-      button.addEventListener(
-        "click",
-        () => {
+        button.addEventListener(
+          "click",
+          () => {
 
-          filterWrap
-            .querySelectorAll(".chip")
-            .forEach(item =>
-              item.classList.remove(
-                "active"
+            filterWrap
+              .querySelectorAll(
+                ".chip"
               )
+              .forEach(
+                item =>
+                  item.classList.remove(
+                    "active"
+                  )
+              );
+
+
+            button.classList.add(
+              "active"
             );
 
-          button.classList.add(
-            "active"
-          );
 
-          renderMovies(
-            button.dataset.filter
-          );
-        }
-      );
-    });
+            activeLanguage =
+              button.dataset.filter ||
+              "all";
+
+
+            showAllMovies =
+              false;
+
+
+            renderMovies();
+
+          }
+        );
+
+      }
+    );
+
 }
 
 
-/* -------------------------------------------------------
-   MOVIE CARD
-------------------------------------------------------- */
+/* ==========================================================
+   POSTER PLACEHOLDER
+   ========================================================== */
 
-function createMovieCard(movie) {
+function createPosterPlaceholder(
+  title
+) {
+
+  const placeholder =
+    document.createElement(
+      "div"
+    );
+
+
+  placeholder.className =
+    "poster-placeholder";
+
+
+  placeholder.textContent =
+    title;
+
+
+  return placeholder;
+}
+
+
+/* ==========================================================
+   MOVIE CARD
+   ========================================================== */
+
+function createMovieCard(
+  movie
+) {
 
   const card =
-    document.createElement("article");
+    document.createElement(
+      "article"
+    );
+
 
   card.className =
     "movie-card";
+
+
+  const safeTitle =
+    escapeHtml(
+      movie.title
+    );
+
+
+  const safeLanguage =
+    escapeHtml(
+      movie.language ||
+      "Language TBC"
+    );
+
+
+  const safeRating =
+    escapeHtml(
+      movie.rating ||
+      "NR"
+    );
+
+
+  const safeUrl =
+    escapeAttr(
+      movie.url ||
+      "https://uae.voxcinemas.com/movies/whatson"
+    );
 
 
   card.innerHTML = `
 
     <div class="poster-wrap">
 
-      <img
-        class="movie-poster"
-        src="${escapeAttr(movie.poster)}"
-        alt="${escapeAttr(movie.title)} poster"
-        loading="lazy"
-      >
-
       <span class="rating">
-        ${escapeHtml(movie.rating || "NR")}
+        ${safeRating}
       </span>
 
     </div>
 
+
     <div class="movie-body">
 
       <h3>
-        ${escapeHtml(movie.title)}
+        ${safeTitle}
       </h3>
 
+
       <div class="meta">
-        ${escapeHtml(
-          movie.language ||
-          "Language TBC"
-        )}
+        ${safeLanguage}
       </div>
+
 
       <div class="card-actions">
 
         <a
           class="details-card"
-          href="${escapeAttr(
-            movie.url ||
-            "https://uae.voxcinemas.com/movies/whatson"
-          )}"
+          href="${safeUrl}"
           target="_blank"
           rel="noopener noreferrer"
         >
           View Movie
         </a>
+
 
         <button
           class="book-card"
@@ -402,32 +671,133 @@ function createMovieCard(movie) {
   `;
 
 
-  const poster =
+  const posterWrap =
     card.querySelector(
-      ".movie-poster"
+      ".poster-wrap"
     );
 
 
-  poster.addEventListener(
-    "error",
-    () => {
+  if (
+    typeof movie.poster ===
+      "string" &&
+    movie.poster.trim()
+  ) {
 
-      card.remove();
+    const image =
+      document.createElement(
+        "img"
+      );
 
-      updateDisplayedMovieCount();
-    }
-  );
+
+    image.className =
+      "movie-poster";
+
+    image.src =
+      movie.poster;
+
+    image.alt =
+      `${movie.title} poster`;
+
+    image.loading =
+      "lazy";
+
+
+    image.addEventListener(
+      "error",
+      () => {
+
+        image.remove();
+
+
+        posterWrap.prepend(
+          createPosterPlaceholder(
+            movie.title
+          )
+        );
+
+      },
+      {
+        once: true
+      }
+    );
+
+
+    posterWrap.prepend(
+      image
+    );
+
+  }
+
+  else {
+
+    posterWrap.prepend(
+      createPosterPlaceholder(
+        movie.title
+      )
+    );
+
+  }
 
 
   card
-    .querySelector(".book-card")
-    .addEventListener(
+    .querySelector(
+      ".book-card"
+    )
+    ?.addEventListener(
       "click",
       () => {
+
+        if (movieSelect) {
+
+          movieSelect.value =
+            movie.title;
+
+        }
+
+
+        updatePageContext({
+          movie:
+            movie.title,
+
+          language:
+            movie.language ||
+            null,
+
+          rating:
+            movie.rating ||
+            null
+        });
+
 
         openBooking(
           movie.title
         );
+
+      }
+    );
+
+
+  card
+    .querySelector(
+      ".details-card"
+    )
+    ?.addEventListener(
+      "click",
+      () => {
+
+        updatePageContext({
+          movie:
+            movie.title,
+
+          language:
+            movie.language ||
+            null,
+
+          rating:
+            movie.rating ||
+            null
+        });
+
       }
     );
 
@@ -436,95 +806,260 @@ function createMovieCard(movie) {
 }
 
 
-/* -------------------------------------------------------
-   RENDER MOVIES
-------------------------------------------------------- */
+/* ==========================================================
+   MOVIE LIST
+   ========================================================== */
 
-function renderMovies(
-  filter = "all"
-) {
+function getFilteredMovies() {
 
-  if (!movieGrid) return;
+  /*
+    The current JSON comes from the VOX
+    /movies/whatson catalogue.
 
+    It does not contain a reliable field distinguishing
+    "Now Showing" from "Coming Soon".
 
-  movieGrid.innerHTML = "";
+    Therefore we do not fabricate a Coming Soon list.
+  */
 
+  if (
+    activeMovieTab ===
+    "soon"
+  ) {
 
-  const list =
-    movies.filter(movie => {
+    return [];
 
-      const matchesLanguage =
-        filter === "all" ||
-        movie.language === filter;
-
-
-      const hasPoster =
-        typeof movie.poster ===
-          "string" &&
-        movie.poster.trim() !== "";
-
-
-      return (
-        matchesLanguage &&
-        hasPoster
-      );
-    });
-
-
-  list.forEach(movie => {
-
-    movieGrid.appendChild(
-      createMovieCard(movie)
-    );
-  });
-
-
-  if (!list.length) {
-
-    movieGrid.innerHTML = `
-      <p class="empty-state">
-        No movies available for this selection.
-      </p>
-    `;
   }
 
 
-  updateDisplayedMovieCount();
+  return movies.filter(
+    movie => {
+
+      return (
+        activeLanguage ===
+          "all" ||
+        movie.language ===
+          activeLanguage
+      );
+
+    }
+  );
+
 }
 
 
-/* -------------------------------------------------------
+/* ==========================================================
+   RENDER MOVIES
+   ========================================================== */
+
+function renderMovies() {
+
+  if (!movieGrid) {
+    return;
+  }
+
+
+  movieGrid.innerHTML =
+    "";
+
+
+  const filtered =
+    getFilteredMovies();
+
+
+  if (!filtered.length) {
+
+    movieGrid.innerHTML = `
+
+      <div class="empty-state">
+
+        ${
+          activeMovieTab === "soon"
+            ? "Coming Soon movies are not included in the current local catalogue."
+            : "No movies are available for this selection."
+        }
+
+      </div>
+    `;
+
+
+    if (viewAllButton) {
+
+      viewAllButton.hidden =
+        true;
+
+    }
+
+
+    updateDisplayedMovieCount(
+      0
+    );
+
+
+    return;
+  }
+
+
+  const visibleMovies =
+    showAllMovies
+      ? filtered
+      : filtered.slice(
+          0,
+          10
+        );
+
+
+  visibleMovies.forEach(
+    movie => {
+
+      movieGrid.appendChild(
+        createMovieCard(
+          movie
+        )
+      );
+
+    }
+  );
+
+
+  if (viewAllButton) {
+
+    viewAllButton.hidden =
+      filtered.length <=
+      10;
+
+
+    viewAllButton.textContent =
+      showAllMovies
+        ? "SHOW LESS"
+        : "VIEW ALL MOVIES";
+
+  }
+
+
+  updateDisplayedMovieCount(
+    visibleMovies.length
+  );
+
+}
+
+
+/* ==========================================================
    MOVIE COUNT
-------------------------------------------------------- */
+   ========================================================== */
 
-function updateDisplayedMovieCount() {
+function updateDisplayedMovieCount(
+  visibleCount = 0
+) {
 
-  if (!liveStatus) return;
-
-
-  const visibleCards =
-    movieGrid
-      ?.querySelectorAll(
-        ".movie-card"
-      )
-      .length || 0;
+  if (!liveStatus) {
+    return;
+  }
 
 
   liveStatus.textContent =
-    `Movie catalogue • ${visibleCards} movies`;
+    `Movie catalogue • ${visibleCount} movies`;
+
 }
 
 
-/* -------------------------------------------------------
-   LOAD MOVIES / CINEMAS
-------------------------------------------------------- */
+/* ==========================================================
+   MOVIE TABS
+   ========================================================== */
+
+document
+  .querySelectorAll(
+    ".movie-tab"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          document
+            .querySelectorAll(
+              ".movie-tab"
+            )
+            .forEach(
+              item =>
+                item.classList.remove(
+                  "active"
+                )
+            );
+
+
+          button.classList.add(
+            "active"
+          );
+
+
+          activeMovieTab =
+            button.dataset.movieTab ||
+            "now";
+
+
+          showAllMovies =
+            false;
+
+
+          renderMovies();
+
+        }
+      );
+
+    }
+  );
+
+
+/* ==========================================================
+   VIEW ALL
+   ========================================================== */
+
+viewAllButton
+  ?.addEventListener(
+    "click",
+    () => {
+
+      showAllMovies =
+        !showAllMovies;
+
+
+      renderMovies();
+
+
+      if (!showAllMovies) {
+
+        document
+          .getElementById(
+            "movies"
+          )
+          ?.scrollIntoView({
+            behavior:
+              "smooth",
+
+            block:
+              "start"
+          });
+
+      }
+
+    }
+  );
+
+
+/* ==========================================================
+   LOAD CATALOGUE
+   ========================================================== */
 
 async function loadCatalogue() {
 
   if (liveStatus) {
 
     liveStatus.textContent =
-      "Loading movie catalogue…";
+      "Loading movie catalogue...";
+
   }
 
 
@@ -533,23 +1068,26 @@ async function loadCatalogue() {
     const [
       movieResponse,
       cinemaResponse
-    ] = await Promise.all([
+    ] =
+      await Promise.all([
 
-      fetch(
-        "data/movies.json",
-        {
-          cache: "no-store"
-        }
-      ),
+        fetch(
+          "data/movies.json",
+          {
+            cache:
+              "no-store"
+          }
+        ),
 
-      fetch(
-        "data/cinemas.json",
-        {
-          cache: "no-store"
-        }
-      )
+        fetch(
+          "data/cinemas.json",
+          {
+            cache:
+              "no-store"
+          }
+        )
 
-    ]);
+      ]);
 
 
     if (
@@ -560,11 +1098,13 @@ async function loadCatalogue() {
       throw new Error(
         "Catalogue files unavailable"
       );
+
     }
 
 
     const movieData =
       await movieResponse.json();
+
 
     const cinemaData =
       await cinemaResponse.json();
@@ -591,6 +1131,7 @@ async function loadCatalogue() {
       throw new Error(
         "Movie catalogue is empty"
       );
+
     }
 
 
@@ -598,25 +1139,17 @@ async function loadCatalogue() {
 
       cinemas =
         fallbackCinemas;
-    }
 
-
-    if (liveStatus) {
-
-      liveStatus.classList.remove(
-        "warn"
-      );
-
-      liveStatus.classList.add(
-        "ok"
-      );
     }
 
 
     if (liveUpdated) {
 
       liveUpdated.textContent =
-        "";
+        movieData.updated_at
+          ? `Updated ${movieData.updated_at}`
+          : "";
+
     }
 
   }
@@ -624,13 +1157,14 @@ async function loadCatalogue() {
   catch (error) {
 
     console.warn(
-      "Using fallback movie data:",
+      "Using fallback catalogue:",
       error
     );
 
 
     movies =
       fallbackMovies;
+
 
     cinemas =
       fallbackCinemas;
@@ -641,13 +1175,6 @@ async function loadCatalogue() {
       liveStatus.textContent =
         "Demo movie catalogue";
 
-      liveStatus.classList.remove(
-        "ok"
-      );
-
-      liveStatus.classList.add(
-        "warn"
-      );
     }
 
 
@@ -655,7 +1182,9 @@ async function loadCatalogue() {
 
       liveUpdated.textContent =
         "";
+
     }
+
   }
 
 
@@ -664,27 +1193,31 @@ async function loadCatalogue() {
   buildFilters();
 
   renderMovies();
+
 }
 
 
-/* -------------------------------------------------------
-   BOOKING MODAL
-------------------------------------------------------- */
+/* ==========================================================
+   BOOKING MODAL ELEMENTS
+   ========================================================== */
 
 const bookingModal =
   document.getElementById(
     "modal"
   );
 
+
 const modalTitle =
   document.getElementById(
     "modalTitle"
   );
 
+
 const modalCopy =
   document.getElementById(
     "modalCopy"
   );
+
 
 const showtimes =
   document.getElementById(
@@ -692,7 +1225,45 @@ const showtimes =
   );
 
 
-function openBooking(title) {
+/* ==========================================================
+   MODAL UTILITIES
+   ========================================================== */
+
+function lockPage() {
+
+  document.body.classList.add(
+    "modal-open"
+  );
+
+}
+
+
+function unlockPageIfClear() {
+
+  const anyModalOpen =
+    document.querySelector(
+      ".modal:not([hidden])"
+    );
+
+
+  if (!anyModalOpen) {
+
+    document.body.classList.remove(
+      "modal-open"
+    );
+
+  }
+
+}
+
+
+/* ==========================================================
+   BOOKING MODAL
+   ========================================================== */
+
+function openBooking(
+  title
+) {
 
   if (
     !bookingModal ||
@@ -700,14 +1271,16 @@ function openBooking(title) {
   ) {
 
     showMessage(
-      `Selected ${title}`
+      `Selected ${title}.`
     );
 
     return;
+
   }
 
 
-  selectedTime = "";
+  selectedTime =
+    "";
 
 
   const cinema =
@@ -715,80 +1288,159 @@ function openBooking(title) {
     "your preferred cinema";
 
 
+  const selectedDate =
+    dateSelect?.value ||
+    null;
+
+
+  updatePageContext({
+    movie:
+      title ||
+      null,
+
+    cinema:
+      cinemaSelect?.value ||
+      null,
+
+    date:
+      selectedDate,
+
+    session:
+      null
+  });
+
+
   if (modalTitle) {
 
     modalTitle.textContent =
       title ||
       "Choose a showtime";
+
   }
 
 
   if (modalCopy) {
 
     modalCopy.textContent =
-      `Select a showtime at ${cinema}.`;
+      cinemaSelect?.value
+        ? `Select a showtime at ${cinema}.`
+        : "Select a showtime. You can choose your cinema during the conversation.";
+
   }
 
 
-  showtimes.innerHTML = "";
+  showtimes.innerHTML =
+    "";
 
 
-  [
+  /*
+    These are demo presentation times.
+
+    They can later be replaced directly by
+    Vista session availability.
+  */
+
+  const demoTimes = [
     "11:15 AM",
     "1:45 PM",
     "4:30 PM",
     "7:15 PM",
     "10:00 PM"
-  ].forEach(time => {
-
-    const button =
-      document.createElement(
-        "button"
-      );
-
-    button.className =
-      "showtime";
-
-    button.type =
-      "button";
-
-    button.textContent =
-      time;
+  ];
 
 
-    button.addEventListener(
-      "click",
-      () => {
+  demoTimes.forEach(
+    time => {
 
-        showtimes
-          .querySelectorAll(
-            ".showtime"
-          )
-          .forEach(item =>
-            item.classList.remove(
-              "selected"
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "showtime";
+
+
+      button.type =
+        "button";
+
+
+      button.textContent =
+        time;
+
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          showtimes
+            .querySelectorAll(
+              ".showtime"
             )
+            .forEach(
+              item =>
+                item.classList.remove(
+                  "selected"
+                )
+            );
+
+
+          button.classList.add(
+            "selected"
           );
 
 
-        button.classList.add(
-          "selected"
-        );
-
-        selectedTime =
-          time;
-      }
-    );
+          selectedTime =
+            time;
 
 
-    showtimes.appendChild(
-      button
-    );
-  });
+          updatePageContext({
+            session:
+              {
+                displayTime:
+                  time
+              }
+          });
+
+        }
+      );
+
+
+      showtimes.appendChild(
+        button
+      );
+
+    }
+  );
 
 
   bookingModal.hidden =
     false;
+
+
+  lockPage();
+
+}
+
+
+/* ==========================================================
+   CLOSE BOOKING MODAL
+   ========================================================== */
+
+function closeBookingModal() {
+
+  if (!bookingModal) {
+    return;
+  }
+
+
+  bookingModal.hidden =
+    true;
+
+
+  unlockPageIfClear();
+
 }
 
 
@@ -798,11 +1450,7 @@ document
   )
   ?.addEventListener(
     "click",
-    () => {
-
-      bookingModal.hidden =
-        true;
-    }
+    closeBookingModal
   );
 
 
@@ -816,12 +1464,17 @@ bookingModal
         bookingModal
       ) {
 
-        bookingModal.hidden =
-          true;
+        closeBookingModal();
+
       }
+
     }
   );
 
+
+/* ==========================================================
+   CONTINUE FROM BOOKING MODAL
+   ========================================================== */
 
 document
   .getElementById(
@@ -838,20 +1491,24 @@ document
         );
 
         return;
+
       }
 
 
       showMessage(
-        `${selectedTime} selected. ` +
-        `For the demo, Voxi can complete the full booking journey.`
+        `${selectedTime} selected. The assistant can continue the booking journey.`
       );
 
 
-      bookingModal.hidden =
-        true;
+      closeBookingModal();
+
     }
   );
 
+
+/* ==========================================================
+   FIND TIMES
+   ========================================================== */
 
 document
   .getElementById(
@@ -867,88 +1524,119 @@ document
         "a movie";
 
 
+      updatePageContext({
+        movie:
+          movieSelect?.value ||
+          selectedMovie,
+
+        cinema:
+          cinemaSelect?.value ||
+          null,
+
+        date:
+          dateSelect?.value ||
+          null
+      });
+
+
       openBooking(
         selectedMovie
       );
+
     }
   );
 
 
+/* ==========================================================
+   HERO BOOK BUTTON
+   ========================================================== */
+
 document
   .getElementById(
-    "viewAllBtn"
+    "heroBookBtn"
   )
   ?.addEventListener(
     "click",
     () => {
 
-      filterWrap
-        ?.querySelectorAll(
-          ".chip"
-        )
-        .forEach(item =>
-          item.classList.remove(
-            "active"
-          )
-        );
+      const heroMovie =
+        "The Odyssey";
 
 
-      filterWrap
-        ?.querySelector(
-          '[data-filter="all"]'
-        )
-        ?.classList.add(
-          "active"
-        );
+      if (movieSelect) {
+
+        const exists =
+          [...movieSelect.options]
+            .some(
+              option =>
+                option.value ===
+                heroMovie
+            );
 
 
-      renderMovies(
-        "all"
+        if (exists) {
+
+          movieSelect.value =
+            heroMovie;
+
+        }
+
+      }
+
+
+      updatePageContext({
+        movie:
+          heroMovie
+      });
+
+
+      openBooking(
+        heroMovie
       );
 
-
-      movieGrid
-        ?.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
     }
   );
 
 
-/* -------------------------------------------------------
-   SITE LOGIN MODAL
-------------------------------------------------------- */
+/* ==========================================================
+   SITE LOGIN ELEMENTS
+   ========================================================== */
 
 const loginModal =
   document.getElementById(
     "loginModal"
   );
 
+
 const loginClose =
   document.getElementById(
     "loginClose"
   );
+
 
 const siteLoginForm =
   document.getElementById(
     "siteLoginForm"
   );
 
+
 const siteLoginIdentifier =
   document.getElementById(
     "siteLoginIdentifier"
   );
+
 
 const siteLoginPin =
   document.getElementById(
     "siteLoginPin"
   );
 
+
 const siteLoginError =
   document.getElementById(
     "siteLoginError"
   );
+
 
 const siteLoginSubmit =
   document.getElementById(
@@ -956,23 +1644,38 @@ const siteLoginSubmit =
   );
 
 
+/* ==========================================================
+   OPEN / CLOSE LOGIN
+   ========================================================== */
+
 function openSiteLogin() {
 
-  if (!loginModal) return;
+  if (!loginModal) {
+    return;
+  }
 
 
-  siteLoginError.hidden =
-    true;
+  if (siteLoginError) {
 
-  siteLoginError.textContent =
-    "";
+    siteLoginError.hidden =
+      true;
 
 
-  siteLoginForm.reset();
+    siteLoginError.textContent =
+      "";
+
+  }
+
+
+  siteLoginForm
+    ?.reset();
 
 
   loginModal.hidden =
     false;
+
+
+  lockPage();
 
 
   setTimeout(
@@ -981,16 +1684,23 @@ function openSiteLogin() {
         ?.focus(),
     50
   );
+
 }
 
 
 function closeSiteLogin() {
 
-  if (loginModal) {
-
-    loginModal.hidden =
-      true;
+  if (!loginModal) {
+    return;
   }
+
+
+  loginModal.hidden =
+    true;
+
+
+  unlockPageIfClear();
+
 }
 
 
@@ -1012,19 +1722,19 @@ loginModal
       ) {
 
         closeSiteLogin();
+
       }
+
     }
   );
 
 
-/* -------------------------------------------------------
-   VERIFY CUSTOMER AGAINST EXISTING VOXI DEMO API
+/* ==========================================================
+   CUSTOMER VALIDATION
 
-   This does NOT replace Voxi login.
-
-   It only validates the same demo credentials
-   and gives the host page the customer name.
-------------------------------------------------------- */
+   Uses the existing backend session/login interfaces.
+   Credentials are not stored by this page.
+   ========================================================== */
 
 async function verifyDemoCustomer(
   identifier,
@@ -1033,18 +1743,27 @@ async function verifyDemoCustomer(
 
   const sessionResponse =
     await fetch(
-      `${VOXI_API_BASE}/widget/session`,
+      `${CHAT_API_BASE}/widget/session`,
       {
-        method: "POST",
+        method:
+          "POST",
+
         headers: {
           "content-type":
             "application/json"
         },
-        body: JSON.stringify({
-          language: "en",
-          modality: "text",
-          channel: "web"
-        })
+
+        body:
+          JSON.stringify({
+            language:
+              "en",
+
+            modality:
+              "text",
+
+            channel:
+              "web"
+          })
       }
     );
 
@@ -1054,6 +1773,7 @@ async function verifyDemoCustomer(
     throw new Error(
       "Could not start the customer session."
     );
+
   }
 
 
@@ -1063,27 +1783,45 @@ async function verifyDemoCustomer(
 
   const loginResponse =
     await fetch(
-      `${VOXI_API_BASE}/widget/login`,
+      `${CHAT_API_BASE}/widget/login`,
       {
-        method: "POST",
+        method:
+          "POST",
+
         headers: {
+
           "content-type":
             "application/json",
 
           authorization:
             `Bearer ${session.token}`
+
         },
 
-        body: JSON.stringify({
-          identifier,
-          pin
-        })
+        body:
+          JSON.stringify({
+            identifier,
+            pin
+          })
       }
     );
 
 
-  const result =
-    await loginResponse.json();
+  let result = {};
+
+
+  try {
+
+    result =
+      await loginResponse.json();
+
+  }
+
+  catch {
+
+    result = {};
+
+  }
 
 
   if (
@@ -1096,23 +1834,26 @@ async function verifyDemoCustomer(
       result.error ||
       "Could not sign in."
     );
+
   }
 
 
   /*
-    Best-effort cleanup of the temporary
+    Best-effort cleanup of the temporary page
     validation session.
 
-    The real authenticated session will
-    belong to the Voxi widget.
+    The conversational widget owns its own
+    authenticated session separately.
   */
 
   fetch(
-    `${VOXI_API_BASE}/widget/logout`,
+    `${CHAT_API_BASE}/widget/logout`,
     {
-      method: "POST",
+      method:
+        "POST",
 
       headers: {
+
         "content-type":
           "application/json",
 
@@ -1121,22 +1862,27 @@ async function verifyDemoCustomer(
             result.token ||
             session.token
           }`
+
       },
 
-      body: "{}"
+      body:
+        "{}"
     }
-  ).catch(
-    () => undefined
-  );
+  )
+    .catch(
+      () =>
+        undefined
+    );
 
 
   return result.customer;
+
 }
 
 
-/* -------------------------------------------------------
+/* ==========================================================
    WAIT HELPER
-------------------------------------------------------- */
+   ========================================================== */
 
 function waitFor(
   getter,
@@ -1145,77 +1891,160 @@ function waitFor(
 ) {
 
   return new Promise(
-    (resolve, reject) => {
+    (
+      resolve,
+      reject
+    ) => {
 
       const started =
         Date.now();
 
 
-      const check = () => {
+      const check =
+        () => {
 
-        let result = null;
-
-        try {
-
-          result =
-            getter();
-
-        }
-
-        catch {
-          result = null;
-        }
+          let result =
+            null;
 
 
-        if (result) {
+          try {
 
-          resolve(result);
+            result =
+              getter();
 
-          return;
-        }
+          }
+
+          catch {
+
+            result =
+              null;
+
+          }
 
 
-        if (
-          Date.now() -
-          started >=
-          timeout
-        ) {
+          if (result) {
 
-          reject(
-            new Error(
-              "Timed out waiting for Voxi."
-            )
+            resolve(
+              result
+            );
+
+            return;
+
+          }
+
+
+          if (
+            Date.now() -
+            started >=
+            timeout
+          ) {
+
+            reject(
+              new Error(
+                "Timed out waiting for the chat widget."
+              )
+            );
+
+            return;
+
+          }
+
+
+          setTimeout(
+            check,
+            interval
           );
 
-          return;
-        }
-
-
-        setTimeout(
-          check,
-          interval
-        );
-      };
+        };
 
 
       check();
+
     }
   );
+
 }
 
 
-/* -------------------------------------------------------
-   AUTO-LOGIN EXISTING VOXI WIDGET
+/* ==========================================================
+   INPUT VALUE HELPER
 
-   Noorul's widget uses an OPEN Shadow DOM.
+   Helps with React-controlled form inputs inside the
+   existing external widget.
+   ========================================================== */
 
-   We open its existing login sheet,
-   fill the same credentials and submit.
+function setInputValue(
+  input,
+  value
+) {
 
-   No changes to Noorul's code are required.
-------------------------------------------------------- */
+  const prototype =
+    Object.getPrototypeOf(
+      input
+    );
 
-async function syncVoxiLogin(
+
+  const descriptor =
+    Object.getOwnPropertyDescriptor(
+      prototype,
+      "value"
+    );
+
+
+  if (
+    descriptor &&
+    typeof descriptor.set ===
+      "function"
+  ) {
+
+    descriptor.set.call(
+      input,
+      value
+    );
+
+  }
+
+  else {
+
+    input.value =
+      value;
+
+  }
+
+
+  input.dispatchEvent(
+    new Event(
+      "input",
+      {
+        bubbles:
+          true
+      }
+    )
+  );
+
+
+  input.dispatchEvent(
+    new Event(
+      "change",
+      {
+        bubbles:
+          true
+      }
+    )
+  );
+
+}
+
+
+/* ==========================================================
+   SYNC LOGIN TO EXISTING CHAT WIDGET
+
+   The following technical object and DOM identifiers belong
+   to the currently deployed external embed and therefore
+   must remain unchanged for compatibility.
+   ========================================================== */
+
+async function syncChatLogin(
   identifier,
   pin
 ) {
@@ -1256,6 +2085,7 @@ async function syncVoxiLogin(
       'input[name="identifier"]'
     );
 
+
   const pinInput =
     form.querySelector(
       'input[name="pin"]'
@@ -1268,43 +2098,23 @@ async function syncVoxiLogin(
   ) {
 
     throw new Error(
-      "Voxi login fields were not found."
+      "Chat login fields were not found."
     );
+
   }
 
 
-  identifierInput.value =
-    identifier;
-
-  identifierInput.dispatchEvent(
-    new Event(
-      "input",
-      {
-        bubbles: true
-      }
-    )
+  setInputValue(
+    identifierInput,
+    identifier
   );
 
 
-  pinInput.value =
-    pin;
-
-  pinInput.dispatchEvent(
-    new Event(
-      "input",
-      {
-        bubbles: true
-      }
-    )
+  setInputValue(
+    pinInput,
+    pin
   );
 
-
-  /*
-    Submit Noorul's existing login form.
-
-    This is what actually authenticates
-    the Voxi conversation.
-  */
 
   if (
     typeof form.requestSubmit ===
@@ -1321,18 +2131,21 @@ async function syncVoxiLogin(
       new Event(
         "submit",
         {
-          bubbles: true,
-          cancelable: true
+          bubbles:
+            true,
+
+          cancelable:
+            true
         }
       )
     );
+
   }
 
 
   /*
-    Successful login changes the widget
-    header from "Log in" to
-    "<first name> · Log out".
+    Successful authentication changes the widget's
+    authentication control from login to logout.
   */
 
   await waitFor(
@@ -1354,18 +2167,20 @@ async function syncVoxiLogin(
       return /log out|خروج/i.test(
         text
       );
+
     },
     12000
   );
 
 
   return true;
+
 }
 
 
-/* -------------------------------------------------------
-   WEBSITE + VOXI SIGN IN
-------------------------------------------------------- */
+/* ==========================================================
+   WEBSITE + CHAT SIGN-IN
+   ========================================================== */
 
 siteLoginForm
   ?.addEventListener(
@@ -1377,13 +2192,16 @@ siteLoginForm
 
       const identifier =
         siteLoginIdentifier
-          .value
-          .trim();
+          ?.value
+          .trim() ||
+        "";
+
 
       const pin =
         siteLoginPin
-          .value
-          .trim();
+          ?.value
+          .trim() ||
+        "";
 
 
       if (
@@ -1392,25 +2210,39 @@ siteLoginForm
       ) {
 
         return;
+
       }
 
 
-      siteLoginError.hidden =
-        true;
+      if (siteLoginError) {
 
-      siteLoginSubmit.disabled =
-        true;
+        siteLoginError.hidden =
+          true;
 
-      siteLoginSubmit.textContent =
-        "Signing in…";
+
+        siteLoginError.textContent =
+          "";
+
+      }
+
+
+      if (siteLoginSubmit) {
+
+        siteLoginSubmit.disabled =
+          true;
+
+
+        siteLoginSubmit.textContent =
+          "SIGNING IN...";
+
+      }
 
 
       try {
 
         /*
           Step 1:
-          validate customer and obtain
-          display information for website.
+          Validate the customer for the host website.
         */
 
         const customer =
@@ -1422,86 +2254,112 @@ siteLoginForm
 
         /*
           Step 2:
-          sign the SAME customer into
-          Noorul's actual Voxi widget.
+          Authenticate the same customer in the
+          existing conversational widget.
         */
 
-        await syncVoxiLogin(
+        await syncChatLogin(
           identifier,
           pin
         );
 
 
-        /*
-          Only mark the website logged in
-          after BOTH have succeeded.
-        */
-
         hostCustomer =
           customer;
 
 
-        loginButton.textContent =
-          `Hi, ${customer.firstName}`;
+        if (loginButton) {
 
-        loginButton.classList.add(
-          "account-signed-in"
-        );
+          loginButton.textContent =
+            customer.firstName
+              ? `HI, ${customer.firstName.toUpperCase()}`
+              : "ACCOUNT";
 
-        loginButton.title =
-          "Signed in to VOX and Voxi";
+
+          loginButton.classList.add(
+            "account-signed-in"
+          );
+
+
+          loginButton.title =
+            "Signed in";
+
+        }
+
+
+        updatePageContext({
+          authenticated:
+            true
+        });
 
 
         closeSiteLogin();
 
 
         showMessage(
-          `Welcome ${customer.firstName}. ` +
-          `Voxi now recognises your customer profile.`
+          customer.firstName
+            ? `Welcome ${customer.firstName}. Your customer profile is now available to the assistant.`
+            : "You are now signed in."
         );
 
 
         /*
-          Credentials are deliberately
-          NOT stored anywhere.
+          Never retain the PIN.
         */
 
-        siteLoginPin.value =
-          "";
+        if (siteLoginPin) {
+
+          siteLoginPin.value =
+            "";
+
+        }
 
       }
 
       catch (error) {
 
         console.error(
-          "VOX/Voxi login failed:",
+          "Customer login failed:",
           error
         );
 
 
-        siteLoginError.textContent =
-          error.message ||
-          "Could not sign in.";
+        if (siteLoginError) {
 
-        siteLoginError.hidden =
-          false;
+          siteLoginError.textContent =
+            error.message ||
+            "Could not sign in.";
+
+
+          siteLoginError.hidden =
+            false;
+
+        }
+
       }
 
       finally {
 
-        siteLoginSubmit.disabled =
-          false;
+        if (siteLoginSubmit) {
 
-        siteLoginSubmit.textContent =
-          "Sign in";
+          siteLoginSubmit.disabled =
+            false;
+
+
+          siteLoginSubmit.textContent =
+            "SIGN IN";
+
+        }
+
       }
+
     }
   );
 
 
-/* -------------------------------------------------------
-   WEBSITE + VOXI LOGOUT
-------------------------------------------------------- */
+/* ==========================================================
+   SIGN OUT
+   ========================================================== */
 
 async function signOutEverywhere() {
 
@@ -1510,6 +2368,7 @@ async function signOutEverywhere() {
     if (window.Voxi) {
 
       window.Voxi.logout();
+
     }
 
   }
@@ -1517,9 +2376,10 @@ async function signOutEverywhere() {
   catch (error) {
 
     console.warn(
-      "Voxi logout warning:",
+      "Chat logout warning:",
       error
     );
+
   }
 
 
@@ -1527,26 +2387,39 @@ async function signOutEverywhere() {
     null;
 
 
-  loginButton.textContent =
-    "Sign in";
+  if (loginButton) {
 
-  loginButton.classList.remove(
-    "account-signed-in"
-  );
+    loginButton.textContent =
+      "SIGN IN";
 
-  loginButton.title =
-    "";
+
+    loginButton.classList.remove(
+      "account-signed-in"
+    );
+
+
+    loginButton.title =
+      "";
+
+  }
+
+
+  updatePageContext({
+    authenticated:
+      false
+  });
 
 
   showMessage(
     "You are now browsing as a guest."
   );
+
 }
 
 
-/* -------------------------------------------------------
-   HEADER LOGIN BUTTON
-------------------------------------------------------- */
+/* ==========================================================
+   LOGIN BUTTON
+   ========================================================== */
 
 loginButton
   ?.addEventListener(
@@ -1558,26 +2431,34 @@ loginButton
         openSiteLogin();
 
         return;
+
       }
+
+
+      const customerName =
+        hostCustomer.firstName ||
+        "this account";
 
 
       const confirmed =
         window.confirm(
-          `Sign out ${hostCustomer.firstName}?`
+          `Sign out ${customerName}?`
         );
 
 
       if (confirmed) {
 
         await signOutEverywhere();
+
       }
+
     }
   );
 
 
-/* -------------------------------------------------------
+/* ==========================================================
    SEARCH
-------------------------------------------------------- */
+   ========================================================== */
 
 document
   .getElementById(
@@ -1593,52 +2474,129 @@ document
         );
 
 
-      if (!query) return;
+      if (!query) {
+        return;
+      }
+
+
+      const normalisedQuery =
+        query
+          .trim()
+          .toLowerCase();
 
 
       const match =
-        movies.find(movie =>
-          movie.title
-            .toLowerCase()
-            .includes(
-              query
-                .toLowerCase()
-            )
+        movies.find(
+          movie =>
+            movie.title
+              .toLowerCase()
+              .includes(
+                normalisedQuery
+              )
         );
 
 
-      if (match) {
-
-        if (movieSelect) {
-
-          movieSelect.value =
-            match.title;
-        }
-
-
-        document
-          .getElementById(
-            "movies"
-          )
-          ?.scrollIntoView({
-            behavior: "smooth"
-          });
-
-      }
-
-      else {
+      if (!match) {
 
         showMessage(
           "No matching movie found."
         );
+
+        return;
+
       }
+
+
+      activeMovieTab =
+        "now";
+
+
+      activeLanguage =
+        "all";
+
+
+      showAllMovies =
+        true;
+
+
+      document
+        .querySelectorAll(
+          ".movie-tab"
+        )
+        .forEach(
+          button => {
+
+            button.classList.toggle(
+              "active",
+              button.dataset.movieTab ===
+                "now"
+            );
+
+          }
+        );
+
+
+      filterWrap
+        ?.querySelectorAll(
+          ".chip"
+        )
+        .forEach(
+          button => {
+
+            button.classList.toggle(
+              "active",
+              button.dataset.filter ===
+                "all"
+            );
+
+          }
+        );
+
+
+      renderMovies();
+
+
+      if (movieSelect) {
+
+        movieSelect.value =
+          match.title;
+
+      }
+
+
+      updatePageContext({
+        movie:
+          match.title,
+
+        language:
+          match.language ||
+          null,
+
+        rating:
+          match.rating ||
+          null
+      });
+
+
+      document
+        .getElementById(
+          "movies"
+        )
+        ?.scrollIntoView({
+          behavior:
+            "smooth",
+
+          block:
+            "start"
+        });
+
     }
   );
 
 
-/* -------------------------------------------------------
-   MOBILE MENU DEMO
-------------------------------------------------------- */
+/* ==========================================================
+   MOBILE MENU
+   ========================================================== */
 
 document
   .getElementById(
@@ -1648,18 +2606,98 @@ document
     "click",
     () => {
 
-      window.alert(
-        "Movies • Experiences • Offers • Food & Drinks"
-      );
+      if (!mobileMenu) {
+        return;
+      }
+
+
+      mobileMenu.hidden =
+        !mobileMenu.hidden;
+
     }
   );
 
 
-/* -------------------------------------------------------
-   MESSAGE
-------------------------------------------------------- */
+mobileMenu
+  ?.querySelectorAll(
+    "a"
+  )
+  .forEach(
+    link => {
 
-function showMessage(message) {
+      link.addEventListener(
+        "click",
+        () => {
+
+          mobileMenu.hidden =
+            true;
+
+        }
+      );
+
+    }
+  );
+
+
+/* ==========================================================
+   KEYBOARD
+   ========================================================== */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key !==
+      "Escape"
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      bookingModal &&
+      !bookingModal.hidden
+    ) {
+
+      closeBookingModal();
+
+    }
+
+
+    if (
+      loginModal &&
+      !loginModal.hidden
+    ) {
+
+      closeSiteLogin();
+
+    }
+
+
+    if (
+      mobileMenu &&
+      !mobileMenu.hidden
+    ) {
+
+      mobileMenu.hidden =
+        true;
+
+    }
+
+  }
+);
+
+
+/* ==========================================================
+   SIMPLE PAGE MESSAGE
+   ========================================================== */
+
+function showMessage(
+  message
+) {
 
   const bookingResult =
     document.getElementById(
@@ -1667,16 +2705,43 @@ function showMessage(message) {
     );
 
 
-  if (bookingResult) {
-
-    bookingResult.textContent =
-      message;
+  if (!bookingResult) {
+    return;
   }
+
+
+  bookingResult.textContent =
+    message;
+
+
+  clearTimeout(
+    showMessage.timer
+  );
+
+
+  showMessage.timer =
+    setTimeout(
+      () => {
+
+        if (
+          bookingResult.textContent ===
+          message
+        ) {
+
+          bookingResult.textContent =
+            "";
+
+        }
+
+      },
+      7000
+    );
+
 }
 
 
-/* -------------------------------------------------------
+/* ==========================================================
    START
-------------------------------------------------------- */
+   ========================================================== */
 
 loadCatalogue();
