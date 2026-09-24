@@ -1069,6 +1069,12 @@ img {
 .live-banner-slide img {
 
   width:
+    calc(100% + 120px);
+
+  max-width:
+    none;
+
+  height:
     100%;
 
   aspect-ratio:
@@ -1076,6 +1082,12 @@ img {
 
   object-fit:
     cover;
+
+  object-position:
+    center;
+
+  margin-left:
+    -60px;
 
 }
 
@@ -1126,13 +1138,13 @@ img {
     50%;
 
   z-index:
-    12;
+    25;
 
   width:
-    64px;
+    56px;
 
   height:
-    76px;
+    56px;
 
   padding:
     0;
@@ -1140,13 +1152,54 @@ img {
   border:
     0;
 
+  border-radius:
+    50%;
+
   background:
-    transparent;
+    rgba(255, 255, 255, 0.98);
+
+  box-shadow:
+    0 3px 14px rgba(0, 0, 0, 0.28);
 
   transform:
-    translateY(
-      -50%
-    );
+    translateY(-50%);
+
+}
+
+
+.live-banner-arrow:hover {
+
+  background:
+    #ffffff;
+
+}
+
+
+.live-banner-arrow::before {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    50%;
+
+  left:
+    50%;
+
+  width:
+    12px;
+
+  height:
+    12px;
+
+  border-top:
+    3px solid #111111;
+
+  border-right:
+    3px solid #111111;
 
 }
 
@@ -1157,17 +1210,18 @@ img {
     calc(
       50% -
       (
-        var(--hero-width) /
-        2
-      ) -
-      4px
+        var(--hero-width) / 2
+      ) +
+      24px
     );
 
+}
+
+
+.live-banner-prev::before {
+
   transform:
-    translate(
-      -50%,
-      -50%
-    );
+    translate(-35%, -50%) rotate(-135deg);
 
 }
 
@@ -1178,17 +1232,18 @@ img {
     calc(
       50% -
       (
-        var(--hero-width) /
-        2
-      ) -
-      4px
+        var(--hero-width) / 2
+      ) +
+      24px
     );
 
+}
+
+
+.live-banner-next::before {
+
   transform:
-    translate(
-      50%,
-      -50%
-    );
+    translate(-65%, -50%) rotate(45deg);
 
 }
 
@@ -2963,6 +3018,122 @@ main {
     transition:
       none;
 
+  }
+
+}
+/* ==========================================================
+   BANNER ARROW FIX
+   Paste this at the VERY END of styles.css
+   ========================================================== */
+
+
+/* Crop the arrows that are baked into the banner images */
+
+.live-banner-slide img {
+  width: calc(100% + 120px);
+  max-width: none;
+  height: 100%;
+  margin-left: -60px;
+  object-fit: cover;
+  object-position: center;
+}
+
+
+/* Create proper arrows on top of the carousel */
+
+.live-banner-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 50;
+
+  width: 56px;
+  height: 56px;
+
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 3px 14px rgba(0, 0, 0, 0.30);
+
+  transform: translateY(-50%);
+}
+
+
+/* Arrow symbol */
+
+.live-banner-arrow::before {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 13px;
+  height: 13px;
+
+  border-top: 4px solid #111111;
+  border-right: 4px solid #111111;
+}
+
+
+/* LEFT ARROW */
+
+.live-banner-prev {
+  left: calc(
+    50% - (var(--hero-width) / 2) + 28px
+  );
+}
+
+
+.live-banner-prev::before {
+  transform:
+    translate(-35%, -50%)
+    rotate(-135deg);
+}
+
+
+/* RIGHT ARROW */
+
+.live-banner-next {
+  right: calc(
+    50% - (var(--hero-width) / 2) + 28px
+  );
+}
+
+
+.live-banner-next::before {
+  transform:
+    translate(-65%, -50%)
+    rotate(45deg);
+}
+
+
+/* Mobile */
+
+@media (max-width: 560px) {
+
+  .live-banner-slide img {
+    width: calc(100% + 80px);
+    margin-left: -40px;
+  }
+
+
+  .live-banner-arrow {
+    width: 44px;
+    height: 44px;
+  }
+
+
+  .live-banner-arrow::before {
+    width: 10px;
+    height: 10px;
+
+    border-top-width: 3px;
+    border-right-width: 3px;
   }
 
 }
