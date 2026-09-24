@@ -1,27 +1,13 @@
 /* ==========================================================
    VOX CINEMAS UAE
-   LIVE-SITE VISUAL REPLICA
-
-   Visual reference:
-   current VOX UAE screenshots supplied by user.
-
-   IMPORTANT:
-   This CSS intentionally follows the live site's dark,
-   compact presentation rather than the previous redesign.
+   LIVE SITE REPLICA
    ========================================================== */
 
-
-/* ==========================================================
-   TOKENS
-   ========================================================== */
 
 :root {
 
   --vox-blue:
     #00a9dc;
-
-  --vox-blue-dark:
-    #008fb9;
 
   --vox-pink:
     #e10078;
@@ -49,12 +35,6 @@
 
   --field-border:
     #555758;
-
-  --white:
-    #ffffff;
-
-  --muted:
-    #a7a7a7;
 
   --content-width:
     940px;
@@ -90,11 +70,11 @@ html {
   padding:
     0;
 
-  scroll-behavior:
-    smooth;
-
   background:
     var(--page-bg);
+
+  scroll-behavior:
+    smooth;
 
 }
 
@@ -107,25 +87,16 @@ body {
   margin:
     0;
 
-  padding:
-    0;
-
-  overflow-x:
-    hidden;
-
   background:
     var(--page-bg);
 
   color:
-    var(--white);
+    #ffffff;
 
   font-family:
     Arial,
     Helvetica,
     sans-serif;
-
-  font-size:
-    14px;
 
   -webkit-font-smoothing:
     antialiased;
@@ -175,9 +146,6 @@ img {
   display:
     block;
 
-  max-width:
-    100%;
-
 }
 
 
@@ -190,11 +158,7 @@ img {
 
 
 /* ==========================================================
-   SHARED WIDTH
-
-   The current VOX content is much narrower than the
-   previous version. Approximately 940px in the supplied
-   desktop screenshots.
+   WIDTH
    ========================================================== */
 
 .site-shell,
@@ -203,7 +167,10 @@ img {
   width:
     min(
       var(--content-width),
-      calc(100% - 32px)
+      calc(
+        100% -
+        32px
+      )
     );
 
   margin:
@@ -213,7 +180,7 @@ img {
 
 
 /* ==========================================================
-   TOP BLACK UTILITY BAR
+   UTILITY BAR
    ========================================================== */
 
 .utility-bar {
@@ -228,7 +195,7 @@ img {
     40px;
 
   background:
-    var(--utility-bg);
+    #000000;
 
 }
 
@@ -327,10 +294,9 @@ img {
     #ffffff;
 
   transform:
-    rotate(45deg);
-
-  transform-origin:
-    left center;
+    rotate(
+      45deg
+    );
 
 }
 
@@ -353,12 +319,6 @@ img {
   font-weight:
     900;
 
-  line-height:
-    40px;
-
-  white-space:
-    nowrap;
-
 }
 
 
@@ -378,14 +338,6 @@ img {
 }
 
 
-.utility-divider {
-
-  display:
-    none;
-
-}
-
-
 .country-selector {
 
   display:
@@ -397,14 +349,8 @@ img {
   gap:
     10px;
 
-  color:
-    #ffffff;
-
   font-size:
     12px;
-
-  font-weight:
-    900;
 
 }
 
@@ -418,14 +364,14 @@ img {
   position:
     relative;
 
-  display:
-    block;
-
   width:
     23px;
 
   height:
     16px;
+
+  display:
+    block;
 
   overflow:
     hidden;
@@ -564,9 +510,6 @@ img {
 
 .vox-logo {
 
-  display:
-    block;
-
   width:
     118px;
 
@@ -584,9 +527,6 @@ img {
   height:
     auto;
 
-  object-fit:
-    contain;
-
 }
 
 
@@ -600,9 +540,6 @@ img {
 
   gap:
     34px;
-
-  min-width:
-    0;
 
 }
 
@@ -665,7 +602,7 @@ img {
 
 
 /* ==========================================================
-   MOBILE MENU BUTTON
+   MENU
    ========================================================== */
 
 .menu-btn {
@@ -714,14 +651,7 @@ img {
 }
 
 
-/* ==========================================================
-   MOBILE NAV
-   ========================================================== */
-
 .mobile-nav {
-
-  position:
-    relative;
 
   z-index:
     2400;
@@ -731,15 +661,6 @@ img {
 
   background:
     #202223;
-
-  border-top:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.07
-    );
 
 }
 
@@ -822,14 +743,6 @@ img {
 }
 
 
-.booking-field {
-
-  min-width:
-    0;
-
-}
-
-
 .booking-field select {
 
   width:
@@ -839,7 +752,8 @@ img {
     39px;
 
   padding:
-    0 40px 0 12px;
+    0 40px
+    0 12px;
 
   border:
     1px solid
@@ -900,9 +814,6 @@ img {
   font-weight:
     700;
 
-  transition:
-    background 0.15s ease;
-
 }
 
 
@@ -927,14 +838,14 @@ img {
 
 .booking-result:not(:empty) {
 
-  padding:
-    0 0 9px;
+  padding-bottom:
+    9px;
 
 }
 
 
 /* ==========================================================
-   LIVE PROMOTIONAL BANNER
+   LIVE BANNER
    ========================================================== */
 
 .live-banner {
@@ -1004,13 +915,6 @@ img {
       2
     );
 
-  transform:
-    translate3d(
-      0,
-      0,
-      0
-    );
-
   transition:
     transform
     430ms
@@ -1051,10 +955,6 @@ img {
   opacity:
     0.96;
 
-  transition:
-    opacity
-    0.2s ease;
-
 }
 
 
@@ -1066,19 +966,24 @@ img {
 }
 
 
+/*
+  ORIGINAL VOX ASSETS
+  No screenshot cropping required.
+*/
+
 .live-banner-slide img {
 
   width:
-    calc(100% + 120px);
-
-  max-width:
-    none;
-
-  height:
     100%;
 
+  max-width:
+    100%;
+
+  height:
+    auto;
+
   aspect-ratio:
-    880 / 441;
+    880 / 440;
 
   object-fit:
     cover;
@@ -1086,14 +991,11 @@ img {
   object-position:
     center;
 
-  margin-left:
-    -60px;
-
 }
 
 
 /* ==========================================================
-   CLICK AREA OVER BAKED-IN BOOK BUTTON
+   BOOK BUTTON CLICK AREA
    ========================================================== */
 
 .banner-book-hotspot {
@@ -1102,31 +1004,25 @@ img {
     absolute;
 
   left:
-    34%;
+    33%;
 
   bottom:
-    5%;
+    4%;
 
   width:
-    31%;
+    34%;
 
   height:
-    13%;
+    15%;
 
   z-index:
-    4;
-
-  cursor:
-    pointer;
+    5;
 
 }
 
 
 /* ==========================================================
-   CAROUSEL ARROW HIT AREAS
-
-   Actual white circles/arrows are already visible in the
-   source banner artwork.
+   OVERLAY CAROUSEL ARROWS
    ========================================================== */
 
 .live-banner-arrow {
@@ -1138,7 +1034,7 @@ img {
     50%;
 
   z-index:
-    25;
+    50;
 
   width:
     56px;
@@ -1156,13 +1052,21 @@ img {
     50%;
 
   background:
-    rgba(255, 255, 255, 0.98);
+    #ffffff;
 
   box-shadow:
-    0 3px 14px rgba(0, 0, 0, 0.28);
+    0 3px 14px
+    rgba(
+      0,
+      0,
+      0,
+      0.30
+    );
 
   transform:
-    translateY(-50%);
+    translateY(
+      -50%
+    );
 
 }
 
@@ -1190,16 +1094,18 @@ img {
     50%;
 
   width:
-    12px;
+    13px;
 
   height:
-    12px;
+    13px;
 
   border-top:
-    3px solid #111111;
+    4px solid
+    #111111;
 
   border-right:
-    3px solid #111111;
+    4px solid
+    #111111;
 
 }
 
@@ -1210,9 +1116,10 @@ img {
     calc(
       50% -
       (
-        var(--hero-width) / 2
+        var(--hero-width) /
+        2
       ) +
-      24px
+      28px
     );
 
 }
@@ -1221,7 +1128,13 @@ img {
 .live-banner-prev::before {
 
   transform:
-    translate(-35%, -50%) rotate(-135deg);
+    translate(
+      -35%,
+      -50%
+    )
+    rotate(
+      -135deg
+    );
 
 }
 
@@ -1232,9 +1145,10 @@ img {
     calc(
       50% -
       (
-        var(--hero-width) / 2
+        var(--hero-width) /
+        2
       ) +
-      24px
+      28px
     );
 
 }
@@ -1243,7 +1157,13 @@ img {
 .live-banner-next::before {
 
   transform:
-    translate(-65%, -50%) rotate(45deg);
+    translate(
+      -65%,
+      -50%
+    )
+    rotate(
+      45deg
+    );
 
 }
 
@@ -1272,7 +1192,7 @@ img {
 
 
 /* ==========================================================
-   MAIN DARK PAGE
+   MAIN PAGE
    ========================================================== */
 
 main {
@@ -1332,9 +1252,6 @@ main {
   line-height:
     1.1;
 
-  text-transform:
-    uppercase;
-
 }
 
 
@@ -1352,11 +1269,6 @@ main {
 
 }
 
-
-/*
-  Keep existing application controls available to JS
-  without presenting them in the live-site shell.
-*/
 
 .existing-movie-controls {
 
@@ -1385,24 +1297,14 @@ main {
       50%
     );
 
-  white-space:
-    nowrap;
-
 }
 
 
 /* ==========================================================
-   MOVIE POSTER WALL
-
-   Live layout:
-   large 2-column hero poster on the left
-   with smaller posters to the right.
+   POSTER GRID
    ========================================================== */
 
 .movie-grid {
-
-  position:
-    relative;
 
   width:
     100%;
@@ -1431,7 +1333,22 @@ main {
 }
 
 
-/* Large lead poster */
+.movie-card {
+
+  position:
+    relative;
+
+  min-width:
+    0;
+
+  overflow:
+    hidden;
+
+  background:
+    #111111;
+
+}
+
 
 .movie-card:nth-child(1) {
 
@@ -1443,8 +1360,6 @@ main {
 
 }
 
-
-/* Four standard posters */
 
 .movie-card:nth-child(2),
 .movie-card:nth-child(3),
@@ -1464,8 +1379,6 @@ main {
 }
 
 
-/* Wider promotional-style tile lower down */
-
 .movie-card:nth-child(8) {
 
   grid-column:
@@ -1473,26 +1386,6 @@ main {
 
   grid-row:
     span 2;
-
-}
-
-
-.movie-card {
-
-  position:
-    relative;
-
-  min-width:
-    0;
-
-  min-height:
-    0;
-
-  overflow:
-    hidden;
-
-  background:
-    #111111;
 
 }
 
@@ -1582,11 +1475,6 @@ main {
 }
 
 
-/*
-  Rating badges are not visible in the supplied
-  live homepage presentation.
-*/
-
 .rating {
 
   display:
@@ -1596,10 +1484,7 @@ main {
 
 
 /* ==========================================================
-   MOVIE ACTIONS
-
-   Hidden until hover so the default view remains
-   the same clean poster wall shown by VOX.
+   MOVIE OVERLAY
    ========================================================== */
 
 .movie-body {
@@ -1621,9 +1506,6 @@ main {
 
   padding:
     38px 13px 13px;
-
-  color:
-    #ffffff;
 
   background:
     linear-gradient(
@@ -1680,12 +1562,6 @@ main {
   font-size:
     13px;
 
-  font-weight:
-    800;
-
-  line-height:
-    1.2;
-
 }
 
 
@@ -1699,12 +1575,6 @@ main {
 
   font-size:
     9px;
-
-  font-weight:
-    700;
-
-  text-transform:
-    uppercase;
 
 }
 
@@ -1750,21 +1620,13 @@ main {
   font-weight:
     900;
 
-  text-transform:
-    uppercase;
-
 }
 
 
 .details-card {
 
   background:
-    rgba(
-      255,
-      255,
-      255,
-      0.93
-    );
+    #ffffff;
 
   color:
     #222222;
@@ -1783,21 +1645,10 @@ main {
 }
 
 
-.book-card:hover {
-
-  background:
-    var(--vox-pink-hover);
-
-}
-
-
 .view-all-btn {
 
   display:
     block;
-
-  min-width:
-    110px;
 
   height:
     35px;
@@ -1811,9 +1662,6 @@ main {
   border:
     1px solid
     #666666;
-
-  border-radius:
-    0;
 
   background:
     transparent;
@@ -1841,34 +1689,14 @@ main {
 }
 
 
-.empty-state {
-
-  grid-column:
-    1 / -1;
-
-  padding:
-    60px 20px;
-
-  color:
-    #b8b8b8;
-
-  text-align:
-    center;
-
-}
-
-
 /* ==========================================================
-   EXPERIENCE SECTION
+   EXPERIENCES
    ========================================================== */
 
 .experiences-section {
 
   padding:
     13px 0 39px;
-
-  background:
-    var(--page-bg);
 
 }
 
@@ -1923,8 +1751,6 @@ main {
 
   transition:
     transform
-    0.22s ease,
-    opacity
     0.22s ease;
 
 }
@@ -1936,9 +1762,6 @@ main {
     scale(
       1.025
     );
-
-  opacity:
-    0.93;
 
 }
 
@@ -1954,9 +1777,6 @@ main {
 
   background:
     var(--footer-bg);
-
-  color:
-    #ffffff;
 
 }
 
@@ -2004,9 +1824,6 @@ main {
   font-size:
     13px;
 
-  font-weight:
-    900;
-
 }
 
 
@@ -2032,9 +1849,6 @@ main {
   font-size:
     13px;
 
-  line-height:
-    1.25;
-
 }
 
 
@@ -2046,17 +1860,10 @@ main {
 }
 
 
-/* ==========================================================
-   SOCIAL ICONS
-   ========================================================== */
-
 .social-links {
 
   display:
     flex;
-
-  align-items:
-    center;
 
   gap:
     9px;
@@ -2086,15 +1893,6 @@ main {
 
   background:
     #4b4c4e;
-
-  color:
-    #ffffff;
-
-  font-size:
-    15px;
-
-  font-weight:
-    800;
 
 }
 
@@ -2170,15 +1968,6 @@ main {
   color:
     #ffffff;
 
-  box-shadow:
-    0 25px 65px
-    rgba(
-      0,
-      0,
-      0,
-      0.45
-    );
-
 }
 
 
@@ -2234,9 +2023,6 @@ main {
   font-weight:
     900;
 
-  letter-spacing:
-    1px;
-
 }
 
 
@@ -2244,9 +2030,6 @@ main {
 
   margin:
     0 0 8px;
-
-  color:
-    #ffffff;
 
   font-size:
     24px;
@@ -2261,9 +2044,6 @@ main {
 
   font-size:
     12px;
-
-  line-height:
-    1.5;
 
 }
 
@@ -2282,9 +2062,6 @@ main {
   border:
     0;
 
-  border-radius:
-    0;
-
   background:
     var(--vox-pink);
 
@@ -2299,29 +2076,6 @@ main {
 
 }
 
-
-.modal-primary:hover {
-
-  background:
-    var(--vox-pink-hover);
-
-}
-
-
-.modal-primary:disabled {
-
-  opacity:
-    0.55;
-
-  cursor:
-    not-allowed;
-
-}
-
-
-/* ==========================================================
-   BOOKING MODAL SHOWTIMES
-   ========================================================== */
 
 .showtimes {
 
@@ -2355,20 +2109,11 @@ main {
     1px solid
     #595b5d;
 
-  border-radius:
-    0;
-
   background:
     #202223;
 
   color:
     #ffffff;
-
-  font-size:
-    11px;
-
-  font-weight:
-    700;
 
 }
 
@@ -2376,32 +2121,18 @@ main {
 .showtime:hover,
 .showtime.selected {
 
-  border-color:
-    var(--vox-blue);
-
   background:
     var(--vox-blue);
 
-  color:
-    #ffffff;
+  border-color:
+    var(--vox-blue);
 
 }
 
 
 /* ==========================================================
-   LOGIN MODAL
+   LOGIN
    ========================================================== */
-
-.login-modal-card {
-
-  width:
-    min(
-      440px,
-      100%
-    );
-
-}
-
 
 .modal-logo {
 
@@ -2417,7 +2148,8 @@ main {
 .login-intro {
 
   margin:
-    4px 0 20px !important;
+    4px 0
+    20px !important;
 
 }
 
@@ -2446,9 +2178,6 @@ main {
 
 .login-field span {
 
-  color:
-    #ffffff;
-
   font-size:
     10px;
 
@@ -2473,9 +2202,6 @@ main {
     1px solid
     #57595a;
 
-  border-radius:
-    0;
-
   outline:
     0;
 
@@ -2496,14 +2222,6 @@ main {
 }
 
 
-.login-field input::placeholder {
-
-  color:
-    #8e9091;
-
-}
-
-
 .login-error {
 
   padding:
@@ -2514,9 +2232,6 @@ main {
 
   color:
     #ffffff;
-
-  font-size:
-    11px;
 
 }
 
@@ -2568,7 +2283,7 @@ main {
 
 
 /* ==========================================================
-   SMALL TABLET / LARGE MOBILE
+   SMALL TABLET
    ========================================================== */
 
 @media (
@@ -2608,14 +2323,7 @@ main {
   }
 
 
-  .vox-logo {
-
-    width:
-      108px;
-
-  }
-
-
+  .vox-logo,
   .vox-logo img {
 
     width:
@@ -2770,23 +2478,6 @@ main {
   }
 
 
-  .utility-login,
-  .utility-signup {
-
-    line-height:
-      37px;
-
-  }
-
-
-  .country-selector {
-
-    font-size:
-      10px;
-
-  }
-
-
   .main-nav {
 
     min-height:
@@ -2839,10 +2530,27 @@ main {
   .live-banner-arrow {
 
     width:
-      46px;
+      44px;
 
     height:
-      62px;
+      44px;
+
+  }
+
+
+  .live-banner-arrow::before {
+
+    width:
+      10px;
+
+    height:
+      10px;
+
+    border-top-width:
+      3px;
+
+    border-right-width:
+      3px;
 
   }
 
@@ -2909,17 +2617,6 @@ main {
         0
       );
 
-    padding:
-      32px 9px 9px;
-
-  }
-
-
-  .movie-body h3 {
-
-    font-size:
-      11px;
-
   }
 
 
@@ -2934,14 +2631,6 @@ main {
   }
 
 
-  .experience-tile img {
-
-    aspect-ratio:
-      2 / 1;
-
-  }
-
-
   .footer-grid {
 
     grid-template-columns:
@@ -2949,14 +2638,6 @@ main {
 
     gap:
       34px;
-
-  }
-
-
-  .footer-logo {
-
-    margin-bottom:
-      25px;
 
   }
 
@@ -2980,160 +2661,6 @@ main {
     padding:
       11px;
 
-  }
-
-
-  .modal-card {
-
-    padding:
-      28px 20px;
-
-  }
-
-}
-
-
-/* ==========================================================
-   REDUCED MOTION
-   ========================================================== */
-
-@media (
-  prefers-reduced-motion:
-  reduce
-) {
-
-  html {
-
-    scroll-behavior:
-      auto;
-
-  }
-
-
-  .live-banner-track,
-  .experience-tile img,
-  .poster-wrap img,
-  .movie-body {
-
-    transition:
-      none;
-
-  }
-
-}
-/* ==========================================================
-   BANNER ARROW FIX
-   Paste this at the VERY END of styles.css
-   ========================================================== */
-
-
-/* Crop the arrows that are baked into the banner images */
-
-.live-banner-slide img {
-  width: calc(100% + 120px);
-  max-width: none;
-  height: 100%;
-  margin-left: -60px;
-  object-fit: cover;
-  object-position: center;
-}
-
-
-/* Create proper arrows on top of the carousel */
-
-.live-banner-arrow {
-  position: absolute;
-  top: 50%;
-  z-index: 50;
-
-  width: 56px;
-  height: 56px;
-
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-
-  background: #ffffff;
-
-  box-shadow:
-    0 3px 14px rgba(0, 0, 0, 0.30);
-
-  transform: translateY(-50%);
-}
-
-
-/* Arrow symbol */
-
-.live-banner-arrow::before {
-  content: "";
-
-  position: absolute;
-
-  top: 50%;
-  left: 50%;
-
-  width: 13px;
-  height: 13px;
-
-  border-top: 4px solid #111111;
-  border-right: 4px solid #111111;
-}
-
-
-/* LEFT ARROW */
-
-.live-banner-prev {
-  left: calc(
-    50% - (var(--hero-width) / 2) + 28px
-  );
-}
-
-
-.live-banner-prev::before {
-  transform:
-    translate(-35%, -50%)
-    rotate(-135deg);
-}
-
-
-/* RIGHT ARROW */
-
-.live-banner-next {
-  right: calc(
-    50% - (var(--hero-width) / 2) + 28px
-  );
-}
-
-
-.live-banner-next::before {
-  transform:
-    translate(-65%, -50%)
-    rotate(45deg);
-}
-
-
-/* Mobile */
-
-@media (max-width: 560px) {
-
-  .live-banner-slide img {
-    width: calc(100% + 80px);
-    margin-left: -40px;
-  }
-
-
-  .live-banner-arrow {
-    width: 44px;
-    height: 44px;
-  }
-
-
-  .live-banner-arrow::before {
-    width: 10px;
-    height: 10px;
-
-    border-top-width: 3px;
-    border-right-width: 3px;
   }
 
 }
