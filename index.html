@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="utf-8">
 
   <meta
@@ -19,12 +20,15 @@
     content="VOX Cinemas UAE"
   >
 
-  <title>VOX Cinemas UAE</title>
+  <title>
+    VOX Cinemas UAE
+  </title>
 
   <link
     rel="stylesheet"
     href="styles.css"
   >
+
 </head>
 
 
@@ -33,7 +37,6 @@
 
   <!-- =====================================================
        TOP UTILITY BAR
-       Matches current VOX presentation
   ====================================================== -->
 
   <div class="utility-bar">
@@ -65,18 +68,14 @@
       <a
         class="utility-signup"
         href="#"
-        aria-label="Sign up"
       >
         SIGN-UP
       </a>
 
 
-      <span class="utility-divider"></span>
-
-
       <div
         class="country-selector"
-        aria-label="Country UAE"
+        aria-label="UAE"
       >
 
         <span
@@ -85,11 +84,8 @@
         >
 
           <i class="flag-red"></i>
-
           <i class="flag-green"></i>
-
           <i class="flag-white"></i>
-
           <i class="flag-black"></i>
 
         </span>
@@ -101,13 +97,14 @@
 
       </div>
 
+
     </div>
 
   </div>
 
 
   <!-- =====================================================
-       MAIN VOX NAVIGATION
+       MAIN HEADER
   ====================================================== -->
 
   <header class="site-header">
@@ -197,7 +194,7 @@
         id="menuBtn"
         class="menu-btn"
         type="button"
-        aria-label="Open navigation menu"
+        aria-label="Open menu"
       >
 
         <span></span>
@@ -206,14 +203,14 @@
 
       </button>
 
+
     </div>
 
   </header>
 
 
   <!-- =====================================================
-       MOBILE NAV
-       IDs retained for existing app.js
+       MOBILE NAVIGATION
   ====================================================== -->
 
   <div
@@ -246,8 +243,8 @@
 
 
   <!-- =====================================================
-       QUICK BOOKING
-       Existing IDs retained exactly
+       BOOKING BAR
+       Existing application IDs preserved
   ====================================================== -->
 
   <section
@@ -282,15 +279,13 @@
         >
 
           <option value="">
-            Select Your Movie(s)
+            Any Movie
           </option>
 
         </select>
 
       </div>
 
-
-      <!-- Required by existing app.js -->
 
       <select
         id="dateSelect"
@@ -307,6 +302,7 @@
         Find Times And Book
       </button>
 
+
     </div>
 
 
@@ -319,142 +315,221 @@
   </section>
 
 
-  <main>
+  <!-- =====================================================
+       LIVE VOX BANNER CAROUSEL
+       All 7 original VOX assets supplied by user
+  ====================================================== -->
+
+  <section
+    class="live-banner"
+    aria-label="VOX promotions"
+  >
 
 
-    <!-- =====================================================
-         LIVE-STYLE PROMOTIONAL CAROUSEL
-
-         Current visual presentation taken from the screenshots
-         supplied by the user.
-
-         Carousel behaviour is isolated here so app.js does
-         not need to be modified.
-    ====================================================== -->
-
-    <section
-      class="live-banner"
-      aria-label="VOX promotions"
+    <div
+      class="live-banner-viewport"
+      data-live-viewport
     >
 
 
       <div
-        class="live-banner-viewport"
-        data-live-viewport
+        class="live-banner-track"
+        data-live-track
       >
 
 
-        <div
-          class="live-banner-track"
-          data-live-track
+        <!-- 1. PARADISE -->
+
+        <article
+          class="live-banner-slide"
+          data-live-slide
         >
 
-
-          <!-- PREVIOUS BANNER -->
-
-          <article
-            class="live-banner-slide"
-            data-live-slide
+          <img
+            src="https://assets.voxcinemas.com/content/paradise_3HP-banner_EN_1790235525.jpg"
+            alt="Paradise at VOX Cinemas"
           >
 
-            <img
-              src="assets/vox-banner-left.jpg"
-              alt="VOX Cinemas promotion"
-            >
+          <a
+            class="banner-book-hotspot"
+            href="#booking"
+            aria-label="Book tickets"
+          ></a>
 
-            <a
-              class="banner-book-hotspot"
-              href="#booking"
-              aria-label="Go to booking"
-            ></a>
-
-          </article>
+        </article>
 
 
-          <!-- CURRENT / CENTRE BANNER -->
+        <!-- 2. HEART OF THE BEAST -->
 
-          <article
-            class="live-banner-slide is-active"
-            data-live-slide
+        <article
+          class="live-banner-slide is-active"
+          data-live-slide
+        >
+
+          <img
+            src="https://assets.voxcinemas.com/content/Heart_of_the_best_banner_1789568116.jpg"
+            alt="Heart of the Beast at VOX Cinemas"
           >
 
-            <img
-              src="assets/vox-banner-heart.jpg"
-              alt="Heart of the Beast at VOX Cinemas"
-            >
+          <a
+            class="banner-book-hotspot"
+            href="#booking"
+            aria-label="Book tickets"
+          ></a>
 
-            <a
-              class="banner-book-hotspot"
-              href="#booking"
-              aria-label="Book tickets"
-            ></a>
-
-          </article>
+        </article>
 
 
-          <!-- NEXT BANNER -->
+        <!-- 3. VOX MEAISEM -->
 
-          <article
-            class="live-banner-slide"
-            data-live-slide
+        <article
+          class="live-banner-slide"
+          data-live-slide
+        >
+
+          <img
+            src="https://assets.voxcinemas.com/content/VOX_Meaisem_CTA_880x440-100_1789041242.jpg"
+            alt="VOX Cinemas City Centre Meaisem"
           >
 
-            <img
-              src="assets/vox-banner-right.jpg"
-              alt="VOX Cinemas promotion"
-            >
+          <a
+            class="banner-book-hotspot"
+            href="#booking"
+            aria-label="Book tickets"
+          ></a>
 
-            <a
-              class="banner-book-hotspot"
-              href="#booking"
-              aria-label="Go to booking"
-            ></a>
-
-          </article>
+        </article>
 
 
-        </div>
+        <!-- 4. BOXB2S -->
+
+        <article
+          class="live-banner-slide"
+          data-live-slide
+        >
+
+          <img
+            src="https://assets.voxcinemas.com/content/BOXB2S_Dubai_Landing_Page-100_1786605109.jpg"
+            alt="VOX Cinemas promotion"
+          >
+
+          <a
+            class="banner-book-hotspot"
+            href="#booking"
+            aria-label="Book tickets"
+          ></a>
+
+        </article>
 
 
-        <!--
-          Invisible click areas sit over the arrows that are
-          already visible inside the captured banner artwork.
-        -->
+        <!-- 5. ENBD OFFER -->
 
-        <button
-          class="live-banner-arrow live-banner-prev"
-          data-live-prev
-          type="button"
-          aria-label="Previous promotion"
-        ></button>
+        <article
+          class="live-banner-slide"
+          data-live-slide
+        >
+
+          <img
+            src="https://assets.voxcinemas.com/content/ENBD_VOX_App_Banner_revised_-_880_x_440px_with_CTA-2_1788166298.jpg"
+            alt="Emirates NBD VOX Cinemas offer"
+          >
+
+          <a
+            class="banner-book-hotspot"
+            href="#booking"
+            aria-label="Book tickets"
+          ></a>
+
+        </article>
 
 
-        <button
-          class="live-banner-arrow live-banner-next"
-          data-live-next
-          type="button"
-          aria-label="Next promotion"
-        ></button>
+        <!-- 6. AVENGERS ENDGAME -->
+
+        <article
+          class="live-banner-slide"
+          data-live-slide
+        >
+
+          <img
+            src="https://assets.voxcinemas.com/content/E_ENDGAME_880x440_1789568146.jpg"
+            alt="Avengers Endgame at VOX Cinemas"
+          >
+
+          <a
+            class="banner-book-hotspot"
+            href="#booking"
+            aria-label="Book tickets"
+          ></a>
+
+        </article>
+
+
+        <!-- 7. RESIDENT EVIL -->
+
+        <article
+          class="live-banner-slide"
+          data-live-slide
+        >
+
+          <img
+            src="https://assets.voxcinemas.com/content/RESIDENT_EVIL_1789568070.jpg"
+            alt="Resident Evil at VOX Cinemas"
+          >
+
+          <a
+            class="banner-book-hotspot"
+            href="#booking"
+            aria-label="Book tickets"
+          ></a>
+
+        </article>
 
 
       </div>
 
 
       <!--
-        Existing app.js expects this ID.
-        Keep it present without changing the visual carousel.
+        Actual navigation controls.
+        These sit OVER the original VOX artwork.
       -->
 
       <button
-        id="heroBookBtn"
-        class="legacy-hero-book"
+        class="live-banner-arrow live-banner-prev"
+        data-live-prev
         type="button"
-        tabindex="-1"
-        aria-hidden="true"
+        aria-label="Previous promotion"
       ></button>
 
 
-    </section>
+      <button
+        class="live-banner-arrow live-banner-next"
+        data-live-next
+        type="button"
+        aria-label="Next promotion"
+      ></button>
+
+
+    </div>
+
+
+    <!--
+      Existing app.js still expects heroBookBtn.
+      Keep it invisible so functional compatibility remains.
+    -->
+
+    <button
+      id="heroBookBtn"
+      class="legacy-hero-book"
+      type="button"
+      tabindex="-1"
+      aria-hidden="true"
+    ></button>
+
+
+  </section>
+
+
+  <main>
 
 
     <!-- =====================================================
@@ -480,10 +555,7 @@
         </div>
 
 
-        <!--
-          Existing movie controls are retained for app.js
-          but hidden visually to match the current homepage.
-        -->
+        <!-- Existing controls retained for app.js -->
 
         <div class="existing-movie-controls">
 
@@ -538,12 +610,6 @@
         </div>
 
 
-        <!--
-          Existing app.js populates this.
-          CSS converts the cards into the live-style
-          asymmetric poster wall.
-        -->
-
         <div
           id="movieGrid"
           class="movie-grid"
@@ -593,7 +659,6 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="MAX"
           >
 
             <img
@@ -607,7 +672,6 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="IMAX with Laser"
           >
 
             <img
@@ -621,12 +685,11 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="THEATRE"
           >
 
             <img
               src="assets/experience-theatre.jpg"
-              alt="THEATRE cinema experience"
+              alt="THEATRE"
             >
 
           </a>
@@ -635,12 +698,11 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="IMAX"
           >
 
             <img
               src="assets/experience-imax.jpg"
-              alt="IMAX cinema experience"
+              alt="IMAX"
             >
 
           </a>
@@ -649,12 +711,11 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="PREMIER"
           >
 
             <img
               src="assets/experience-premier.jpg"
-              alt="PREMIER cinema experience"
+              alt="PREMIER"
             >
 
           </a>
@@ -663,12 +724,11 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="GOLD"
           >
 
             <img
               src="assets/experience-gold.jpg"
-              alt="GOLD cinema experience"
+              alt="GOLD"
             >
 
           </a>
@@ -677,12 +737,11 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="KIDS"
           >
 
             <img
               src="assets/experience-kids.jpg"
-              alt="KIDS cinema experience"
+              alt="KIDS"
             >
 
           </a>
@@ -691,7 +750,6 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="Private Cinema"
           >
 
             <img
@@ -705,12 +763,11 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="4DX"
           >
 
             <img
               src="assets/experience-4dx.jpg"
-              alt="4DX cinema experience"
+              alt="4DX"
             >
 
           </a>
@@ -719,12 +776,11 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="Onyx"
           >
 
             <img
               src="assets/experience-onyx.jpg"
-              alt="Onyx cinema experience"
+              alt="Onyx"
             >
 
           </a>
@@ -733,12 +789,11 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="VOX at Kempinski"
           >
 
             <img
               src="assets/experience-kempinski.jpg"
-              alt="VOX at Kempinski"
+              alt="VOX Kempinski"
             >
 
           </a>
@@ -747,7 +802,6 @@
           <a
             class="experience-tile"
             href="#booking"
-            aria-label="VOX Moonlight"
           >
 
             <img
@@ -759,6 +813,7 @@
 
 
         </div>
+
 
       </div>
 
@@ -772,15 +827,10 @@
        FOOTER
   ====================================================== -->
 
-  <footer
-    id="footer"
-    class="site-footer"
-  >
+  <footer class="site-footer">
 
     <div class="content-shell footer-grid">
 
-
-      <!-- COLUMN 1 -->
 
       <div class="footer-brand-column">
 
@@ -799,37 +849,23 @@
 
         <div class="social-links">
 
-
-          <a
-            href="#"
-            aria-label="Facebook"
-          >
+          <a href="#">
             f
           </a>
 
-
-          <a
-            href="#"
-            aria-label="Instagram"
-          >
+          <a href="#">
             ◎
           </a>
 
-
-          <a
-            href="#"
-            aria-label="YouTube"
-          >
+          <a href="#">
             ▶
           </a>
 
-
         </div>
+
 
       </div>
 
-
-      <!-- COLUMN 2 -->
 
       <div class="footer-column">
 
@@ -856,8 +892,6 @@
       </div>
 
 
-      <!-- COLUMN 3 -->
-
       <div class="footer-column">
 
         <h3>
@@ -882,8 +916,6 @@
 
       </div>
 
-
-      <!-- COLUMN 4 -->
 
       <div class="footer-column">
 
@@ -917,7 +949,7 @@
 
   <!-- =====================================================
        BOOKING MODAL
-       Existing IDs preserved
+       Existing application IDs retained
   ====================================================== -->
 
   <div
@@ -973,8 +1005,8 @@
 
 
   <!-- =====================================================
-       SIGN-IN MODAL
-       Existing login IDs preserved exactly
+       LOGIN MODAL
+       Existing IDs retained
   ====================================================== -->
 
   <div
@@ -1025,6 +1057,7 @@
             Email, mobile number or SHARE member ID
           </span>
 
+
           <input
             id="siteLoginIdentifier"
             name="identifier"
@@ -1042,6 +1075,7 @@
           <span>
             PIN
           </span>
+
 
           <input
             id="siteLoginPin"
@@ -1075,6 +1109,7 @@
 
       </form>
 
+
     </div>
 
   </div>
@@ -1082,18 +1117,30 @@
 
   <!-- =====================================================
        PAGE CONTEXT
-       EXISTING INTEGRATION
   ====================================================== -->
 
   <script>
 
     window.VOX_PAGE_CONTEXT = {
-      page: "home",
-      movie: null,
-      cinema: null,
-      date: null,
-      session: null,
-      experience: null
+
+      page:
+        "home",
+
+      movie:
+        null,
+
+      cinema:
+        null,
+
+      date:
+        null,
+
+      session:
+        null,
+
+      experience:
+        null
+
     };
 
   </script>
@@ -1101,7 +1148,6 @@
 
   <!-- =====================================================
        EXISTING CHAT CONFIG
-       DO NOT CHANGE
   ====================================================== -->
 
   <script>
@@ -1123,15 +1169,14 @@
 
 
   <!-- =====================================================
-       EXISTING APPLICATION
+       EXISTING APP
   ====================================================== -->
 
   <script src="app.js"></script>
 
 
   <!-- =====================================================
-       EXISTING CHAT EMBED
-       DO NOT CHANGE
+       EXISTING CHATBOT
   ====================================================== -->
 
   <script
@@ -1142,7 +1187,7 @@
 
 
   <!-- =====================================================
-       EXISTING CHAT LAUNCHER CUSTOMISATION
+       CHAT LAUNCHER LABEL
   ====================================================== -->
 
   <script>
@@ -1226,8 +1271,13 @@
           observer.observe(
             shadow,
             {
-              childList: true,
-              subtree: true
+
+              childList:
+                true,
+
+              subtree:
+                true
+
             }
           );
 
@@ -1283,15 +1333,13 @@
 
 
   <!-- =====================================================
-       VISUAL-ONLY LIVE BANNER CAROUSEL
-
-       Isolated from app.js so the existing application
-       behaviour is not refactored.
+       VISUAL-ONLY BANNER CAROUSEL
   ====================================================== -->
 
   <script>
 
     (function initialiseLiveBanner() {
+
 
       const viewport =
         document.querySelector(
@@ -1336,16 +1384,13 @@
 
 
       /*
-        Start on the middle banner so previous and
-        next campaigns are visible at each side,
-        matching the current VOX layout.
+        Heart of the Beast is slide 1.
+        Starting here reproduces the current live-site
+        presentation with Paradise visible on the left.
       */
 
       let activeIndex =
-        Math.min(
-          1,
-          slides.length - 1
-        );
+        1;
 
 
       let pointerStartX =
@@ -1375,8 +1420,11 @@
         animate = true
       ) {
 
+
         const activeSlide =
-          slides[activeIndex];
+          slides[
+            activeIndex
+          ];
 
 
         if (!activeSlide) {
@@ -1429,7 +1477,10 @@
       }
 
 
-      function showSlide(index) {
+      function showSlide(
+        index
+      ) {
+
 
         activeIndex =
           (
@@ -1439,7 +1490,9 @@
           slides.length;
 
 
-        positionCarousel(true);
+        positionCarousel(
+          true
+        );
 
       }
 
@@ -1447,7 +1500,12 @@
       previousButton
         ?.addEventListener(
           "click",
-          () => {
+          event => {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
 
             showSlide(
               activeIndex - 1
@@ -1460,7 +1518,12 @@
       nextButton
         ?.addEventListener(
           "click",
-          () => {
+          event => {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
 
             showSlide(
               activeIndex + 1
@@ -1480,9 +1543,6 @@
             "click",
             event => {
 
-              /*
-                Do not hijack the booking hotspot.
-              */
 
               if (
                 event.target.closest(
@@ -1500,7 +1560,9 @@
                 activeIndex
               ) {
 
-                showSlide(index);
+                showSlide(
+                  index
+                );
 
               }
 
@@ -1525,6 +1587,7 @@
       viewport.addEventListener(
         "pointerup",
         event => {
+
 
           if (
             pointerStartX ===
@@ -1585,7 +1648,9 @@
         "resize",
         () => {
 
-          positionCarousel(false);
+          positionCarousel(
+            false
+          );
 
         }
       );
@@ -1594,10 +1659,13 @@
       requestAnimationFrame(
         () => {
 
-          positionCarousel(false);
+          positionCarousel(
+            false
+          );
 
         }
       );
+
 
     })();
 
