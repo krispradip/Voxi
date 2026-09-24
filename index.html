@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 
 <head>
@@ -11,6 +12,7 @@
   >
 
   <meta
+    id="themeColorMeta"
     name="theme-color"
     content="#242526"
   >
@@ -23,6 +25,94 @@
   <title>
     VOX Cinemas UAE
   </title>
+
+
+  <!-- =====================================================
+       SYNC WEBSITE THEME WITH BROWSER / SYSTEM
+       ====================================================== -->
+
+  <script>
+
+    (function syncSiteThemeWithBrowser() {
+
+      const themeQuery =
+        window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        );
+
+
+      function applyTheme(
+        darkMode
+      ) {
+
+        document.documentElement.dataset.theme =
+          darkMode
+            ? "dark"
+            : "light";
+
+
+        const themeMeta =
+          document.getElementById(
+            "themeColorMeta"
+          );
+
+
+        if (themeMeta) {
+
+          themeMeta.setAttribute(
+            "content",
+            darkMode
+              ? "#242526"
+              : "#00a9dc"
+          );
+
+        }
+
+      }
+
+
+      applyTheme(
+        themeQuery.matches
+      );
+
+
+      const handleThemeChange =
+        event => {
+
+          applyTheme(
+            event.matches
+          );
+
+        };
+
+
+      if (
+        typeof themeQuery.addEventListener ===
+        "function"
+      ) {
+
+        themeQuery.addEventListener(
+          "change",
+          handleThemeChange
+        );
+
+      }
+
+      else if (
+        typeof themeQuery.addListener ===
+        "function"
+      ) {
+
+        themeQuery.addListener(
+          handleThemeChange
+        );
+
+      }
+
+    })();
+
+  </script>
+
 
   <link
     rel="stylesheet"
@@ -37,7 +127,7 @@
 
   <!-- =====================================================
        TOP UTILITY BAR
-  ====================================================== -->
+       ====================================================== -->
 
   <div class="utility-bar">
 
@@ -84,8 +174,11 @@
         >
 
           <i class="flag-red"></i>
+
           <i class="flag-green"></i>
+
           <i class="flag-white"></i>
+
           <i class="flag-black"></i>
 
         </span>
@@ -105,7 +198,7 @@
 
   <!-- =====================================================
        MAIN HEADER
-  ====================================================== -->
+       ====================================================== -->
 
   <header class="site-header">
 
@@ -198,7 +291,9 @@
       >
 
         <span></span>
+
         <span></span>
+
         <span></span>
 
       </button>
@@ -211,7 +306,7 @@
 
   <!-- =====================================================
        MOBILE NAVIGATION
-  ====================================================== -->
+       ====================================================== -->
 
   <div
     id="mobileNav"
@@ -244,8 +339,8 @@
 
   <!-- =====================================================
        BOOKING BAR
-       Existing application IDs preserved
-  ====================================================== -->
+       Existing app.js IDs preserved
+       ====================================================== -->
 
   <section
     id="booking"
@@ -317,8 +412,8 @@
 
   <!-- =====================================================
        LIVE VOX BANNER CAROUSEL
-       All 7 original VOX assets supplied by user
-  ====================================================== -->
+       Original VOX banner assets
+       ====================================================== -->
 
   <section
     class="live-banner"
@@ -422,7 +517,7 @@
         </article>
 
 
-        <!-- 5. ENBD OFFER -->
+        <!-- 5. ENBD -->
 
         <article
           class="live-banner-slide"
@@ -488,10 +583,7 @@
       </div>
 
 
-      <!--
-        Actual navigation controls.
-        These sit OVER the original VOX artwork.
-      -->
+      <!-- OVERLAY CAROUSEL ARROWS -->
 
       <button
         class="live-banner-arrow live-banner-prev"
@@ -512,10 +604,7 @@
     </div>
 
 
-    <!--
-      Existing app.js still expects heroBookBtn.
-      Keep it invisible so functional compatibility remains.
-    -->
+    <!-- Existing app.js expects this ID -->
 
     <button
       id="heroBookBtn"
@@ -534,7 +623,7 @@
 
     <!-- =====================================================
          WHAT'S ON
-    ====================================================== -->
+         ====================================================== -->
 
     <section
       id="movies"
@@ -631,8 +720,8 @@
 
 
     <!-- =====================================================
-         TRY A VOX EXPERIENCE
-    ====================================================== -->
+         VOX EXPERIENCES
+         ====================================================== -->
 
     <section
       id="experiences"
@@ -689,7 +778,7 @@
 
             <img
               src="assets/experience-theatre.jpg"
-              alt="THEATRE"
+              alt="THEATRE cinema experience"
             >
 
           </a>
@@ -702,7 +791,7 @@
 
             <img
               src="assets/experience-imax.jpg"
-              alt="IMAX"
+              alt="IMAX cinema experience"
             >
 
           </a>
@@ -715,7 +804,7 @@
 
             <img
               src="assets/experience-premier.jpg"
-              alt="PREMIER"
+              alt="PREMIER cinema experience"
             >
 
           </a>
@@ -728,7 +817,7 @@
 
             <img
               src="assets/experience-gold.jpg"
-              alt="GOLD"
+              alt="GOLD cinema experience"
             >
 
           </a>
@@ -741,7 +830,7 @@
 
             <img
               src="assets/experience-kids.jpg"
-              alt="KIDS"
+              alt="KIDS cinema experience"
             >
 
           </a>
@@ -767,7 +856,7 @@
 
             <img
               src="assets/experience-4dx.jpg"
-              alt="4DX"
+              alt="4DX cinema experience"
             >
 
           </a>
@@ -780,7 +869,7 @@
 
             <img
               src="assets/experience-onyx.jpg"
-              alt="Onyx"
+              alt="Onyx cinema experience"
             >
 
           </a>
@@ -825,7 +914,7 @@
 
   <!-- =====================================================
        FOOTER
-  ====================================================== -->
+       ====================================================== -->
 
   <footer class="site-footer">
 
@@ -849,15 +938,24 @@
 
         <div class="social-links">
 
-          <a href="#">
+          <a
+            href="#"
+            aria-label="Facebook"
+          >
             f
           </a>
 
-          <a href="#">
+          <a
+            href="#"
+            aria-label="Instagram"
+          >
             ◎
           </a>
 
-          <a href="#">
+          <a
+            href="#"
+            aria-label="YouTube"
+          >
             ▶
           </a>
 
@@ -949,8 +1047,8 @@
 
   <!-- =====================================================
        BOOKING MODAL
-       Existing application IDs retained
-  ====================================================== -->
+       Existing IDs preserved
+       ====================================================== -->
 
   <div
     id="modal"
@@ -1005,9 +1103,9 @@
 
 
   <!-- =====================================================
-       LOGIN MODAL
-       Existing IDs retained
-  ====================================================== -->
+       SIGN IN MODAL
+       Existing login IDs preserved
+       ====================================================== -->
 
   <div
     id="loginModal"
@@ -1117,7 +1215,7 @@
 
   <!-- =====================================================
        PAGE CONTEXT
-  ====================================================== -->
+       ====================================================== -->
 
   <script>
 
@@ -1148,7 +1246,8 @@
 
   <!-- =====================================================
        EXISTING CHAT CONFIG
-  ====================================================== -->
+       DO NOT CHANGE
+       ====================================================== -->
 
   <script>
 
@@ -1169,15 +1268,15 @@
 
 
   <!-- =====================================================
-       EXISTING APP
-  ====================================================== -->
+       EXISTING APPLICATION
+       ====================================================== -->
 
   <script src="app.js"></script>
 
 
   <!-- =====================================================
-       EXISTING CHATBOT
-  ====================================================== -->
+       EXISTING CHATBOT EMBED
+       ====================================================== -->
 
   <script
     src="https://voxi-demo.up.railway.app/embed/voxi.js"
@@ -1188,7 +1287,7 @@
 
   <!-- =====================================================
        CHAT LAUNCHER LABEL
-  ====================================================== -->
+       ====================================================== -->
 
   <script>
 
@@ -1271,13 +1370,11 @@
           observer.observe(
             shadow,
             {
-
               childList:
                 true,
 
               subtree:
                 true
-
             }
           );
 
@@ -1334,7 +1431,7 @@
 
   <!-- =====================================================
        VISUAL-ONLY BANNER CAROUSEL
-  ====================================================== -->
+       ====================================================== -->
 
   <script>
 
@@ -1382,12 +1479,6 @@
 
       }
 
-
-      /*
-        Heart of the Beast is slide 1.
-        Starting here reproduces the current live-site
-        presentation with Paradise visible on the left.
-      */
 
       let activeIndex =
         1;
