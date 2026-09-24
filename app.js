@@ -2791,3 +2791,281 @@ function showMessage(message) {
    ========================================================== */
 
 loadCatalogue();
+
+
+/* ==========================================================
+   PROMOTIONAL BANNER CAROUSEL
+
+   Presentation-only enhancement.
+   Existing application, login, customer-context,
+   booking and chatbot functionality above is unchanged.
+   ========================================================== */
+
+(function initialisePromoCarousel() {
+
+  const track =
+    document.querySelector(
+      "[data-promo-track]"
+    );
+
+
+  const slides = [
+    ...document.querySelectorAll(
+      "[data-promo-slide]"
+    )
+  ];
+
+
+  const previousButton =
+    document.querySelector(
+      "[data-promo-prev]"
+    );
+
+
+  const nextButton =
+    document.querySelector(
+      "[data-promo-next]"
+    );
+
+
+  const dots = [
+    ...document.querySelectorAll(
+      "[data-promo-dot]"
+    )
+  ];
+
+
+  if (
+    !track ||
+    slides.length < 2
+  ) {
+
+    return;
+  }
+
+
+  let activeIndex =
+    0;
+
+
+  let pointerStartX =
+    null;
+
+
+  function showSlide(index) {
+
+    activeIndex =
+      (
+        index +
+        slides.length
+      ) %
+      slides.length;
+
+
+    track.style.transform =
+      `translate3d(-${
+        activeIndex * 100
+      }%, 0, 0)`;
+
+
+    slides.forEach(
+      (
+        slide,
+        slideIndex
+      ) => {
+
+        const active =
+          slideIndex ===
+          activeIndex;
+
+
+        slide.classList.toggle(
+          "is-active",
+          active
+        );
+
+
+        slide.setAttribute(
+          "aria-hidden",
+          active
+            ? "false"
+            : "true"
+        );
+
+      }
+    );
+
+
+    dots.forEach(
+      (
+        dot,
+        dotIndex
+      ) => {
+
+        const active =
+          dotIndex ===
+          activeIndex;
+
+
+        dot.classList.toggle(
+          "is-active",
+          active
+        );
+
+
+        if (active) {
+
+          dot.setAttribute(
+            "aria-current",
+            "true"
+          );
+
+        }
+
+        else {
+
+          dot.removeAttribute(
+            "aria-current"
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  previousButton
+    ?.addEventListener(
+      "click",
+      () => {
+
+        showSlide(
+          activeIndex - 1
+        );
+
+      }
+    );
+
+
+  nextButton
+    ?.addEventListener(
+      "click",
+      () => {
+
+        showSlide(
+          activeIndex + 1
+        );
+
+      }
+    );
+
+
+  dots.forEach(
+    dot => {
+
+      dot.addEventListener(
+        "click",
+        () => {
+
+          const index =
+            Number(
+              dot.dataset.promoDot
+            );
+
+
+          if (
+            Number.isInteger(
+              index
+            )
+          ) {
+
+            showSlide(
+              index
+            );
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+  /*
+    Touch / mouse drag support.
+  */
+
+  track.addEventListener(
+    "pointerdown",
+    event => {
+
+      pointerStartX =
+        event.clientX;
+
+    }
+  );
+
+
+  track.addEventListener(
+    "pointerup",
+    event => {
+
+      if (
+        pointerStartX ===
+        null
+      ) {
+
+        return;
+      }
+
+
+      const distance =
+        event.clientX -
+        pointerStartX;
+
+
+      pointerStartX =
+        null;
+
+
+      if (
+        Math.abs(
+          distance
+        ) < 45
+      ) {
+
+        return;
+      }
+
+
+      showSlide(
+
+        distance < 0
+
+          ? activeIndex + 1
+
+          : activeIndex - 1
+
+      );
+
+    }
+  );
+
+
+  track.addEventListener(
+    "pointercancel",
+    () => {
+
+      pointerStartX =
+        null;
+
+    }
+  );
+
+
+  showSlide(0);
+
+})();
