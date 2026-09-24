@@ -3096,3 +3096,34 @@ html[data-theme="light"]
   }
 
 }
+/* ==========================================================
+   OFFICIAL VOX LOGOS
+   ========================================================== */
+
+/* Main navigation */
+
+html[data-theme="light"] .vox-logo img {
+  content: url("assets/vox-logo-light.png");
+}
+
+html[data-theme="dark"] .vox-logo img {
+  content: url("assets/vox-logo-dark.png");
+}
+
+
+/* Sign-in modal */
+
+html[data-theme="light"] .modal-logo {
+  content: url("assets/vox-logo-light.png");
+}
+
+html[data-theme="dark"] .modal-logo {
+  content: url("assets/vox-logo-dark.png");
+}
+
+
+/* Footer is always dark */
+
+.footer-logo {
+  content: url("assets/vox-logo-dark.png");
+}
