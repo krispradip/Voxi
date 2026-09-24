@@ -3097,45 +3097,44 @@ html[data-theme="light"]
 
 }
 /* ==========================================================
-   OFFICIAL VOX LOGOS
-   Use official VOX site assets directly
+   OFFICIAL VOX LOGO - CORRECT THEME MAPPING
    ========================================================== */
 
 
-/* LIGHT MODE
-   White navigation background -> black VOX wordmark
+/* DARK MODE
+   Dark header -> white VOX lettering
 */
 
-html[data-theme="light"] .vox-logo img {
+html[data-theme="dark"] .vox-logo img {
   content: url("https://uae.voxcinemas.com/assets/images/logo-vox-dark.webp");
 }
 
 
-/* DARK MODE
-   Dark navigation background -> white VOX wordmark
+/* LIGHT MODE
+   White header -> black VOX lettering
 */
 
-html[data-theme="dark"] .vox-logo img {
+html[data-theme="light"] .vox-logo img {
   content: url("https://uae.voxcinemas.com/assets/images/logo-vox.webp");
 }
 
 
 /* SIGN-IN MODAL */
 
-html[data-theme="light"] .modal-logo {
+html[data-theme="dark"] .modal-logo {
   content: url("https://uae.voxcinemas.com/assets/images/logo-vox-dark.webp");
 }
 
 
-html[data-theme="dark"] .modal-logo {
+html[data-theme="light"] .modal-logo {
   content: url("https://uae.voxcinemas.com/assets/images/logo-vox.webp");
 }
 
 
 /* FOOTER
-   Footer remains dark in both themes
+   Footer is always dark -> white VOX lettering
 */
 
 .footer-logo {
-  content: url("https://uae.voxcinemas.com/assets/images/logo-vox.webp");
+  content: url("https://uae.voxcinemas.com/assets/images/logo-vox-dark.webp");
 }
