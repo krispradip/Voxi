@@ -1,120 +1,210 @@
-<!-- VOX site visual refresh - functionality preserved -->
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#00a9ce">
-  <meta name="description" content="VOX Cinemas UAE">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="theme-color"
+    content="#242526"
+  >
+
+  <meta
+    name="description"
+    content="VOX Cinemas UAE"
+  >
+
   <title>VOX Cinemas UAE</title>
-  <link rel="stylesheet" href="styles.css">
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
 </head>
+
 
 <body>
 
-  <div class="brand-line"></div>
 
   <!-- =====================================================
-       HEADER
+       TOP UTILITY BAR
+       Matches current VOX presentation
+  ====================================================== -->
+
+  <div class="utility-bar">
+
+    <div class="site-shell utility-inner">
+
+
+      <button
+        id="searchBtn"
+        class="utility-search"
+        type="button"
+        aria-label="Search"
+      >
+
+        <span class="search-icon"></span>
+
+      </button>
+
+
+      <button
+        id="loginBtn"
+        class="utility-login"
+        type="button"
+      >
+        LOGIN
+      </button>
+
+
+      <a
+        class="utility-signup"
+        href="#"
+        aria-label="Sign up"
+      >
+        SIGN-UP
+      </a>
+
+
+      <span class="utility-divider"></span>
+
+
+      <div
+        class="country-selector"
+        aria-label="Country UAE"
+      >
+
+        <span
+          class="uae-flag"
+          aria-hidden="true"
+        >
+
+          <i class="flag-red"></i>
+
+          <i class="flag-green"></i>
+
+          <i class="flag-white"></i>
+
+          <i class="flag-black"></i>
+
+        </span>
+
+
+        <strong>
+          UAE
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       MAIN VOX NAVIGATION
   ====================================================== -->
 
   <header class="site-header">
 
-    <div class="header-inner">
+    <div class="site-shell main-nav">
+
 
       <a
-        class="brand"
+        class="vox-logo"
         href="/"
         aria-label="VOX Cinemas home"
       >
 
-        <span
-          class="vox-symbol"
-          aria-hidden="true"
+        <img
+          src="assets/vox-logo.jpg"
+          alt="VOX Cinemas"
         >
-          <span class="vox-arch arch-one"></span>
-          <span class="vox-arch arch-two"></span>
-          <span class="vox-arch arch-three"></span>
-        </span>
-
-        <span class="brand-lockup">
-          <strong>VOX</strong>
-          <small>CINEMAS</small>
-        </span>
 
       </a>
 
 
       <nav
-        class="nav-links"
+        class="desktop-nav"
         aria-label="Main navigation"
       >
 
+
         <a href="#movies">
-          MOVIES
+
+          <span>
+            MOVIES
+          </span>
+
+          <i></i>
+
         </a>
 
-        <a href="#cinemas">
-          CINEMAS
+
+        <a href="#booking">
+
+          <span>
+            FOOD &amp; DRINKS
+          </span>
+
+          <i></i>
+
         </a>
+
 
         <a href="#experiences">
-          EXPERIENCES
+
+          <span>
+            WAYS TO WATCH
+          </span>
+
+          <i></i>
+
         </a>
 
-        <a href="#offers">
-          OFFERS
+
+        <a href="#booking">
+
+          <span>
+            OFFERS
+          </span>
+
+          <i></i>
+
         </a>
 
-        <a href="#food">
-          FOOD &amp; DRINKS
+
+        <a href="#booking">
+
+          <span>
+            GROUPS &amp; PARTIES
+          </span>
+
+          <i></i>
+
         </a>
+
 
       </nav>
 
 
-      <div class="header-actions">
+      <button
+        id="menuBtn"
+        class="menu-btn"
+        type="button"
+        aria-label="Open navigation menu"
+      >
 
-        <button
-          class="header-icon"
-          id="searchBtn"
-          type="button"
-          aria-label="Search movies"
-        >
-          <span class="search-shape"></span>
-        </button>
+        <span></span>
+        <span></span>
+        <span></span>
 
-
-        <button
-          class="language-btn"
-          type="button"
-          aria-label="Switch language"
-        >
-          العربية
-        </button>
-
-
-        <button
-          class="signin-btn"
-          id="loginBtn"
-          type="button"
-        >
-          SIGN IN
-        </button>
-
-
-        <button
-          class="menu-btn"
-          id="menuBtn"
-          type="button"
-          aria-label="Open menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
-      </div>
+      </button>
 
     </div>
 
@@ -122,12 +212,13 @@
 
 
   <!-- =====================================================
-       MOBILE NAVIGATION
+       MOBILE NAV
+       IDs retained for existing app.js
   ====================================================== -->
 
   <div
-    class="mobile-nav"
     id="mobileNav"
+    class="mobile-nav"
     hidden
   >
 
@@ -135,20 +226,20 @@
       MOVIES
     </a>
 
-    <a href="#cinemas">
-      CINEMAS
+    <a href="#booking">
+      FOOD &amp; DRINKS
     </a>
 
     <a href="#experiences">
-      EXPERIENCES
+      WAYS TO WATCH
     </a>
 
-    <a href="#offers">
+    <a href="#booking">
       OFFERS
     </a>
 
-    <a href="#food">
-      FOOD &amp; DRINKS
+    <a href="#booking">
+      GROUPS &amp; PARTIES
     </a>
 
   </div>
@@ -156,24 +247,23 @@
 
   <!-- =====================================================
        QUICK BOOKING
-       Existing functionality retained
+       Existing IDs retained exactly
   ====================================================== -->
 
   <section
-    class="booking-bar"
     id="booking"
+    class="booking-bar"
   >
 
-    <div class="booking-inner">
+    <div class="site-shell booking-inner">
 
 
-      <div class="booking-control">
+      <div class="booking-field">
 
-        <label for="cinemaSelect">
-          SELECT YOUR CINEMA(S)
-        </label>
-
-        <select id="cinemaSelect">
+        <select
+          id="cinemaSelect"
+          aria-label="Select your cinema"
+        >
 
           <option value="">
             Select Your Cinema(s)
@@ -184,16 +274,15 @@
       </div>
 
 
-      <div class="booking-control">
+      <div class="booking-field">
 
-        <label for="movieSelect">
-          SELECT YOUR MOVIE(S)
-        </label>
-
-        <select id="movieSelect">
+        <select
+          id="movieSelect"
+          aria-label="Select your movie"
+        >
 
           <option value="">
-            Any Movie
+            Select Your Movie(s)
           </option>
 
         </select>
@@ -201,7 +290,7 @@
       </div>
 
 
-      <!-- Required by existing application logic -->
+      <!-- Required by existing app.js -->
 
       <select
         id="dateSelect"
@@ -211,11 +300,11 @@
 
 
       <button
-        class="vox-book-btn"
         id="findBtn"
+        class="find-times-btn"
         type="button"
       >
-        FIND TIMES AND BOOK
+        Find Times And Book
       </button>
 
     </div>
@@ -223,7 +312,7 @@
 
     <div
       id="bookingResult"
-      class="booking-result"
+      class="booking-result site-shell"
       aria-live="polite"
     ></div>
 
@@ -234,375 +323,136 @@
 
 
     <!-- =====================================================
-         PROMOTIONAL HERO CAROUSEL
+         LIVE-STYLE PROMOTIONAL CAROUSEL
+
+         Current visual presentation taken from the screenshots
+         supplied by the user.
+
+         Carousel behaviour is isolated here so app.js does
+         not need to be modified.
     ====================================================== -->
 
     <section
-      class="promo-carousel"
-      aria-label="Featured at VOX Cinemas"
+      class="live-banner"
+      aria-label="VOX promotions"
     >
 
-      <div class="promo-viewport">
+
+      <div
+        class="live-banner-viewport"
+        data-live-viewport
+      >
 
 
         <div
-          class="promo-track"
-          data-promo-track
+          class="live-banner-track"
+          data-live-track
         >
 
 
-          <!-- SLIDE 1 -->
+          <!-- PREVIOUS BANNER -->
 
           <article
-            class="promo-slide promo-odyssey is-active"
-            data-promo-slide
-            style="--promo-image: url('assets/odyssey.png')"
+            class="live-banner-slide"
+            data-live-slide
           >
 
-            <div
-              class="promo-bg"
-              aria-hidden="true"
-            ></div>
+            <img
+              src="assets/vox-banner-left.jpg"
+              alt="VOX Cinemas promotion"
+            >
 
-
-            <div class="promo-shell">
-
-
-              <div class="promo-copy">
-
-                <span class="promo-kicker">
-                  NOW SHOWING
-                </span>
-
-
-                <h1>
-                  THE ODYSSEY
-                </h1>
-
-
-                <p>
-                  Experience Christopher Nolan's epic cinematic adventure
-                  on the big screen at VOX Cinemas.
-                </p>
-
-
-                <div
-                  class="promo-meta"
-                  aria-label="Movie information"
-                >
-
-                  <span>
-                    15+
-                  </span>
-
-                  <i></i>
-
-                  <span>
-                    ENGLISH
-                  </span>
-
-                  <i></i>
-
-                  <span>
-                    IMAX
-                  </span>
-
-                </div>
-
-
-                <div class="promo-actions">
-
-                  <button
-                    class="promo-primary"
-                    id="heroBookBtn"
-                    type="button"
-                  >
-                    BOOK NOW
-                  </button>
-
-
-                  <a
-                    class="promo-secondary"
-                    href="#movies"
-                  >
-                    VIEW MOVIES
-                  </a>
-
-                </div>
-
-              </div>
-
-
-              <div
-                class="promo-art"
-                aria-hidden="true"
-              >
-
-                <img
-                  src="assets/odyssey.png"
-                  alt=""
-                >
-
-              </div>
-
-            </div>
+            <a
+              class="banner-book-hotspot"
+              href="#booking"
+              aria-label="Go to booking"
+            ></a>
 
           </article>
 
 
-          <!-- SLIDE 2 -->
+          <!-- CURRENT / CENTRE BANNER -->
 
           <article
-            class="promo-slide promo-spiderman"
-            data-promo-slide
-            style="--promo-image: url('assets/spiderman.png')"
+            class="live-banner-slide is-active"
+            data-live-slide
           >
 
-            <div
-              class="promo-bg"
-              aria-hidden="true"
-            ></div>
+            <img
+              src="assets/vox-banner-heart.jpg"
+              alt="Heart of the Beast at VOX Cinemas"
+            >
 
-
-            <div class="promo-shell">
-
-
-              <div class="promo-copy">
-
-                <span class="promo-kicker">
-                  COMING TO VOX
-                </span>
-
-
-                <h2>
-                  SPIDER-MAN:<br>
-                  BRAND NEW DAY
-                </h2>
-
-
-                <p>
-                  A new chapter swings onto the big screen.
-                  Discover upcoming movies and plan your next VOX visit.
-                </p>
-
-
-                <div
-                  class="promo-meta"
-                  aria-label="Movie information"
-                >
-
-                  <span>
-                    PG13
-                  </span>
-
-                  <i></i>
-
-                  <span>
-                    ENGLISH
-                  </span>
-
-                  <i></i>
-
-                  <span>
-                    PREMIER
-                  </span>
-
-                </div>
-
-
-                <div class="promo-actions">
-
-                  <a
-                    class="promo-primary"
-                    href="#booking"
-                  >
-                    FIND SHOWTIMES
-                  </a>
-
-
-                  <a
-                    class="promo-secondary"
-                    href="#movies"
-                  >
-                    VIEW MOVIES
-                  </a>
-
-                </div>
-
-              </div>
-
-
-              <div
-                class="promo-art"
-                aria-hidden="true"
-              >
-
-                <img
-                  src="assets/spiderman.png"
-                  alt=""
-                >
-
-              </div>
-
-            </div>
+            <a
+              class="banner-book-hotspot"
+              href="#booking"
+              aria-label="Book tickets"
+            ></a>
 
           </article>
 
 
-          <!-- SLIDE 3 -->
+          <!-- NEXT BANNER -->
 
           <article
-            class="promo-slide promo-imgame"
-            data-promo-slide
-            style="--promo-image: url('assets/im-game.png')"
+            class="live-banner-slide"
+            data-live-slide
           >
 
-            <div
-              class="promo-bg"
-              aria-hidden="true"
-            ></div>
+            <img
+              src="assets/vox-banner-right.jpg"
+              alt="VOX Cinemas promotion"
+            >
 
-
-            <div class="promo-shell">
-
-
-              <div class="promo-copy">
-
-                <span class="promo-kicker">
-                  AT VOX CINEMAS
-                </span>
-
-
-                <h2>
-                  I'M GAME
-                </h2>
-
-
-                <p>
-                  Browse what's showing, choose your cinema
-                  and continue your movie journey with VOX.
-                </p>
-
-
-                <div
-                  class="promo-meta"
-                  aria-label="Movie information"
-                >
-
-                  <span>
-                    PG15
-                  </span>
-
-                  <i></i>
-
-                  <span>
-                    MALAYALAM
-                  </span>
-
-                  <i></i>
-
-                  <span>
-                    STANDARD
-                  </span>
-
-                </div>
-
-
-                <div class="promo-actions">
-
-                  <a
-                    class="promo-primary"
-                    href="#booking"
-                  >
-                    FIND SHOWTIMES
-                  </a>
-
-
-                  <a
-                    class="promo-secondary"
-                    href="#movies"
-                  >
-                    VIEW MOVIES
-                  </a>
-
-                </div>
-
-              </div>
-
-
-              <div
-                class="promo-art"
-                aria-hidden="true"
-              >
-
-                <img
-                  src="assets/im-game.png"
-                  alt=""
-                >
-
-              </div>
-
-            </div>
+            <a
+              class="banner-book-hotspot"
+              href="#booking"
+              aria-label="Go to booking"
+            ></a>
 
           </article>
+
 
         </div>
 
 
-        <!-- CAROUSEL CONTROLS -->
+        <!--
+          Invisible click areas sit over the arrows that are
+          already visible inside the captured banner artwork.
+        -->
 
         <button
-          class="promo-arrow promo-prev"
+          class="live-banner-arrow live-banner-prev"
+          data-live-prev
           type="button"
-          data-promo-prev
           aria-label="Previous promotion"
-        >
-          <span aria-hidden="true">
-            ‹
-          </span>
-        </button>
+        ></button>
 
 
         <button
-          class="promo-arrow promo-next"
+          class="live-banner-arrow live-banner-next"
+          data-live-next
           type="button"
-          data-promo-next
           aria-label="Next promotion"
-        >
-          <span aria-hidden="true">
-            ›
-          </span>
-        </button>
+        ></button>
 
-
-        <div
-          class="promo-pagination"
-          aria-label="Featured promotion slides"
-        >
-
-          <button
-            class="is-active"
-            type="button"
-            data-promo-dot="0"
-            aria-label="Show promotion 1"
-            aria-current="true"
-          ></button>
-
-          <button
-            type="button"
-            data-promo-dot="1"
-            aria-label="Show promotion 2"
-          ></button>
-
-          <button
-            type="button"
-            data-promo-dot="2"
-            aria-label="Show promotion 3"
-          ></button>
-
-        </div>
 
       </div>
+
+
+      <!--
+        Existing app.js expects this ID.
+        Keep it present without changing the visual carousel.
+      -->
+
+      <button
+        id="heroBookBtn"
+        class="legacy-hero-book"
+        type="button"
+        tabindex="-1"
+        aria-hidden="true"
+      ></button>
+
 
     </section>
 
@@ -612,46 +462,30 @@
     ====================================================== -->
 
     <section
-      class="movies-section"
       id="movies"
+      class="whats-on-section"
     >
 
-      <div class="section-shell">
+      <div class="content-shell">
 
 
-        <div class="movies-heading">
+        <div class="vox-section-heading">
+
+          <span></span>
+
+          <h2>
+            WHAT'S ON
+          </h2>
+
+        </div>
 
 
-          <div class="title-area">
+        <!--
+          Existing movie controls are retained for app.js
+          but hidden visually to match the current homepage.
+        -->
 
-            <span class="section-kicker">
-              MOVIES
-            </span>
-
-
-            <h2>
-              What's On
-            </h2>
-
-
-            <div class="live-row">
-
-              <span
-                id="liveStatus"
-                class="live-status"
-              >
-                Loading movie catalogue...
-              </span>
-
-
-              <span
-                id="liveUpdated"
-                class="live-updated"
-              ></span>
-
-            </div>
-
-          </div>
+        <div class="existing-movie-controls">
 
 
           <div
@@ -679,29 +513,51 @@
 
           </div>
 
+
+          <div class="movie-filters"></div>
+
+
+          <div class="live-row">
+
+            <span
+              id="liveStatus"
+              class="live-status"
+            >
+              Loading movie catalogue...
+            </span>
+
+
+            <span
+              id="liveUpdated"
+              class="live-updated"
+            ></span>
+
+          </div>
+
+
         </div>
 
 
-        <!-- Created dynamically by app.js -->
-
-        <div class="movie-filters"></div>
-
-
-        <!-- Movie cards created dynamically by app.js -->
+        <!--
+          Existing app.js populates this.
+          CSS converts the cards into the live-style
+          asymmetric poster wall.
+        -->
 
         <div
-          class="movie-grid"
           id="movieGrid"
+          class="movie-grid"
         ></div>
 
 
         <button
-          class="view-all-btn"
           id="viewAllBtn"
+          class="view-all-btn"
           type="button"
         >
-          VIEW ALL MOVIES
+          VIEW ALL
         </button>
+
 
       </div>
 
@@ -709,33 +565,24 @@
 
 
     <!-- =====================================================
-         EXPERIENCES
+         TRY A VOX EXPERIENCE
     ====================================================== -->
 
     <section
-      class="experience-section"
       id="experiences"
+      class="experiences-section"
     >
 
-      <div class="section-shell">
+      <div class="content-shell">
 
 
-        <div class="experience-heading">
+        <div class="vox-section-heading">
 
-          <span class="section-kicker">
-            EXPERIENCES
-          </span>
-
+          <span></span>
 
           <h2>
-            Try a VOX experience
+            TRY A VOX EXPERIENCE
           </h2>
-
-
-          <p>
-            Choose the cinema experience that makes
-            your next movie even more memorable.
-          </p>
 
         </div>
 
@@ -743,381 +590,180 @@
         <div class="experience-grid">
 
 
-          <article
-            class="experience-card experience-imax"
+          <a
+            class="experience-tile"
+            href="#booking"
+            aria-label="MAX"
           >
 
-            <div class="experience-overlay"></div>
-
-
-            <div class="experience-content">
-
-              <span class="experience-small">
-                BIGGER. BOLDER.
-              </span>
-
-
-              <h3>
-                IMAX
-              </h3>
-
-
-              <p>
-                Larger screens, immersive sound
-                and spectacular cinematic scale.
-              </p>
-
-
-              <a href="#booking">
-                DISCOVER IMAX
-              </a>
-
-            </div>
-
-          </article>
-
-
-          <article
-            class="experience-card experience-theatre"
-          >
-
-            <div class="experience-overlay"></div>
-
-
-            <div class="experience-content">
-
-              <span class="experience-small">
-                PREMIUM CINEMA
-              </span>
-
-
-              <h3>
-                THEATRE
-              </h3>
-
-
-              <p>
-                Premium seating, cinema dining
-                and elevated service.
-              </p>
-
-
-              <a href="#booking">
-                DISCOVER THEATRE
-              </a>
-
-            </div>
-
-          </article>
-
-
-          <article
-            class="experience-card experience-4dx"
-          >
-
-            <div class="experience-overlay"></div>
-
-
-            <div class="experience-content">
-
-              <span class="experience-small">
-                FEEL THE MOVIE
-              </span>
-
-
-              <h3>
-                4DX
-              </h3>
-
-
-              <p>
-                Motion and environmental effects
-                bring the action to life.
-              </p>
-
-
-              <a href="#booking">
-                DISCOVER 4DX
-              </a>
-
-            </div>
-
-          </article>
-
-
-          <article
-            class="experience-card experience-kids"
-          >
-
-            <div class="experience-overlay"></div>
-
-
-            <div class="experience-content">
-
-              <span class="experience-small">
-                FAMILY FUN
-              </span>
-
-
-              <h3>
-                KIDS
-              </h3>
-
-
-              <p>
-                A colourful and entertaining cinema
-                experience for younger movie fans.
-              </p>
-
-
-              <a href="#booking">
-                DISCOVER KIDS
-              </a>
-
-            </div>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         FOOD & DRINKS
-    ====================================================== -->
-
-    <section
-      class="food-section"
-      id="food"
-    >
-
-      <div class="food-inner">
-
-
-        <div class="food-copy">
-
-          <span class="section-eyebrow">
-            FOOD &amp; DRINKS
-          </span>
-
-
-          <h2>
-            Movie night tastes better at VOX
-          </h2>
-
-
-          <p>
-            Discover cinema favourites, snacks
-            and drinks for your next visit.
-          </p>
+            <img
+              src="assets/experience-max.jpg"
+              alt="MAX cinema experience"
+            >
+
+          </a>
 
 
           <a
-            class="food-button"
+            class="experience-tile"
             href="#booking"
-          >
-            EXPLORE FOOD &amp; DRINKS
-          </a>
-
-        </div>
-
-
-        <div
-          class="food-art"
-          aria-hidden="true"
-        >
-
-          <div class="popcorn-bucket">
-
-
-            <div class="popcorn">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-
-
-            <strong>
-              VOX
-            </strong>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         OFFERS
-    ====================================================== -->
-
-    <section
-      class="offers-section"
-      id="offers"
-    >
-
-      <div class="section-shell">
-
-
-        <div class="standard-heading">
-
-          <div>
-
-            <span class="section-kicker">
-              OFFERS
-            </span>
-
-
-            <h2>
-              Offers &amp; promotions
-            </h2>
-
-          </div>
-
-
-          <a href="#booking">
-            VIEW ALL OFFERS
-          </a>
-
-        </div>
-
-
-        <div class="offers-grid">
-
-
-          <article
-            class="offer-card bank-offer-card"
+            aria-label="IMAX with Laser"
           >
 
-            <span class="offer-tag">
-              BANK OFFERS
-            </span>
-
-
-            <h3>
-              More ways to enjoy the movies
-            </h3>
-
-
-            <p>
-              Discover available card promotions
-              and cinema offers.
-            </p>
-
-
-            <a href="#booking">
-              EXPLORE OFFERS
-            </a>
-
-          </article>
-
-
-          <article
-            class="offer-card share-card"
-          >
-
-            <span class="offer-tag">
-              SHARE
-            </span>
-
-
-            <h3>
-              Make every movie more rewarding
-            </h3>
-
-
-            <p>
-              Earn and spend SHARE points when
-              enjoying VOX Cinemas.
-            </p>
-
-
-            <a href="#booking">
-              LEARN MORE
-            </a>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         CINEMAS
-    ====================================================== -->
-
-    <section
-      class="find-us-section"
-      id="cinemas"
-    >
-
-      <div class="section-shell">
-
-
-        <div class="find-us-layout">
-
-
-          <div class="find-us-copy">
-
-            <span class="section-eyebrow">
-              FIND US
-            </span>
-
-
-            <h2>
-              Find your nearest VOX Cinema
-            </h2>
-
-
-            <p>
-              Explore VOX Cinemas locations across
-              Dubai, Abu Dhabi and the UAE.
-            </p>
-
-
-            <a
-              class="find-us-button"
-              href="#booking"
+            <img
+              src="assets/experience-imax-laser.jpg"
+              alt="IMAX with Laser"
             >
-              FIND A CINEMA
-            </a>
 
-          </div>
+          </a>
 
 
-          <div
-            class="cinema-visual"
-            aria-hidden="true"
+          <a
+            class="experience-tile"
+            href="#booking"
+            aria-label="THEATRE"
           >
 
-            <div
-              class="cinema-visual-circle circle-one"
-            ></div>
+            <img
+              src="assets/experience-theatre.jpg"
+              alt="THEATRE cinema experience"
+            >
 
-            <div
-              class="cinema-visual-circle circle-two"
-            ></div>
+          </a>
 
-            <div class="cinema-pin"></div>
 
-          </div>
+          <a
+            class="experience-tile"
+            href="#booking"
+            aria-label="IMAX"
+          >
+
+            <img
+              src="assets/experience-imax.jpg"
+              alt="IMAX cinema experience"
+            >
+
+          </a>
+
+
+          <a
+            class="experience-tile"
+            href="#booking"
+            aria-label="PREMIER"
+          >
+
+            <img
+              src="assets/experience-premier.jpg"
+              alt="PREMIER cinema experience"
+            >
+
+          </a>
+
+
+          <a
+            class="experience-tile"
+            href="#booking"
+            aria-label="GOLD"
+          >
+
+            <img
+              src="assets/experience-gold.jpg"
+              alt="GOLD cinema experience"
+            >
+
+          </a>
+
+
+          <a
+            class="experience-tile"
+            href="#booking"
+            aria-label="KIDS"
+          >
+
+            <img
+              src="assets/experience-kids.jpg"
+              alt="KIDS cinema experience"
+            >
+
+          </a>
+
+
+          <a
+            class="experience-tile"
+            href="#booking"
+            aria-label="Private Cinema"
+          >
+
+            <img
+              src="assets/experience-private.jpg"
+              alt="Private Cinema"
+            >
+
+          </a>
+
+
+          <a
+            class="experience-tile"
+            href="#booking"
+            aria-label="4DX"
+          >
+
+            <img
+              src="assets/experience-4dx.jpg"
+              alt="4DX cinema experience"
+            >
+
+          </a>
+
+
+          <a
+            class="experience-tile"
+            href="#booking"
+            aria-label="Onyx"
+          >
+
+            <img
+              src="assets/experience-onyx.jpg"
+              alt="Onyx cinema experience"
+            >
+
+          </a>
+
+
+          <a
+            class="experience-tile"
+            href="#booking"
+            aria-label="VOX at Kempinski"
+          >
+
+            <img
+              src="assets/experience-kempinski.jpg"
+              alt="VOX at Kempinski"
+            >
+
+          </a>
+
+
+          <a
+            class="experience-tile"
+            href="#booking"
+            aria-label="VOX Moonlight"
+          >
+
+            <img
+              src="assets/experience-moonlight.jpg"
+              alt="VOX Moonlight"
+            >
+
+          </a>
+
 
         </div>
 
       </div>
 
     </section>
+
 
   </main>
 
@@ -1126,124 +772,143 @@
        FOOTER
   ====================================================== -->
 
-  <footer class="site-footer">
+  <footer
+    id="footer"
+    class="site-footer"
+  >
 
-    <div class="footer-inner">
-
-
-      <div class="footer-brand">
-
-        <div class="footer-logo">
+    <div class="content-shell footer-grid">
 
 
-          <span class="footer-vox">
-            VOX
-          </span>
+      <!-- COLUMN 1 -->
+
+      <div class="footer-brand-column">
 
 
-          <small>
-            CINEMAS
-          </small>
+        <img
+          class="footer-logo"
+          src="assets/vox-logo.jpg"
+          alt="VOX Cinemas"
+        >
+
+
+        <h3>
+          STAY IN TOUCH
+        </h3>
+
+
+        <div class="social-links">
+
+
+          <a
+            href="#"
+            aria-label="Facebook"
+          >
+            f
+          </a>
+
+
+          <a
+            href="#"
+            aria-label="Instagram"
+          >
+            ◎
+          </a>
+
+
+          <a
+            href="#"
+            aria-label="YouTube"
+          >
+            ▶
+          </a>
+
 
         </div>
-
-
-        <p>
-          Great moments on the big screen.
-        </p>
 
       </div>
 
 
+      <!-- COLUMN 2 -->
+
       <div class="footer-column">
 
-        <strong>
-          MOVIES
-        </strong>
+        <h3>
+          About
+        </h3>
 
+        <a href="#">
+          About Us
+        </a>
+
+        <a href="#">
+          Terms and Conditions
+        </a>
+
+        <a href="#">
+          Careers
+        </a>
+
+        <a href="#">
+          Corporate
+        </a>
+
+      </div>
+
+
+      <!-- COLUMN 3 -->
+
+      <div class="footer-column">
+
+        <h3>
+          Help &amp; Support
+        </h3>
+
+        <a href="#">
+          Refunds
+        </a>
+
+        <a href="#">
+          Contact Us
+        </a>
+
+        <a href="#">
+          FAQs
+        </a>
+
+        <a href="#">
+          Privacy Policy
+        </a>
+
+      </div>
+
+
+      <!-- COLUMN 4 -->
+
+      <div class="footer-column">
+
+        <h3>
+          Explore Our Site
+        </h3>
 
         <a href="#movies">
           What's On
         </a>
 
-
         <a href="#movies">
           Coming Soon
         </a>
 
-
         <a href="#booking">
-          Book Tickets
-        </a>
-
-      </div>
-
-
-      <div class="footer-column">
-
-        <strong>
-          EXPERIENCES
-        </strong>
-
-
-        <a href="#experiences">
-          IMAX
-        </a>
-
-
-        <a href="#experiences">
-          THEATRE
-        </a>
-
-
-        <a href="#experiences">
-          4DX
-        </a>
-
-
-        <a href="#experiences">
-          KIDS
-        </a>
-
-      </div>
-
-
-      <div class="footer-column">
-
-        <strong>
-          VOX CINEMAS
-        </strong>
-
-
-        <a href="#cinemas">
-          Cinemas
-        </a>
-
-
-        <a href="#offers">
-          Offers
-        </a>
-
-
-        <a href="#food">
           Food &amp; Drinks
         </a>
 
+        <a href="#experiences">
+          Ways To Watch
+        </a>
+
       </div>
 
-    </div>
-
-
-    <div class="footer-bottom">
-
-      <span>
-        © VOX Cinemas
-      </span>
-
-
-      <span>
-        UAE
-      </span>
 
     </div>
 
@@ -1252,21 +917,21 @@
 
   <!-- =====================================================
        BOOKING MODAL
-       IDs retained for existing app.js compatibility
+       Existing IDs preserved
   ====================================================== -->
 
   <div
-    class="modal"
     id="modal"
+    class="modal"
     hidden
   >
 
-    <div class="modal-card booking-modal-card">
+    <div class="modal-card">
 
 
       <button
-        class="modal-close"
         id="modalClose"
+        class="modal-close"
         type="button"
         aria-label="Close"
       >
@@ -1274,7 +939,7 @@
       </button>
 
 
-      <span class="modal-eyebrow">
+      <span class="modal-kicker">
         SELECT A SESSION
       </span>
 
@@ -1294,12 +959,13 @@
 
 
       <button
-        class="modal-primary"
         id="continueBtn"
+        class="modal-primary"
         type="button"
       >
         CONTINUE
       </button>
+
 
     </div>
 
@@ -1308,12 +974,12 @@
 
   <!-- =====================================================
        SIGN-IN MODAL
-       Existing login behaviour remains untouched
+       Existing login IDs preserved exactly
   ====================================================== -->
 
   <div
-    class="modal"
     id="loginModal"
+    class="modal"
     hidden
   >
 
@@ -1321,8 +987,8 @@
 
 
       <button
-        class="modal-close"
         id="loginClose"
+        class="modal-close"
         type="button"
         aria-label="Close sign in"
       >
@@ -1330,15 +996,11 @@
       </button>
 
 
-      <div class="login-logo">
-
-        <span>
-          VOX
-        </span>
-
-        CINEMAS
-
-      </div>
+      <img
+        class="modal-logo"
+        src="assets/vox-logo.jpg"
+        alt="VOX Cinemas"
+      >
 
 
       <h3>
@@ -1347,8 +1009,7 @@
 
 
       <p class="login-intro">
-        Sign in to continue with your customer profile
-        during this visit.
+        Sign in to continue with your customer profile.
       </p>
 
 
@@ -1363,7 +1024,6 @@
           <span>
             Email, mobile number or SHARE member ID
           </span>
-
 
           <input
             id="siteLoginIdentifier"
@@ -1382,7 +1042,6 @@
           <span>
             PIN
           </span>
-
 
           <input
             id="siteLoginPin"
@@ -1406,12 +1065,13 @@
 
 
         <button
-          class="modal-primary"
           id="siteLoginSubmit"
+          class="modal-primary"
           type="submit"
         >
           SIGN IN
         </button>
+
 
       </form>
 
@@ -1422,7 +1082,7 @@
 
   <!-- =====================================================
        PAGE CONTEXT
-       DO NOT CHANGE
+       EXISTING INTEGRATION
   ====================================================== -->
 
   <script>
@@ -1440,7 +1100,7 @@
 
 
   <!-- =====================================================
-       EXISTING CHAT BACKEND CONFIGURATION
+       EXISTING CHAT CONFIG
        DO NOT CHANGE
   ====================================================== -->
 
@@ -1463,14 +1123,14 @@
 
 
   <!-- =====================================================
-       WEBSITE APPLICATION
+       EXISTING APPLICATION
   ====================================================== -->
 
   <script src="app.js"></script>
 
 
   <!-- =====================================================
-       EXISTING EXTERNAL CHAT EMBED
+       EXISTING CHAT EMBED
        DO NOT CHANGE
   ====================================================== -->
 
@@ -1482,8 +1142,7 @@
 
 
   <!-- =====================================================
-       CHAT WIDGET HOST CUSTOMISATION
-       Existing chatbot behaviour retained
+       EXISTING CHAT LAUNCHER CUSTOMISATION
   ====================================================== -->
 
   <script>
@@ -1623,5 +1282,328 @@
   </script>
 
 
+  <!-- =====================================================
+       VISUAL-ONLY LIVE BANNER CAROUSEL
+
+       Isolated from app.js so the existing application
+       behaviour is not refactored.
+  ====================================================== -->
+
+  <script>
+
+    (function initialiseLiveBanner() {
+
+      const viewport =
+        document.querySelector(
+          "[data-live-viewport]"
+        );
+
+
+      const track =
+        document.querySelector(
+          "[data-live-track]"
+        );
+
+
+      const slides = [
+        ...document.querySelectorAll(
+          "[data-live-slide]"
+        )
+      ];
+
+
+      const previousButton =
+        document.querySelector(
+          "[data-live-prev]"
+        );
+
+
+      const nextButton =
+        document.querySelector(
+          "[data-live-next]"
+        );
+
+
+      if (
+        !viewport ||
+        !track ||
+        slides.length === 0
+      ) {
+
+        return;
+
+      }
+
+
+      /*
+        Start on the middle banner so previous and
+        next campaigns are visible at each side,
+        matching the current VOX layout.
+      */
+
+      let activeIndex =
+        Math.min(
+          1,
+          slides.length - 1
+        );
+
+
+      let pointerStartX =
+        null;
+
+
+      function updateActiveState() {
+
+        slides.forEach(
+          (
+            slide,
+            index
+          ) => {
+
+            slide.classList.toggle(
+              "is-active",
+              index === activeIndex
+            );
+
+          }
+        );
+
+      }
+
+
+      function positionCarousel(
+        animate = true
+      ) {
+
+        const activeSlide =
+          slides[activeIndex];
+
+
+        if (!activeSlide) {
+
+          return;
+
+        }
+
+
+        if (!animate) {
+
+          track.style.transition =
+            "none";
+
+        }
+
+
+        const target =
+          activeSlide.offsetLeft +
+          (
+            activeSlide.offsetWidth /
+            2
+          ) -
+          (
+            viewport.clientWidth /
+            2
+          );
+
+
+        track.style.transform =
+          `translate3d(${-target}px, 0, 0)`;
+
+
+        updateActiveState();
+
+
+        if (!animate) {
+
+          requestAnimationFrame(
+            () => {
+
+              track.style.transition =
+                "";
+
+            }
+          );
+
+        }
+
+      }
+
+
+      function showSlide(index) {
+
+        activeIndex =
+          (
+            index +
+            slides.length
+          ) %
+          slides.length;
+
+
+        positionCarousel(true);
+
+      }
+
+
+      previousButton
+        ?.addEventListener(
+          "click",
+          () => {
+
+            showSlide(
+              activeIndex - 1
+            );
+
+          }
+        );
+
+
+      nextButton
+        ?.addEventListener(
+          "click",
+          () => {
+
+            showSlide(
+              activeIndex + 1
+            );
+
+          }
+        );
+
+
+      slides.forEach(
+        (
+          slide,
+          index
+        ) => {
+
+          slide.addEventListener(
+            "click",
+            event => {
+
+              /*
+                Do not hijack the booking hotspot.
+              */
+
+              if (
+                event.target.closest(
+                  ".banner-book-hotspot"
+                )
+              ) {
+
+                return;
+
+              }
+
+
+              if (
+                index !==
+                activeIndex
+              ) {
+
+                showSlide(index);
+
+              }
+
+            }
+          );
+
+        }
+      );
+
+
+      viewport.addEventListener(
+        "pointerdown",
+        event => {
+
+          pointerStartX =
+            event.clientX;
+
+        }
+      );
+
+
+      viewport.addEventListener(
+        "pointerup",
+        event => {
+
+          if (
+            pointerStartX ===
+            null
+          ) {
+
+            return;
+
+          }
+
+
+          const distance =
+            event.clientX -
+            pointerStartX;
+
+
+          pointerStartX =
+            null;
+
+
+          if (
+            Math.abs(
+              distance
+            ) < 45
+          ) {
+
+            return;
+
+          }
+
+
+          showSlide(
+
+            distance < 0
+
+              ? activeIndex + 1
+
+              : activeIndex - 1
+
+          );
+
+        }
+      );
+
+
+      viewport.addEventListener(
+        "pointercancel",
+        () => {
+
+          pointerStartX =
+            null;
+
+        }
+      );
+
+
+      window.addEventListener(
+        "resize",
+        () => {
+
+          positionCarousel(false);
+
+        }
+      );
+
+
+      requestAnimationFrame(
+        () => {
+
+          positionCarousel(false);
+
+        }
+      );
+
+    })();
+
+  </script>
+
+
 </body>
+
 </html>
