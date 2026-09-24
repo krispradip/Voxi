@@ -1,15 +1,30 @@
 /* ==========================================================
    VOX CINEMAS UAE
-   FINAL DARK + LIGHT THEME
+   FINAL BROWSER-SYNCED DARK / LIGHT THEME
+
+   Browser Light:
+   - cyan utility bar
+   - white navigation
+   - dark booking strip
+   - white content area
+   - dark footer
+
+   Browser Dark:
+   - black utility bar
+   - charcoal navigation
+   - dark booking strip
+   - charcoal content area
+   - dark footer
+
+   Chatbot remains independently browser-theme aware.
    ========================================================== */
 
 
 /* ==========================================================
-   DEFAULT DARK MODE
+   SHARED VARIABLES
    ========================================================== */
 
-:root,
-html[data-theme="dark"] {
+:root {
 
   --vox-blue:
     #00a9dc;
@@ -20,6 +35,25 @@ html[data-theme="dark"] {
   --vox-pink-hover:
     #c9006c;
 
+
+  --content-width:
+    940px;
+
+
+  --hero-width:
+    min(
+      880px,
+      72vw
+    );
+
+}
+
+
+/* ==========================================================
+   DARK MODE
+   ========================================================== */
+
+html[data-theme="dark"] {
 
   --page-bg:
     #252627;
@@ -32,9 +66,6 @@ html[data-theme="dark"] {
 
   --utility-bg:
     #000000;
-
-  --footer-bg:
-    #1b1c1d;
 
 
   --field-bg:
@@ -51,28 +82,18 @@ html[data-theme="dark"] {
     #bfc1c2;
 
 
-  --section-line:
-    #444647;
-
   --card-bg:
     #111111;
 
-
-  --content-width:
-    940px;
-
-  --hero-width:
-    min(
-      880px,
-      72vw
-    );
+  --section-line:
+    #444647;
 
 }
 
 
 /* ==========================================================
    LIGHT MODE
-   Matches current VOX light presentation
+   Based on current VOX light presentation
    ========================================================== */
 
 html[data-theme="light"] {
@@ -89,9 +110,6 @@ html[data-theme="light"] {
   --utility-bg:
     #00a9dc;
 
-  --footer-bg:
-    #1b1c1d;
-
 
   --field-bg:
     #ffffff;
@@ -104,14 +122,14 @@ html[data-theme="light"] {
     #17191b;
 
   --secondary-text:
-    #62676b;
+    #64696d;
 
-
-  --section-line:
-    #d9dcde;
 
   --card-bg:
     #eeeeee;
+
+  --section-line:
+    #d9dcde;
 
 }
 
@@ -123,30 +141,46 @@ html[data-theme="light"] {
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+
+  box-sizing:
+    border-box;
+
 }
 
 
 html {
-  margin: 0;
-  padding: 0;
 
-  background: var(--page-bg);
+  margin:
+    0;
 
-  scroll-behavior: smooth;
+  padding:
+    0;
+
+  background:
+    var(--page-bg);
+
+  scroll-behavior:
+    smooth;
+
 }
 
 
 body {
-  min-width: 320px;
 
-  margin: 0;
+  min-width:
+    320px;
 
-  overflow-x: hidden;
+  margin:
+    0;
 
-  background: var(--page-bg);
+  overflow-x:
+    hidden;
 
-  color: var(--primary-text);
+  background:
+    var(--page-bg);
+
+  color:
+    var(--primary-text);
 
   font-family:
     Arial,
@@ -155,45 +189,68 @@ body {
 
   -webkit-font-smoothing:
     antialiased;
+
 }
 
 
 body.modal-open {
-  overflow: hidden;
+
+  overflow:
+    hidden;
+
 }
 
 
 button,
 select,
 input {
-  font: inherit;
+
+  font:
+    inherit;
+
 }
 
 
 button {
-  cursor: pointer;
+
+  cursor:
+    pointer;
+
 }
 
 
 a {
-  color: inherit;
-  text-decoration: none;
+
+  color:
+    inherit;
+
+  text-decoration:
+    none;
+
 }
 
 
 img {
-  display: block;
-  max-width: 100%;
+
+  display:
+    block;
+
+  max-width:
+    100%;
+
 }
 
 
 [hidden] {
-  display: none !important;
+
+  display:
+    none !important;
+
 }
 
 
 /* ==========================================================
-   MAIN WIDTH
+   SHARED PAGE WIDTH
    ========================================================== */
 
 .site-shell,
@@ -202,7 +259,10 @@ img {
   width:
     min(
       var(--content-width),
-      calc(100% - 32px)
+      calc(
+        100% -
+        32px
+      )
     );
 
   margin:
@@ -212,7 +272,7 @@ img {
 
 
 /* ==========================================================
-   TOP UTILITY BAR
+   UTILITY BAR
    ========================================================== */
 
 .utility-bar {
@@ -232,15 +292,13 @@ img {
 }
 
 
-/*
-   Creates the slight VOX angled lower edge
-   visible in light mode.
-*/
+/* VOX light-mode angled cyan strip */
 
 html[data-theme="light"]
 .utility-bar::after {
 
-  content: "";
+  content:
+    "";
 
   position:
     absolute;
@@ -252,10 +310,13 @@ html[data-theme="light"]
     0;
 
   bottom:
-    -17px;
+    -18px;
 
   height:
     20px;
+
+  z-index:
+    -1;
 
   background:
     var(--utility-bg);
@@ -265,15 +326,12 @@ html[data-theme="light"]
       0 0,
       100% 0,
       100% 100%,
-      42% 28%,
-      0 28%
+      42% 30%,
+      0 30%
     );
 
   pointer-events:
     none;
-
-  z-index:
-    -1;
 
 }
 
@@ -354,7 +412,8 @@ html[data-theme="light"]
 
 .search-icon::after {
 
-  content: "";
+  content:
+    "";
 
   position:
     absolute;
@@ -375,13 +434,15 @@ html[data-theme="light"]
     #ffffff;
 
   transform:
-    rotate(45deg);
+    rotate(
+      45deg
+    );
 
 }
 
 
 /* ==========================================================
-   UTILITY LINKS
+   UTILITY LOGIN / SIGN UP
    ========================================================== */
 
 .utility-login,
@@ -405,100 +466,32 @@ html[data-theme="light"]
 }
 
 
+html[data-theme="dark"]
 .utility-login {
-  color: var(--vox-blue);
-}
-
-
-.utility-signup {
-  color: var(--primary-text);
-}
-
-
-/*
-   On actual VOX light mode these sit on the cyan strip,
-   therefore force them to white.
-*/
-
-html[data-theme="light"]
-.utility-login,
-
-html[data-theme="light"]
-.utility-signup,
-
-html[data-theme="light"]
-.country-selector {
 
   color:
-    #ffffff;
-
-}
-
-
-/* ==========================================================
-   THEME TOGGLE
-   ========================================================== */
-
-.theme-toggle {
-
-  height:
-    28px;
-
-  padding:
-    0 9px;
-
-  display:
-    inline-flex;
-
-  align-items:
-    center;
-
-  gap:
-    6px;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.55
-    );
-
-  border-radius:
-    2px;
-
-  background:
-    transparent;
-
-  color:
-    #ffffff;
-
-  font-size:
-    9px;
-
-  font-weight:
-    900;
+    var(--vox-blue);
 
 }
 
 
 html[data-theme="dark"]
-.theme-toggle {
+.utility-signup {
 
-  border-color:
-    rgba(
-      255,
-      255,
-      255,
-      0.28
-    );
+  color:
+    #ffffff;
 
 }
 
 
-.theme-toggle-icon {
-  font-size: 13px;
+html[data-theme="light"]
+.utility-login,
+html[data-theme="light"]
+.utility-signup {
+
+  color:
+    #ffffff;
+
 }
 
 
@@ -518,7 +511,7 @@ html[data-theme="dark"]
     10px;
 
   color:
-    var(--primary-text);
+    #ffffff;
 
   font-size:
     12px;
@@ -538,14 +531,14 @@ html[data-theme="dark"]
   position:
     relative;
 
+  display:
+    block;
+
   width:
     23px;
 
   height:
     16px;
-
-  display:
-    block;
 
   overflow:
     hidden;
@@ -688,6 +681,9 @@ html[data-theme="dark"]
 
 .vox-logo {
 
+  display:
+    block;
+
   width:
     118px;
 
@@ -705,11 +701,14 @@ html[data-theme="dark"]
   height:
     auto;
 
+  object-fit:
+    contain;
+
 }
 
 
 /* ==========================================================
-   NAVIGATION
+   MAIN NAVIGATION
    ========================================================== */
 
 .desktop-nav {
@@ -834,7 +833,7 @@ html[data-theme="dark"]
 
 
 /* ==========================================================
-   MOBILE NAV
+   MOBILE NAVIGATION
    ========================================================== */
 
 .mobile-nav {
@@ -846,7 +845,8 @@ html[data-theme="dark"]
     2400;
 
   padding:
-    5px 20px 14px;
+    5px 20px
+    14px;
 
   background:
     var(--header-bg);
@@ -913,8 +913,14 @@ html[data-theme="dark"]
     grid;
 
   grid-template-columns:
-    minmax(0, 1fr)
-    minmax(0, 1fr)
+    minmax(
+      0,
+      1fr
+    )
+    minmax(
+      0,
+      1fr
+    )
     185px;
 
   align-items:
@@ -926,6 +932,10 @@ html[data-theme="dark"]
 }
 
 
+/* ==========================================================
+   BOOKING DROPDOWNS
+   ========================================================== */
+
 .booking-field select {
 
   width:
@@ -935,7 +945,8 @@ html[data-theme="dark"]
     39px;
 
   padding:
-    0 40px 0 12px;
+    0 40px
+    0 12px;
 
   border:
     1px solid
@@ -962,10 +973,6 @@ html[data-theme="dark"]
 }
 
 
-/*
-   Actual VOX light mode uses white booking fields.
-*/
-
 html[data-theme="light"]
 .booking-field select {
 
@@ -976,7 +983,7 @@ html[data-theme="light"]
     #222222;
 
   border-color:
-    #cacaca;
+    #c7c7c7;
 
 }
 
@@ -988,6 +995,10 @@ html[data-theme="light"]
 
 }
 
+
+/* ==========================================================
+   BOOK BUTTON
+   ========================================================== */
 
 .find-times-btn {
 
@@ -1046,8 +1057,7 @@ html[data-theme="light"]
 
 
 /* ==========================================================
-   HERO / LIVE BANNER
-   Does NOT change between dark/light
+   LIVE BANNER
    ========================================================== */
 
 .live-banner {
@@ -1115,6 +1125,13 @@ html[data-theme="light"]
         var(--hero-width)
       ) /
       2
+    );
+
+  transform:
+    translate3d(
+      0,
+      0,
+      0
     );
 
   transition:
@@ -1192,7 +1209,7 @@ html[data-theme="light"]
 
 
 /* ==========================================================
-   BANNER BOOKING HOTSPOT
+   BANNER CTA HIT AREA
    ========================================================== */
 
 .banner-book-hotspot {
@@ -1219,7 +1236,7 @@ html[data-theme="light"]
 
 
 /* ==========================================================
-   OVERLAY BANNER ARROWS
+   OVERLAY CAROUSEL ARROWS
    ========================================================== */
 
 .live-banner-arrow {
@@ -1262,7 +1279,9 @@ html[data-theme="light"]
     );
 
   transform:
-    translateY(-50%);
+    translateY(
+      -50%
+    );
 
 }
 
@@ -1392,7 +1411,7 @@ main {
 
 
 /* ==========================================================
-   SECTION HEADERS
+   SECTION HEADINGS
    ========================================================== */
 
 .vox-section-heading {
@@ -1450,7 +1469,8 @@ main {
 .whats-on-section {
 
   padding:
-    29px 0 51px;
+    29px 0
+    51px;
 
   background:
     var(--page-bg);
@@ -1481,7 +1501,12 @@ main {
     );
 
   clip-path:
-    inset(50%);
+    inset(
+      50%
+    );
+
+  white-space:
+    nowrap;
 
 }
 
@@ -1491,6 +1516,9 @@ main {
    ========================================================== */
 
 .movie-grid {
+
+  position:
+    relative;
 
   width:
     100%;
@@ -1519,22 +1547,7 @@ main {
 }
 
 
-.movie-card {
-
-  position:
-    relative;
-
-  min-width:
-    0;
-
-  overflow:
-    hidden;
-
-  background:
-    var(--card-bg);
-
-}
-
+/* Large first movie */
 
 .movie-card:nth-child(1) {
 
@@ -1572,6 +1585,26 @@ main {
 
   grid-row:
     span 2;
+
+}
+
+
+.movie-card {
+
+  position:
+    relative;
+
+  min-width:
+    0;
+
+  min-height:
+    0;
+
+  overflow:
+    hidden;
+
+  background:
+    var(--card-bg);
 
 }
 
@@ -1616,7 +1649,9 @@ main {
 .poster-wrap img {
 
   transform:
-    scale(1.025);
+    scale(
+      1.025
+    );
 
 }
 
@@ -1668,7 +1703,7 @@ main {
 
 
 /* ==========================================================
-   MOVIE HOVER DETAILS
+   MOVIE HOVER CONTENT
    ========================================================== */
 
 .movie-body {
@@ -1689,7 +1724,8 @@ main {
     5;
 
   padding:
-    38px 13px 13px;
+    38px 13px
+    13px;
 
   color:
     #ffffff;
@@ -1714,7 +1750,9 @@ main {
     );
 
   transform:
-    translateY(100%);
+    translateY(
+      100%
+    );
 
   transition:
     transform
@@ -1725,12 +1763,13 @@ main {
 
 .movie-card:hover
 .movie-body,
-
 .movie-card:focus-within
 .movie-body {
 
   transform:
-    translateY(0);
+    translateY(
+      0
+    );
 
 }
 
@@ -1745,6 +1784,9 @@ main {
 
   font-size:
     13px;
+
+  font-weight:
+    800;
 
 }
 
@@ -1795,6 +1837,9 @@ main {
   border:
     0;
 
+  border-radius:
+    0;
+
   font-size:
     9px;
 
@@ -1826,6 +1871,14 @@ main {
 }
 
 
+.book-card:hover {
+
+  background:
+    var(--vox-pink-hover);
+
+}
+
+
 /* ==========================================================
    VIEW ALL
    ========================================================== */
@@ -1835,11 +1888,15 @@ main {
   display:
     block;
 
+  min-width:
+    110px;
+
   height:
     35px;
 
   margin:
-    24px auto 0;
+    24px auto
+    0;
 
   padding:
     0 16px;
@@ -1847,6 +1904,9 @@ main {
   border:
     1px solid
     var(--secondary-text);
+
+  border-radius:
+    0;
 
   background:
     transparent;
@@ -1874,14 +1934,32 @@ main {
 }
 
 
+.empty-state {
+
+  grid-column:
+    1 / -1;
+
+  padding:
+    60px 20px;
+
+  color:
+    var(--secondary-text);
+
+  text-align:
+    center;
+
+}
+
+
 /* ==========================================================
-   EXPERIENCE SECTION
+   EXPERIENCES
    ========================================================== */
 
 .experiences-section {
 
   padding:
-    13px 0 39px;
+    13px 0
+    39px;
 
   background:
     var(--page-bg);
@@ -1947,21 +2025,23 @@ main {
 .experience-tile:hover img {
 
   transform:
-    scale(1.025);
+    scale(
+      1.025
+    );
 
 }
 
 
 /* ==========================================================
    FOOTER
-
-   Real site remains dark even when page is light.
+   Stays dark in both themes like the reference site
    ========================================================== */
 
 .site-footer {
 
   padding:
-    30px 0 54px;
+    30px 0
+    54px;
 
   background:
     #1b1c1d;
@@ -2007,13 +2087,17 @@ main {
 .footer-column h3 {
 
   margin:
-    0 0 23px;
+    0 0
+    23px;
 
   color:
     #ffffff;
 
   font-size:
     13px;
+
+  font-weight:
+    900;
 
 }
 
@@ -2162,6 +2246,16 @@ main {
   color:
     var(--primary-text);
 
+  box-shadow:
+    0 25px
+    65px
+    rgba(
+      0,
+      0,
+      0,
+      0.45
+    );
+
 }
 
 
@@ -2242,6 +2336,9 @@ main {
   font-size:
     12px;
 
+  line-height:
+    1.5;
+
 }
 
 
@@ -2259,6 +2356,9 @@ main {
   border:
     0;
 
+  border-radius:
+    0;
+
   background:
     var(--vox-pink);
 
@@ -2270,6 +2370,25 @@ main {
 
   font-weight:
     800;
+
+}
+
+
+.modal-primary:hover {
+
+  background:
+    var(--vox-pink-hover);
+
+}
+
+
+.modal-primary:disabled {
+
+  opacity:
+    0.55;
+
+  cursor:
+    not-allowed;
 
 }
 
@@ -2310,6 +2429,9 @@ main {
     1px solid
     var(--field-border);
 
+  border-radius:
+    0;
+
   background:
     var(--field-bg);
 
@@ -2338,6 +2460,17 @@ main {
    LOGIN
    ========================================================== */
 
+.login-modal-card {
+
+  width:
+    min(
+      440px,
+      100%
+    );
+
+}
+
+
 .modal-logo {
 
   width:
@@ -2352,7 +2485,8 @@ main {
 .login-intro {
 
   margin:
-    4px 0 20px !important;
+    4px 0
+    20px !important;
 
 }
 
@@ -2408,6 +2542,9 @@ main {
     1px solid
     var(--field-border);
 
+  border-radius:
+    0;
+
   outline:
     0;
 
@@ -2416,6 +2553,18 @@ main {
 
   color:
     var(--primary-text);
+
+}
+
+
+html[data-theme="light"]
+.login-field input {
+
+  background:
+    #ffffff;
+
+  color:
+    #222222;
 
 }
 
@@ -2439,14 +2588,25 @@ main {
   color:
     #ffffff;
 
+  font-size:
+    11px;
+
 }
 
 
 /* ==========================================================
    CHATBOT STACKING FIX
+
+   Keeps the opened chatbot ABOVE:
+   utility bar      z 3000
+   site header      z 2500
+   booking bar      z 2200
    ========================================================== */
 
 #voxi-widget-host {
+
+  position:
+    relative;
 
   z-index:
     999999 !important;
@@ -2520,7 +2680,7 @@ main {
   .utility-inner {
 
     gap:
-      13px;
+      15px;
 
   }
 
@@ -2529,28 +2689,6 @@ main {
 
     display:
       none;
-
-  }
-
-
-  .theme-toggle-label {
-
-    display:
-      none;
-
-  }
-
-
-  .theme-toggle {
-
-    width:
-      30px;
-
-    padding:
-      0;
-
-    justify-content:
-      center;
 
   }
 
@@ -2594,7 +2732,8 @@ main {
       13px 0;
 
     grid-template-columns:
-      1fr 1fr;
+      1fr
+      1fr;
 
   }
 
@@ -2868,7 +3007,9 @@ main {
   .movie-body {
 
     transform:
-      translateY(0);
+      translateY(
+        0
+      );
 
   }
 
@@ -2913,6 +3054,14 @@ main {
 
     padding:
       11px;
+
+  }
+
+
+  .modal-card {
+
+    padding:
+      28px 20px;
 
   }
 
